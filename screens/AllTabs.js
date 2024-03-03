@@ -45,8 +45,8 @@ export default function AllTabs() {
             borderRadius: 25, // Rounds the corners of the tabBar
             shadowColor: "#000", // Shadow color for iOS
             shadowOffset: { width: 0, height: 10 }, // Shadow position for iOS
-            shadowOpacity: 0.3, // Shadow opacity for iOS
-            shadowRadius: 5, // Shadow blur radius for iOS
+            shadowOpacity: 0.3, 
+            shadowRadius: 5, 
           },
           tabBarItemStyle: {
             alignContent: "center",

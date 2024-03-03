@@ -117,14 +117,14 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 4,
         borderRadius: 10,
-        gap: 8, // Note: 'gap' might not work on some versions of React Native; consider using margin inside cardView instead
+        gap: 8, 
     },
     cardView: {
         backgroundColor: "#111319",
         padding: 10,
         borderRadius: 10,
         paddingVertical: 15,
-        marginBottom: 8, // Use marginBottom instead of gap for spacing between cards
+        marginBottom: 8,  
     },
     cardTitle: {
         color: "#d21d76",
