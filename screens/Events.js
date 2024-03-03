@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { useState } from "react";
-
 import TopMostCard from "../Components/TopMostCard";
 import OngoingUpcomingButton from "../Components/OngoingUpcomingButtons";
 import OngoingScreen from "./OngoingScreen";
 import UpcomingScreen from "./UpcomingScreen";
+
 export default function Events() {
     const [screen, setScreen] = useState(1);
     function renderOngoing() {

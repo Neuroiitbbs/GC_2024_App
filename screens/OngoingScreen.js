@@ -17,38 +17,38 @@ import axios from "axios";
 const back_link = "https://cp29bd07-3002.inc1.devtunnels.ms/";
 function OngoingScreen(props) {
   const [ongoingEvents, setOngoingEvents] = useState([
-    // {
-    //     gameName: 'Basketball',
-    //     id: 'Basketball',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
-    // },
-    // {
-    //     gameName: 'Cricket',
-    //     id: 'Cricket',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
-    // },
-    // {
-    //     gameName: 'Football',
-    //     id: 'Football',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
-    // },
-    // {
-    //     gameName: 'Tennis',
-    //     id: 'Tennis',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
-    // },
+    {
+        gameName: 'Basketball',
+        id: 'Basketball',
+        teamA: 'ECE-META',
+        teamB: 'CSE',
+        scoreA: '4',
+        scoreB: '6'
+    },
+    {
+        gameName: 'Cricket',
+        id: 'Cricket',
+        teamA: 'ECE-META',
+        teamB: 'CSE',
+        scoreA: '4',
+        scoreB: '6'
+    },
+    {
+        gameName: 'Football',
+        id: 'Football',
+        teamA: 'ECE-META',
+        teamB: 'CSE',
+        scoreA: '4',
+        scoreB: '6'
+    },
+    {
+        gameName: 'Tennis',
+        id: 'Tennis',
+        teamA: 'ECE-META',
+        teamB: 'CSE',
+        scoreA: '4',
+        scoreB: '6'
+    },
   ]);
   useEffect(() => {
     const fetchData = async () => {

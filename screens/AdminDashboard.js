@@ -1,9 +1,6 @@
-import { Image, SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native";
-
-import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Octicons } from "@expo/vector-icons";
+import React from 'react';
+import { Image, SafeAreaView, StatusBar, StyleSheet, Text, View, Pressable } from 'react-native';
+import { AntDesign, FontAwesome5, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 
 const AdminDashboard = () => {
     return (
@@ -11,49 +8,83 @@ const AdminDashboard = () => {
             <Text style={styles.heading}>Admin</Text>
             <Text style={styles.text}>Please click on the specific tile for the options related to that particular feature/option.</Text>
             <View style={styles.subcontainer}>
-                {/* left Column */}
+                {/* Left Column */}
                 <View style={styles.column}>
-                    <View style={styles.cardView} onTouchEnd={() => {}}>
+                    <Pressable 
+                        style={({ pressed }) => [
+                            styles.cardView,
+                            pressed ? styles.cardPressed : {},
+                        ]}
+                        onPress={() => {}}>
                         <MaterialCommunityIcons name="bell" size={30} color="#0066FF" style={{ paddingVertical: 2 }} />
                         <Text style={styles.cardTitle}>Notifications</Text>
                         <Text style={styles.cardDescription}>Send or Delete Notifications</Text>
                         <AntDesign name="arrowright" size={20} color="white" />
-                    </View>
-                    <View style={styles.cardView}>
-                        <View style={{paddingVertical: 15}}>
+                    </Pressable>
+
+                    <Pressable 
+                        style={({ pressed }) => [
+                            styles.cardView,
+                            pressed ? styles.cardPressed : {},
+                        ]}
+                        onPress={() => {}}>
+                        <View style={{ paddingVertical: 15 }}>
                             <Image source={require("../assets/news.png")} style={{ alignSelf: "center" }} />
                         </View>
                         <Text style={styles.cardTitle}>News</Text>
                         <Text style={styles.cardDescription}>Only for Oracle Members</Text>
                         <AntDesign name="arrowright" size={20} color="white" />
-                    </View>
-                    <View style={styles.cardView}>
+                    </Pressable>
+
+                    <Pressable 
+                        style={({ pressed }) => [
+                            styles.cardView,
+                            pressed ? styles.cardPressed : {},
+                        ]}
+                        onPress={() => {}}>
                         <Octicons name="north-star" size={30} color="#0066FF" style={{ paddingVertical: 2 }} />
                         <Text style={styles.cardTitle}>Add Score</Text>
                         <AntDesign name="arrowright" size={20} color="white" />
-                    </View>
+                    </Pressable>
                 </View>
-                {/* right Column */}
+                {/* Right Column */}
                 <View style={styles.column}>
-                    <View style={styles.cardView}>
-                        <View style={{paddingVertical: 10}}>
+                    <Pressable 
+                        style={({ pressed }) => [
+                            styles.cardView,
+                            pressed ? styles.cardPressed : {},
+                        ]}
+                        onPress={() => {}}>
+                        <View style={{ paddingVertical: 10 }}>
                             <Image source={require("../assets/liveEvents.png")} style={{ alignSelf: "center" }} />
                         </View>
                         <Text style={styles.cardTitle}>Live Events</Text>
                         <Text style={styles.cardDescription}>Add or Update a Live Event</Text>
                         <AntDesign name="arrowright" size={20} color="white" />
-                    </View>
-                    <View style={styles.cardView}>
+                    </Pressable>
+
+                    <Pressable 
+                        style={({ pressed }) => [
+                            styles.cardView,
+                            pressed ? styles.cardPressed : {},
+                        ]}
+                        onPress={() => {}}>
                         <Image source={require("../assets/carousel.png")} style={{ alignSelf: "center" }} />
                         <Text style={styles.cardTitle}>Carousel Image</Text>
                         <Text style={styles.cardDescription}>Add or Delete Carousel Image</Text>
                         <AntDesign name="arrowright" size={20} color="white" />
-                    </View>
-                    <View style={styles.cardView}>
+                    </Pressable>
+
+                    <Pressable 
+                        style={({ pressed }) => [
+                            styles.cardView,
+                            pressed ? styles.cardPressed : {},
+                        ]}
+                        onPress={() => {}}>
                         <FontAwesome5 name="trophy" size={30} color="#0066FF" style={{ paddingVertical: 2 }} />
                         <Text style={styles.cardTitle}>Add Event Result</Text>
                         <AntDesign name="arrowright" size={20} color="white" />
-                    </View>
+                    </Pressable>
                 </View>
             </View>
         </View>
@@ -66,8 +97,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#000",
-        margin: 15,
-        marginTop: StatusBar.currentHeight + 10,
     },
     heading: {
         color: "#d21d76",
@@ -87,15 +116,15 @@ const styles = StyleSheet.create({
     column: {
         flex: 1,
         margin: 4,
-        padding: 0,
         borderRadius: 10,
-        gap: 8,
+        gap: 8, // Note: 'gap' might not work on some versions of React Native; consider using margin inside cardView instead
     },
     cardView: {
         backgroundColor: "#111319",
         padding: 10,
         borderRadius: 10,
         paddingVertical: 15,
+        marginBottom: 8, // Use marginBottom instead of gap for spacing between cards
     },
     cardTitle: {
         color: "#d21d76",
@@ -108,5 +137,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: "400",
         paddingVertical: 2,
+    },
+    cardPressed: {
+        opacity: 0.5,
     },
 });
