@@ -10,18 +10,13 @@ import {
   TouchableOpacity, // Added for custom button styling
 } from "react-native";
 
-const Login = () => {
+const Login = ({authenticateUser}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const AdminLogin = () => {
-    if (username === "admin" && password === "password") {
-      console.log("Login successful!");
-      setErrorMessage("");
-    } else {
-      setErrorMessage("Invalid username or password");
-    }
+    authenticateUser(true);
   };
 
   return (
