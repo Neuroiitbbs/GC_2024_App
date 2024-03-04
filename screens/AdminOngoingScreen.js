@@ -7,19 +7,18 @@ import { ScrollView } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 import { View } from "react-native";
 import axios from "axios";
-const backend_link = "https://cp29bd07-3002.inc1.devtunnels.ms/";
-
+import { backend_link } from "../utils/constants";
 function OngoingScreen(props) {
   const [isEventUpdated, setIsEventUpdated] = useState(false);
   const [ongoingEvents, setOngoingEvents] = useState([
-    {
-      gameName: "Basketball",
-      id: "Basketball",
-      teamA: "ECE-META",
-      teamB: "CSE",
-      scoreA: "4",
-      scoreB: "6",
-    },
+    // {
+    //   gameName: "Basketball",
+    //   id: "Basketball",
+    //   teamA: "ECE-META",
+    //   teamB: "CSE",
+    //   scoreA: "4",
+    //   scoreB: "6",
+    // },
     // {
     //     gameName: 'Cricket',
     //     id: 'Cricket',

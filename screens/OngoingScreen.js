@@ -8,7 +8,7 @@ import { TouchableWithoutFeedback } from "react-native";
 import { View } from "react-native";
 import axios from "axios";
 import Loader from "../Components/Loader";
-const backend_link = "https://cp29bd07-3002.inc1.devtunnels.ms/";
+import { backend_link } from "../utils/constants";
 
 function OngoingScreen(props) {
   const [isLoading, setIsLoading] = useState(true);

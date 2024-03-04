@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 // import CSELogo from "../assets/CSELogo.png";
 import { Image } from "react-native";
 
@@ -32,13 +32,15 @@ const LeaderBoardElement = (props) => {
   );
 };
 
+const screenWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   LeaderBoardElement: {
     flexDirection: "row",
     flex: 0.08,
     backgroundColor: "#252728",
     alignItems: "center",
-    width: 343,
+    justifyContent: "center",
+    width: screenWidth * 0.85,
     height: 72,
     borderRadius: 12,
   },

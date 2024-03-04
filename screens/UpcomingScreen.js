@@ -10,7 +10,8 @@ import axios from "axios";
 import UpcomingEventCard from "../Components/UpcomingEventCard";
 import Loader from "../Components/Loader";
 
-const back_link = "https://cp29bd07-3002.inc1.devtunnels.ms/";
+import { backend_link } from "../utils/constants";
+
 function UpcomingScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [upcomingEvents, setUpcomingEvents] = useState([
@@ -51,7 +52,7 @@ function UpcomingScreen(props) {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          back_link + "api/event/getCurrentlyLiveEvents"
+          backend_link + "api/event/getCurrentlyLiveEvents"
         );
 
         console.log(response.data);

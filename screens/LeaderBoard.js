@@ -214,13 +214,13 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   leadHeading: {
-    fontSize: 20,
+    fontSize: 15,
     color: "white",
 
     fontWeight: "bold",
   },
   leadScore: {
-    fontSize: 25,
+    fontSize: 20,
     color: "white",
 
     fontWeight: "bold",

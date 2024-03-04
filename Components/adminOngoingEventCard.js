@@ -12,7 +12,7 @@ import {
 import { useState } from "react";
 import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
-const backend_link = "https://cp29bd07-3002.inc1.devtunnels.ms/";
+import { backend_link } from "../utils/constants";
 
 import logoPaths from "../utils/logoPaths";
 import setProperTeamName from "../utils/setProperTeamName";
