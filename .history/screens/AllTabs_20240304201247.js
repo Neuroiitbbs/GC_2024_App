@@ -14,9 +14,6 @@ import LoginScreen from "./LoginPage";
 import Header from "../Components/Header";
 import { getHeaderTitle } from "@react-navigation/elements";
 import AdminOngoingScreen from "./AdminOngoingScreen";
-import LiveEvents from "./LiveEvents";
-import AddLiveEvents from "./AddLiveEvents";
-import UpdateLiveEvents from "./UpdateLiveEvents";
 
 
 
@@ -71,42 +68,6 @@ function AdminDashboardStackNavigator() {
       <AdminDashboardStack.Screen
         name="AdminAddScoreStack"
         component={AdminOngoingScreen}
-        options={{
-          headerTitle: () => <Header />,
-          headerTintColor: "white", // YAY! Proper format!
-          headerStyle: { backgroundColor: "#111319" },
-        }}
-      />
-      <AdminDashboardStack.Screen
-        name="LiveEvents"
-        component={LiveEvents}
-        options={{
-          headerTitle: () => <Header />,
-          headerTintColor: "white", // YAY! Proper format!
-          headerStyle: { backgroundColor: "#111319" },
-        }}
-      />
-      <AdminDashboardStack.Screen
-        name="AddLiveEvent"
-        component={LiveEvents}
-        options={{
-          headerTitle: () => <Header />,
-          headerTintColor: "white", // YAY! Proper format!
-          headerStyle: { backgroundColor: "#111319" },
-        }}
-      />
-      <AdminDashboardStack.Screen
-        name="AddingLiveEvent"
-        component={AddLiveEvents}
-        options={{
-          headerTitle: () => <Header />,
-          headerTintColor: "white", // YAY! Proper format!
-          headerStyle: { backgroundColor: "#111319" },
-        }}
-      />
-      <AdminDashboardStack.Screen
-        name="UpdatingLiveEvent"
-        component={UpdateLiveEvents}
         options={{
           headerTitle: () => <Header />,
           headerTintColor: "white", // YAY! Proper format!
@@ -180,8 +141,19 @@ function MyTabs() {
 export default function AllTabs() {
   const [events, setEvents] = useState([]);
 
+  // useEffect(() => {
+  //   fetch("http://your-backend-ip-address:your-backend-port/api/event")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setEvents(data); // Assuming data is an array of events
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching events:", error);
+  //     });
+  // }, []);
+
   return (
-    
+    <NavigationContainer>
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -240,6 +212,6 @@ export default function AllTabs() {
         component={AdminDashboardStackNavigator}
       />
     </Tab.Navigator>
-    
+    </NavigationContainer>
   );
 }

@@ -8,21 +8,12 @@ import {
   View,
   Pressable,
 } from "react-native";
-
 import {
   AntDesign,
   FontAwesome5,
   MaterialCommunityIcons,
   Octicons,
 } from "@expo/vector-icons";
-
-
-
-import LiveEvents from "./LiveEvents";
-import UpdateEvent from "./UpdateEvent";
-import AddEvent from "./AddEvent";
-
-
 
 const AdminDashboard = ({ navigation }) => {
   const AddPoints = () => {
@@ -102,7 +93,9 @@ const AdminDashboard = ({ navigation }) => {
               styles.cardView,
               pressed ? styles.cardPressed : {},
             ]}
-            onPress={() => {navigation.navigate('LiveEvents');}}
+            onPress={
+              navigation.navigate('LiveEvent');
+          }
           >
             <View style={{ paddingVertical: 10 }}>
               <Image
