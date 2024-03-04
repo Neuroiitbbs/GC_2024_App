@@ -13,6 +13,7 @@ import Events from "./Events";
 import LoginScreen from "./LoginPage";
 import Header from "../Components/Header";
 import { getHeaderTitle } from "@react-navigation/elements";
+import AdminOngoingScreen from "./AdminOngoingScreen";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -26,7 +27,10 @@ function EventsStackNavigator() {
       <EventsStack.Screen
         name="EventsStack"
         component={Events}
-        options={{ headerTitle: () => <Header />,headerStyle: {backgroundColor: "#111319",height:100}}}
+        options={{
+          headerTitle: () => <Header />,
+          headerStyle: { backgroundColor: "#111319", height: 100 },
+        }}
       />
     </EventsStack.Navigator>
   );
@@ -38,8 +42,10 @@ function LeaderboardStackNavigator() {
       <LeaderboardStack.Screen
         name="LeaderboardStack"
         component={Leaderboard}
-        options={{ headerTitle: (props) => <Header />,headerStyle: {backgroundColor: "#111319",height:100}}}
-        
+        options={{
+          headerTitle: (props) => <Header />,
+          headerStyle: { backgroundColor: "#111319", height: 100 },
+        }}
       />
     </LeaderboardStack.Navigator>
   );
@@ -51,7 +57,19 @@ function AdminDashboardStackNavigator() {
       <AdminDashboardStack.Screen
         name="AdminDashboardStack"
         component={AdminDashboard}
-        options={{ headerTitle: () => <Header /> ,headerStyle: {backgroundColor: "#111319",height:100}}}
+        options={{
+          headerTitle: () => <Header />,
+          headerStyle: { backgroundColor: "#111319", height: 100 },
+        }}
+      />
+      <AdminDashboardStack.Screen
+        name="AdminAddScoreStack"
+        component={AdminOngoingScreen}
+        options={{
+          headerTitle: () => <Header />,
+          headerTintColor: "white", // YAY! Proper format!
+          headerStyle: { backgroundColor: "#111319" },
+        }}
       />
     </AdminDashboardStack.Navigator>
   );

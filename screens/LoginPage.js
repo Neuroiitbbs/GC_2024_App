@@ -10,7 +10,7 @@ import {
   TouchableOpacity, // Added for custom button styling
 } from "react-native";
 
-const Login = ({authenticateUser}) => {
+const Login = ({ authenticateUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");

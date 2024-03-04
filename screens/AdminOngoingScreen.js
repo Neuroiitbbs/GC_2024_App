@@ -2,16 +2,15 @@ import TopMostCard from "../Components/TopMostCard";
 import OngoingEventCard from "../Components/OngoingEventCard";
 import AdminOngoingEventCard from "../Components/adminOngoingEventCard";
 import { useState, useEffect } from "react";
-import { Alert, FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { ScrollView } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 import { View } from "react-native";
 import axios from "axios";
-import Loader from "../Components/Loader";
 const backend_link = "https://cp29bd07-3002.inc1.devtunnels.ms/";
 
 function OngoingScreen(props) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isEventUpdated, setIsEventUpdated] = useState(false);
   const [ongoingEvents, setOngoingEvents] = useState([
     {
       gameName: "Basketball",
@@ -59,6 +58,7 @@ function OngoingScreen(props) {
           const teams = item.subEvents;
           console.log("teams", item);
           const newSubEvents = teams.map((item1) => {
+            console.log("item11", item1);
             const teamA = item1.data.points
               ? item1.data.points?.teamA
               : item1.data.pointsTable?.teamA;
@@ -72,6 +72,7 @@ function OngoingScreen(props) {
               .split(" ")
               .slice(0, idx - 1)
               .join(" ");
+            console.log("teamA", teamA);
             return {
               details: item1.data.details,
               status: item1.data.status,
@@ -89,32 +90,32 @@ function OngoingScreen(props) {
           });
           return newSubEvents;
         });
+        console.log("hi");
         console.log(newData.flat());
-        setIsLoading(false);
         setOngoingEvents(newData.flat());
       } catch (err) {
         console.log(err);
-        setIsLoading(false);
-        Alert.alert("Error", "Something went wrong", [{ text: "Okay" }]);
       }
     };
     fetchData();
-  }, []);
+  }, [isEventUpdated]);
 
   return (
     <View style={styles.eventsContainer}>
       <FlatList
-        key={1}
         data={ongoingEvents}
-        renderItem={(itemData) => {
+        renderItem={(itemData, index) => {
           return (
-            <OngoingEventCard
+            <AdminOngoingEventCard
               gameName={itemData.item.gameName}
               id={itemData.item.id}
               teamA={itemData.item.teamA}
               teamB={itemData.item.teamB}
               scoreA={itemData.item.scoreA}
               scoreB={itemData.item.scoreB}
+              details={itemData.item.details}
+              status={itemData.item.status}
+              setIsEventUpdated={setIsEventUpdated}
             />
           );
         }}
@@ -123,7 +124,6 @@ function OngoingScreen(props) {
         }}
         alwaysBounceVertical={false}
       />
-      <Loader visible={isLoading} />
     </View>
   );
 }
@@ -133,6 +133,6 @@ export default OngoingScreen;
 const styles = StyleSheet.create({
   eventsContainer: {
     flex: 5,
-    maxHeight: "60%",
+    maxHeight: "90%",
   },
 });

@@ -69,7 +69,13 @@ export default function Leaderboard() {
               <FontAwesome5 name="crown" size={22} color="#ADABA1" />
             </View>
             <Image
-              source={logoPaths[top3[1].Name.replace(".", "").replace("+", "")]}
+              source={
+                logoPaths[
+                  top3[1].Name.replace(".", "")
+                    .replace("+", "")
+                    .replace("-", "")
+                ]
+              }
               style={{ width: 100, height: 100 }}
             />
           </View>
@@ -117,11 +123,10 @@ export default function Leaderboard() {
         />
       </View>
       <View style={styles.bottomcont}>
-        <Text style={styles.text01}>Last Updated on:   </Text>
+        <Text style={styles.text01}>Last Updated on: </Text>
         <Text style={styles.text02}>05/03/2023</Text>
       </View>
-      <View style={styles.bottomnav}>
-      </View>
+      <View style={styles.bottomnav}></View>
     </View>
   );
 }
@@ -244,14 +249,14 @@ const styles = StyleSheet.create({
   text01: {
     color: "#D41D77",
     alignItems: "center",
-    
+
     paddingBottom: 0,
   },
   text02: {
     color: "white",
     fontWeight: "bold",
     alignContent: "center",
-    
+
     paddingBottom: 0,
   },
   bottomnav: {

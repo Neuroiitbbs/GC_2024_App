@@ -14,9 +14,10 @@ import LoginScreen from "./screens/LoginPage";
 import AllTabs from "./screens/AllTabs";
 import axios from "axios";
 
+//update score Admin
+// import AdminOngoingScreen from './screens/AdminOngoingScreen';
+
 const Stack = createStackNavigator();
-
-
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

@@ -9,36 +9,39 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import VoteButton from "./VoteButton";
 
+import logoPaths from "../utils/logoPaths";
+import setProperTeamName from "../utils/setProperTeamName";
+
 function UpcomingEventCard(props) {
+  const teamA = setProperTeamName(props.teamA);
+  const teamB = setProperTeamName(props.teamB);
   return (
     <View>
-      
       <LinearGradient
         start={{ x: 0.2, y: 0.1 }}
         end={{ x: 0.65, y: 0.5 }}
         locations={[0.6, 1]}
         colors={["white", "#e3e3e3"]}
-        style={styles.cardTop}>
-          <View>
-          <Text style={{fontWeight:"700",paddingBottom:20}}>ECE VS CSE</Text>
-          <Text style={{fontWeight:"700"}}>CSS Battle</Text>
-          </View>
-        <Image
-          style={styles.LeftImageContainer}
-          source={require("../assets/images/ECE-META.jpg")}
-        />
+        style={styles.cardTop}
+      >
+        <View>
+          <Text style={{ fontWeight: "700", paddingBottom: 20 }}>
+            {props.teamA} v/s {props.teamB}
+          </Text>
+          <Text style={{ fontWeight: "700" }}>{props.gameName}</Text>
+        </View>
+        <Image style={styles.LeftImageContainer} source={logoPaths[teamA]} />
         <Image />
-        <Image
-          style={styles.RightImageContainer}
-          source={require("../assets/images/CSE.jpg")}
-        />
+        <Image style={styles.RightImageContainer} source={logoPaths[teamB]} />
         <Image />
       </LinearGradient>
 
       <View style={styles.cardBottom}>
         <View>
           <Text style={styles.BottomTextGame}>{props.gameName}</Text>
-          <Text style={styles.BottomTextTeams}>{props.teamA} v/s {props.teamB}</Text>
+          <Text style={styles.BottomTextTeams}>
+            {props.teamA} v/s {props.teamB}
+          </Text>
         </View>
         {/* <VoteButton/> */}
       </View>
@@ -66,8 +69,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.75,
-    alignItems:"center",
-    justifyContent:"center"
+    alignItems: "center",
+    justifyContent: "center",
   },
   cardBottom: {
     marginBottom: 0.04 * deviceHeight,
@@ -128,9 +131,8 @@ const styles = StyleSheet.create({
     color: "#322d2d",
     fontSize: 26,
     position: "absolute",
-    right:90,
+    right: 90,
     margin: 9,
     marginTop: 38,
   },
-  
 });

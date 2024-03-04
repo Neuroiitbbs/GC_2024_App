@@ -9,38 +9,46 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import VoteButton from "./VoteButton";
 
+import logoPaths from "../utils/logoPaths";
+import setProperTeamName from "../utils/setProperTeamName";
+
 function OngoingEventCard(props) {
+  const teamA = setProperTeamName(props.teamA);
+  const teamB = setProperTeamName(props.teamB);
+
   return (
-    <>
+    <View>
       <LinearGradient
         start={{ x: 0.2, y: 0.1 }}
         end={{ x: 0.65, y: 0.5 }}
         locations={[0.6, 1]}
         colors={["white", "#e3e3e3"]}
-        style={styles.cardTop}>
-        <Image
-          style={styles.LeftImageContainer}
-          source={require("../assets/images/ECE-META.jpg")}
-        />
-      
+        style={styles.cardTop}
+      >
+        <View>
+          <Text style={{ fontWeight: "700", paddingBottom: 20 }}>
+            {props.teamA} v/s {props.teamB}
+          </Text>
+          <Text style={{ fontWeight: "700" }}>{props.gameName}</Text>
+        </View>
+        <Image style={styles.LeftImageContainer} source={logoPaths[teamA]} />
         <Image />
         <Text style={styles.LEFTscoreText}>{props.scoreA}</Text>
         <Text style={styles.RIGHTscoreText}>{props.scoreB}</Text>
-        <Image
-          style={styles.RightImageContainer}
-          source={require("../assets/images/CSE.jpg")}
-        />
+        <Image style={styles.RightImageContainer} source={logoPaths[teamB]} />
         <Image />
       </LinearGradient>
 
       <View style={styles.cardBottom}>
         <View>
           <Text style={styles.BottomTextGame}>{props.gameName}</Text>
-          <Text style={styles.BottomTextTeams}>{props.teamA} v/s {props.teamB}</Text>
+          <Text style={styles.BottomTextTeams}>
+            {props.teamA} v/s {props.teamB}
+          </Text>
         </View>
-        <VoteButton/>
+        {/* <VoteButton /> */}
       </View>
-    </>
+    </View>
   );
 }
 
@@ -64,8 +72,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.75,
-    alignItems:"center",
-    justifyContent:"center",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
   },
   cardBottom: {
     marginBottom: 0.04 * deviceHeight,
@@ -93,9 +102,9 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   LeftImageContainer: {
-    width: deviceWidth < 380 ? 26 : 57,
-    height: deviceWidth < 380 ? 26 : 57,
-    borderRadius: deviceWidth < 380 ? 13 : 39,
+    width: deviceWidth < 380 ? 26 : 46,
+    height: deviceWidth < 380 ? 26 : 46,
+    borderRadius: deviceWidth < 380 ? 13 : 23,
     borderWidth: 3,
     overflow: "hidden",
     margin: 9,
@@ -104,9 +113,9 @@ const styles = StyleSheet.create({
     left: 9,
   },
   RightImageContainer: {
-    width: deviceWidth < 380 ? 26 : 57,
-    height: deviceWidth < 380 ? 26 : 57,
-    borderRadius: deviceWidth < 380 ? 13 : 39,
+    width: deviceWidth < 380 ? 26 : 46,
+    height: deviceWidth < 380 ? 26 : 46,
+    borderRadius: deviceWidth < 380 ? 13 : 23,
     borderWidth: 3,
     overflow: "hidden",
     margin: 9,
@@ -118,7 +127,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: "#322d2d",
     position: "absolute",
-    left: 90,
+    left: 70,
     margin: 9,
     marginTop: 38,
   },
@@ -126,9 +135,8 @@ const styles = StyleSheet.create({
     color: "#322d2d",
     fontSize: 26,
     position: "absolute",
-    right:90,
+    right: 70,
     margin: 9,
     marginTop: 38,
   },
-  
 });
