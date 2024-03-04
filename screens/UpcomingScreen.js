@@ -119,7 +119,12 @@ function UpcomingScreen(props) {
         alwaysBounceVertical={false}
       />
       <View style={{ height: 80 }}>
-        <Loader visible={isLoading} />
+        <Loader
+          visible={isLoading}
+          top={250}
+          bottom={0}
+          setModalVisible={setIsLoading}
+        />
       </View>
     </View>
   );

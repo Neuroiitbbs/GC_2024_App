@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { useState, useEffect } from "react";
 import { Icon } from "react-native-elements";
-
+import { Provider as PaperProvider } from "react-native-paper";
 import TopMostCard from "./Components/TopMostCard";
 import OngoingUpcomingButton from "./Components/OngoingUpcomingButtons";
 import { NavigationContainer } from "@react-navigation/native";
@@ -29,19 +29,31 @@ export default function App() {
   };
 
   return (
-    // <AddLiveEvents/>
-    <NavigationContainer>
-      {isAuthenticated ? (
-        <AllTabs />
-      ) : (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login">
-            {(props) => (
-              <LoginScreen {...props} authenticateUser={authenticateUser} />
-            )}
-          </Stack.Screen>
-        </Stack.Navigator>
-      )}
-    </NavigationContainer>
+    <PaperProvider>
+      <SafeAreaView style={styles.container}>
+        <NavigationContainer>
+          <StatusBar style="light" />
+          {isAuthenticated ? (
+            <AllTabs />
+          ) : (
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Login">
+                {(props) => (
+                  <LoginScreen {...props} authenticateUser={authenticateUser} />
+                )}
+              </Stack.Screen>
+            </Stack.Navigator>
+          )}
+        </NavigationContainer>
+      </SafeAreaView>
+    </PaperProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#ECF0F1",
+  },
+});

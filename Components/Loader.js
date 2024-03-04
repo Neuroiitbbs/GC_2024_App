@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text } from "react-native";
-import AnimatedLoader from "react-native-animated-loader";
+import AnimatedLoader from "./InnerLoaderComponent";
 
-const Loader = ({ visible }) => {
+const Loader = ({ visible, top, bottom, setModalVisible }) => {
   return (
     <AnimatedLoader
       visible={visible}
-      overlayColor="rgba(255,255,255,0.75)"
+      overlayColor="black"
       animationStyle={styles.lottie}
       speed={1}
+      top={top}
+      bottom={bottom}
+      setModalVisible={setModalVisible}
+      animationType={"fade"}
     >
       <Text>Loading...</Text>
     </AnimatedLoader>

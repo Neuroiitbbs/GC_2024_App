@@ -7,6 +7,7 @@ import {
   Text,
   View,
   Pressable,
+  ScrollView,
 } from "react-native";
 
 import {
@@ -16,13 +17,9 @@ import {
   Octicons,
 } from "@expo/vector-icons";
 
-
-
 import LiveEvents from "./LiveEvents";
 import UpdateEvent from "./UpdateEvent";
 import AddEvent from "./AddEvent";
-
-
 
 const AdminDashboard = ({ navigation }) => {
   const AddPoints = () => {
@@ -30,74 +27,119 @@ const AdminDashboard = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Admin</Text>
-      <Text style={styles.text}>
-        Please click on the specific tile for the options related to that
-        particular feature/option.
-      </Text>
-      <View style={styles.subcontainer}>
-        {/* Left Column */}
-        <View style={styles.column}>
-          <Pressable
-            style={({ pressed }) => [
-              styles.cardView,
-              pressed ? styles.cardPressed : {},
-            ]}
-            onPress={() => {}}
-          >
-            <MaterialCommunityIcons
-              name="bell"
-              size={30}
-              color="#0066FF"
-              style={{ paddingVertical: 2 }}
-            />
-            <Text style={styles.cardTitle}>Notifications</Text>
-            <Text style={styles.cardDescription}>
-              Send or Delete Notifications
-            </Text>
-            <AntDesign name="arrowright" size={20} color="white" />
-          </Pressable>
+      <View style={{ maxHeight: "85%" }}>
+        <ScrollView>
+          <Text style={styles.heading}>Admin</Text>
+          <Text style={styles.text}>
+            Please click on the specific tile for the options related to that
+            particular feature/option.
+          </Text>
+          <View style={styles.subcontainer}>
+            {/* Left Column */}
+            <View style={styles.column}>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.cardView,
+                  pressed ? styles.cardPressed : {},
+                ]}
+                onPress={() => {}}
+              >
+                <MaterialCommunityIcons
+                  name="bell"
+                  size={30}
+                  color="#0066FF"
+                  style={{ paddingVertical: 2 }}
+                />
+                <Text style={styles.cardTitle}>Notifications</Text>
+                <Text style={styles.cardDescription}>
+                  Send or Delete Notifications
+                </Text>
+                <AntDesign name="arrowright" size={20} color="white" />
+              </Pressable>
 
-          <Pressable
-            style={({ pressed }) => [
-              styles.cardView,
-              pressed ? styles.cardPressed : {},
-            ]}
-            onPress={() => {}}
-          >
-            <View style={{ paddingVertical: 15 }}>
-              <Image
-                source={require("../assets/news.png")}
-                style={{ alignSelf: "center" }}
-              />
+              <Pressable
+                style={({ pressed }) => [
+                  styles.cardView,
+                  pressed ? styles.cardPressed : {},
+                ]}
+                onPress={() => {}}
+              >
+                <View style={{ paddingVertical: 15 }}>
+                  <Image
+                    source={require("../assets/news.png")}
+                    style={{ alignSelf: "center" }}
+                  />
+                </View>
+                <Text style={styles.cardTitle}>News</Text>
+                <Text style={styles.cardDescription}>
+                  Only for Oracle Members
+                </Text>
+                <AntDesign name="arrowright" size={20} color="white" />
+              </Pressable>
+
+              <Pressable
+                style={({ pressed }) => [
+                  styles.cardView,
+                  pressed ? styles.cardPressed : {},
+                ]}
+                onPress={() => {
+                  AddPoints();
+                }}
+              >
+                <Octicons
+                  name="north-star"
+                  size={30}
+                  color="#0066FF"
+                  style={{ paddingVertical: 2 }}
+                />
+                <Text style={styles.cardTitle}>Add Score</Text>
+                <AntDesign name="arrowright" size={20} color="white" />
+              </Pressable>
             </View>
-            <Text style={styles.cardTitle}>News</Text>
-            <Text style={styles.cardDescription}>Only for Oracle Members</Text>
-            <AntDesign name="arrowright" size={20} color="white" />
-          </Pressable>
+            {/* Right Column */}
+            <View style={styles.column}>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.cardView,
+                  pressed ? styles.cardPressed : {},
+                ]}
+                onPress={() => {}}
+              >
+                <View style={{ paddingVertical: 10 }}>
+                  <Image
+                    source={require("../assets/liveEvents.png")}
+                    style={{ alignSelf: "center" }}
+                  />
+                </View>
+                <Text style={styles.cardTitle}>Live Events</Text>
+                <Text style={styles.cardDescription}>
+                  Add or Update a Live Event
+                </Text>
+                <AntDesign name="arrowright" size={20} color="white" />
+              </Pressable>
 
-          <Pressable
-            style={({ pressed }) => [
-              styles.cardView,
-              pressed ? styles.cardPressed : {},
-            ]}
-            onPress={() => {
-              AddPoints();
-            }}
-          >
-            <Octicons
-              name="north-star"
-              size={30}
-              color="#0066FF"
-              style={{ paddingVertical: 2 }}
-            />
-            <Text style={styles.cardTitle}>Add Score</Text>
-            <AntDesign name="arrowright" size={20} color="white" />
-          </Pressable>
-        </View>
-        {/* Right Column */}
-        <View style={styles.column}>
-          <Pressable
+              <Pressable
+                style={({ pressed }) => [
+                  styles.cardView,
+                  pressed ? styles.cardPressed : {},
+                ]}
+                onPress={() => {
+                  AddPoints();
+                }}
+              >
+                <Octicons
+                  name="north-star"
+                  size={30}
+                  color="#0066FF"
+                  style={{ paddingVertical: 2 }}
+                />
+                <Text style={styles.cardTitle}>Add Score</Text>
+                <AntDesign name="arrowright" size={20} color="white" />
+              </Pressable>
+            </View>
+            {/* Right Column */}
+            <View style={styles.column}>
+              {/* <Pressable
             style={({ pressed }) => [
               styles.cardView,
               pressed ? styles.cardPressed : {},
@@ -108,50 +150,44 @@ const AdminDashboard = ({ navigation }) => {
               <Image
                 source={require("../assets/liveEvents.png")}
                 style={{ alignSelf: "center" }}
-              />
+              /> */}
+              <Pressable
+                style={({ pressed }) => [
+                  styles.cardView,
+                  pressed ? styles.cardPressed : {},
+                ]}
+                onPress={() => {}}
+              >
+                <Image
+                  source={require("../assets/carousel.png")}
+                  style={{ alignSelf: "center" }}
+                />
+                <Text style={styles.cardTitle}>Carousel Image</Text>
+                <Text style={styles.cardDescription}>
+                  Add or Delete Carousel Image
+                </Text>
+                <AntDesign name="arrowright" size={20} color="white" />
+              </Pressable>
+
+              <Pressable
+                style={({ pressed }) => [
+                  styles.cardView,
+                  pressed ? styles.cardPressed : {},
+                ]}
+                onPress={() => {}}
+              >
+                <FontAwesome5
+                  name="trophy"
+                  size={30}
+                  color="#0066FF"
+                  style={{ paddingVertical: 2 }}
+                />
+                <Text style={styles.cardTitle}>Add Event Result</Text>
+                <AntDesign name="arrowright" size={20} color="white" />
+              </Pressable>
             </View>
-            <Text style={styles.cardTitle}>Live Events</Text>
-            <Text style={styles.cardDescription}>
-              Add or Update a Live Event
-            </Text>
-            <AntDesign name="arrowright" size={20} color="white" />
-          </Pressable>
-
-          <Pressable
-            style={({ pressed }) => [
-              styles.cardView,
-              pressed ? styles.cardPressed : {},
-            ]}
-            onPress={() => {}}
-          >
-            <Image
-              source={require("../assets/carousel.png")}
-              style={{ alignSelf: "center" }}
-            />
-            <Text style={styles.cardTitle}>Carousel Image</Text>
-            <Text style={styles.cardDescription}>
-              Add or Delete Carousel Image
-            </Text>
-            <AntDesign name="arrowright" size={20} color="white" />
-          </Pressable>
-
-          <Pressable
-            style={({ pressed }) => [
-              styles.cardView,
-              pressed ? styles.cardPressed : {},
-            ]}
-            onPress={() => {}}
-          >
-            <FontAwesome5
-              name="trophy"
-              size={30}
-              color="#0066FF"
-              style={{ paddingVertical: 2 }}
-            />
-            <Text style={styles.cardTitle}>Add Event Result</Text>
-            <AntDesign name="arrowright" size={20} color="white" />
-          </Pressable>
-        </View>
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
@@ -162,6 +198,7 @@ export default AdminDashboard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 15,
     backgroundColor: "#000",
   },
   heading: {

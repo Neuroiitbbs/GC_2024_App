@@ -22,6 +22,14 @@ function OngoingScreen(props) {
     //   scoreB: "6",
     // },
     // {
+    //   gameName: "Basketball",
+    //   id: "Basketball",
+    //   teamA: "ECE-META",
+    //   teamB: "CSE",
+    //   scoreA: "4",
+    //   scoreB: "6",
+    // },
+    // {
     //     gameName: 'Cricket',
     //     id: 'Cricket',
     //     teamA: 'ECE-META',
@@ -53,10 +61,10 @@ function OngoingScreen(props) {
         const response = await axios.get(
           backend_link + "api/event/getCurrentlyLiveEvents"
         );
-        console.log("response.data   ",response.data);
+        console.log("response.data   ", response.data);
         const data = response.data.events;
         const events = data.map((item) => {
-          console.log("item",item);
+          console.log("item", item);
           const eventName = item.eventId; //ex. Football BOYS
           const subEvents = item.subEvents;
           console.log("subEvents", subEvents);
@@ -84,8 +92,8 @@ function OngoingScreen(props) {
               status: match_item.data.status,
               gameName: gameName,
               id: match_item.subEventId,
-                // match_item.data.details.title.split(" ").join("") +
-                // match_item.subEventId.split(" ").join(""),
+              // match_item.data.details.title.split(" ").join("") +
+              // match_item.subEventId.split(" ").join(""),
               // teamA: item1.subEventId.split(" vs ")[0],
               // teamB: item1.subEventId.split(" vs ")[1],
               teamA: teamA?.name || match_item.subEventId.split(" vs ")[0],
@@ -94,7 +102,7 @@ function OngoingScreen(props) {
               scoreB: teamB?.points,
             };
           });
-          
+
           return match;
         });
         console.log(events.flat());
@@ -102,8 +110,9 @@ function OngoingScreen(props) {
         setOngoingEvents(events.flat());
       } catch (err) {
         console.log(err);
-        setIsLoading(false);
         Alert.alert("Error", "Something went wrong", [{ text: "Okay" }]);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -132,7 +141,12 @@ function OngoingScreen(props) {
         }}
         alwaysBounceVertical={false}
       />
-      <Loader visible={isLoading} />
+      <Loader
+        visible={isLoading}
+        top={250}
+        bottom={0}
+        setModalVisible={setIsLoading}
+      />
     </View>
   );
 }

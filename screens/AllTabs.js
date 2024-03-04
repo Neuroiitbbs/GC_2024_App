@@ -17,9 +17,7 @@ import AdminOngoingScreen from "./AdminOngoingScreen";
 import LiveEvents from "./LiveEvents";
 import AddLiveEvents from "./AddLiveEvents";
 import UpdateLiveEvents from "./UpdateLiveEvents";
-
-
-
+import SpecificEvents from "./SpecificEvents";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -33,10 +31,21 @@ function EventsStackNavigator() {
       <EventsStack.Screen
         name="EventsStack"
         component={Events}
-        options={{
+        options={({ route }) => ({
+          headerTitle: () => <Header events={true} />,
+          headerStyle: { backgroundColor: "#111319", height: 100 },
+          field: route.params?.field || "Sports",
+        })}
+      />
+      <EventsStack.Screen
+        name="SpecificEvent"
+        component={SpecificEvents}
+        options={({ route }) => ({
           headerTitle: () => <Header />,
           headerStyle: { backgroundColor: "#111319", height: 100 },
-        }}
+          headerTintColor: "white",
+          data: route.params.data,
+        })}
       />
     </EventsStack.Navigator>
   );
@@ -73,7 +82,8 @@ function AdminDashboardStackNavigator() {
         component={AdminOngoingScreen}
         options={{
           headerTitle: () => <Header />,
-          headerTintColor: "white", // YAY! Proper format!
+          headerTintColor: "white",
+          headerLeft: null,
           headerStyle: { backgroundColor: "#111319" },
         }}
       />
@@ -119,7 +129,6 @@ function AdminDashboardStackNavigator() {
 
 function MyTabs() {
   return (
-    
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -174,14 +183,12 @@ function MyTabs() {
       <Tab.Screen name="Events" component={Events} />
       <Tab.Screen name="Leaderboard" component={Leaderboard} />
     </Tab.Navigator>
-    
   );
 }
 export default function AllTabs() {
   const [events, setEvents] = useState([]);
 
   return (
-    
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -240,6 +247,5 @@ export default function AllTabs() {
         component={AdminDashboardStackNavigator}
       />
     </Tab.Navigator>
-    
   );
 }

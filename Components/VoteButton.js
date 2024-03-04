@@ -1,11 +1,11 @@
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
 
 function VoteButton() {
-    return (
-        <TouchableOpacity style={styles.VoteButton}>
-          <Text style={{ color: "white", fontWeight: "bold" }}>VOTE</Text>
-        </TouchableOpacity>
-    );
+  return (
+    <TouchableOpacity style={styles.VoteButton}>
+      <Text style={{ color: "white", fontWeight: "bold" }}>VOTE</Text>
+    </TouchableOpacity>
+  );
 }
 
 export default VoteButton;

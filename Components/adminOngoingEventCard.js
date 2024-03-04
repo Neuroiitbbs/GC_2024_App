@@ -103,7 +103,7 @@ function OngoingEventCard(props) {
 
       <View style={styles.cardBottom}>
         <View>
-          <Text style={styles.BottomTextGame}>{props.gameName}</Text>
+          <Text style={styles.BottomTextGame}>{props.details?.location}</Text>
           <Text style={styles.BottomTextTeams}>
             {props.teamA} v/s {props.teamB}
           </Text>

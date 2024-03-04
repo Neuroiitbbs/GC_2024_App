@@ -2,6 +2,7 @@ const setProperTeamName = (team) => {
   if (team === "CS") team = "CSE";
   else if (
     team === "MM" ||
+    team === "META" ||
     team === "ECE-META" ||
     team === "ECE" ||
     team === "EC"
