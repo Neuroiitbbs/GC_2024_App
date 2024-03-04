@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     right: 9,
   },
   LEFTscoreText: {
-    fontSize: 26,
+    fontSize: 20,
     color: "#322d2d",
     position: "absolute",
     left: 70,
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   RIGHTscoreText: {
     color: "#322d2d",
-    fontSize: 26,
+    fontSize: 20,
     position: "absolute",
     right: 70,
     margin: 9,
