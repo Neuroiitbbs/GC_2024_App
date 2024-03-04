@@ -9,6 +9,7 @@ const setProperTeamName = (team) => {
     team = "ECEMETA";
   else if (team === "ME" || team === "MECH") team = "MECH";
   else if (team === "CE") team = "CIVIL";
+  else if(team ==="Phd" || team === 'phd') team = "PhD";
 
   return team;
 };

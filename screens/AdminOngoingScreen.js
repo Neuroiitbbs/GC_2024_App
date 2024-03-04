@@ -9,6 +9,7 @@ import { View } from "react-native";
 import axios from "axios";
 import { backend_link } from "../utils/constants";
 function OngoingScreen(props) {
+  console.log(props);
   const [isEventUpdated, setIsEventUpdated] = useState(false);
   const [ongoingEvents, setOngoingEvents] = useState([
     // {
@@ -48,12 +49,12 @@ function OngoingScreen(props) {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          backend_link + "api/event/getAllLiveEvents"
+          backend_link + "api/event/getCurrentlyLiveEvents"
         );
         console.log(response.data);
         const data = response.data.events;
         const newData = data.map((item) => {
-          const event = item.eventId;
+          const gameName = item.eventId;;
           const teams = item.subEvents;
           console.log("teams", item);
           const newSubEvents = teams.map((item1) => {
@@ -64,14 +65,16 @@ function OngoingScreen(props) {
             const teamB = item1.data.points
               ? item1.data.points?.teamB
               : item1.data.pointsTable?.teamB;
-            const idx = item1.data.details.title
-              .split(" ")
-              .findIndex((word) => word.toLowerCase() === "vs");
-            const gameName = item1.data.details.title
-              .split(" ")
-              .slice(0, idx - 1)
-              .join(" ");
-            console.log("teamA", teamA);
+            //const gameName = event;
+            //console.log("item1", item1);
+            // const idx = item1.data.details.title
+            //   .split(" ")
+            //   .findIndex((word) => word.toLowerCase() === "vs");
+            // const gameName = item1.data.details.title
+            //   .split(" ")
+            //   .slice(0, idx - 1)
+            //   .join(" ");
+            //console.log("teamA", teamA);
             return {
               details: item1.data.details,
               status: item1.data.status,
@@ -89,7 +92,7 @@ function OngoingScreen(props) {
           });
           return newSubEvents;
         });
-        console.log("hi");
+        //console.log("hi");
         console.log(newData.flat());
         setOngoingEvents(newData.flat());
       } catch (err) {

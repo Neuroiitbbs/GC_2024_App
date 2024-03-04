@@ -12,9 +12,23 @@ import VoteButton from "./VoteButton";
 import logoPaths from "../utils/logoPaths";
 import setProperTeamName from "../utils/setProperTeamName";
 
+const deviceWidth = Dimensions.get("window").width;
+const deviceHeight = Dimensions.get("window").height;
+
 function OngoingEventCard(props) {
+console.log(props);
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);
+
+  const timestamp = props.details?.timestamp;
+  const date = new Date(timestamp);
+  const formattedDate = date.toLocaleDateString(); // Date component
+  let hour = date.getHours();
+  const minute = date.getMinutes();
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  hour = hour % 12;
+  hour = hour ? hour : 12; 
+  const formattedTime = `${hour}:${minute < 10 ? '0' : ''}${minute} ${ampm}`;
 
   return (
     <View>
@@ -26,10 +40,13 @@ function OngoingEventCard(props) {
         style={styles.cardTop}
       >
         <View>
-          <Text style={{ fontWeight: "700", paddingBottom: 20 }}>
+          <Text style={{ fontWeight: "700", paddingBottom: 20  }}>
             {props.teamA} v/s {props.teamB}
           </Text>
-          <Text style={{ fontWeight: "700" }}>{props.gameName}</Text>
+          <Text style={{ fontWeight: "700", paddingBottom: 20, position:'relative', left:deviceWidth*0.04}}>
+            {props.id}
+          </Text>
+          {/* <Text style={{ fontWeight: "700" }}>{props.data.details.location}</Text> */}
         </View>
         <Image style={styles.LeftImageContainer} source={logoPaths[teamA]} />
         <Image />
@@ -43,7 +60,13 @@ function OngoingEventCard(props) {
         <View>
           <Text style={styles.BottomTextGame}>{props.gameName}</Text>
           <Text style={styles.BottomTextTeams}>
-            {props.teamA} v/s {props.teamB}
+            {props.details.location}
+          </Text>
+        </View>
+        <View>
+          <Text style={styles.BottomTextGame}>{formattedDate}</Text>
+          <Text style={styles.BottomTextTime}>
+            {formattedTime}
           </Text>
         </View>
         {/* <VoteButton /> */}
@@ -53,9 +76,6 @@ function OngoingEventCard(props) {
 }
 
 export default OngoingEventCard;
-
-const deviceWidth = Dimensions.get("window").width;
-const deviceHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   cardTop: {
@@ -89,22 +109,26 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 1,
     shadowOpacity: 1,
-
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
   },
   BottomTextGame: {
     color: "white",
-    fontSize: 18,
+    fontSize: 16,
   },
   BottomTextTeams: {
     color: "gray",
   },
+  BottomTextTime:{
+    color: "gray",
+    position: 'relative',
+    right: -18 
+  },
   LeftImageContainer: {
-    width: deviceWidth < 380 ? 26 : 46,
-    height: deviceWidth < 380 ? 26 : 46,
-    borderRadius: deviceWidth < 380 ? 13 : 23,
+    width: deviceWidth < 380 ? 30 : 52,
+    height: deviceWidth < 380 ? 30 : 52,
+    borderRadius: deviceWidth < 380 ? 15 : 26,
     borderWidth: 3,
     overflow: "hidden",
     margin: 9,
@@ -113,9 +137,9 @@ const styles = StyleSheet.create({
     left: 9,
   },
   RightImageContainer: {
-    width: deviceWidth < 380 ? 26 : 46,
-    height: deviceWidth < 380 ? 26 : 46,
-    borderRadius: deviceWidth < 380 ? 13 : 23,
+    width: deviceWidth < 380 ? 26 : 52,
+    height: deviceWidth < 380 ? 26 : 52,
+    borderRadius: deviceWidth < 380 ? 15 : 26,
     borderWidth: 3,
     overflow: "hidden",
     margin: 9,

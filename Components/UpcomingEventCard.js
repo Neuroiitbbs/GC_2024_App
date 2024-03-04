@@ -12,7 +12,22 @@ import VoteButton from "./VoteButton";
 import logoPaths from "../utils/logoPaths";
 import setProperTeamName from "../utils/setProperTeamName";
 
+const deviceWidth = Dimensions.get("window").width;
+const deviceHeight = Dimensions.get("window").height;
+
 function UpcomingEventCard(props) {
+
+  console.log(props);
+  const timestamp = props.details?.timestamp;
+  const date = new Date(timestamp);
+  const formattedDate = date.toLocaleDateString(); // Date component
+  let hour = date.getHours();
+  const minute = date.getMinutes();
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  hour = hour % 12;
+  hour = hour ? hour : 12; 
+  const formattedTime = `${hour}:${minute < 10 ? '0' : ''}${minute} ${ampm}`;
+
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);
   return (
@@ -28,7 +43,7 @@ function UpcomingEventCard(props) {
           <Text style={{ fontWeight: "700", paddingBottom: 20 }}>
             {props.teamA} v/s {props.teamB}
           </Text>
-          <Text style={{ fontWeight: "700" }}>{props.gameName}</Text>
+          <Text style={{ fontWeight: "700", position:"relative", left:deviceWidth*0.045 }}>{props.id}</Text>
         </View>
         <Image style={styles.LeftImageContainer} source={logoPaths[teamA]} />
         <Image />
@@ -40,7 +55,13 @@ function UpcomingEventCard(props) {
         <View>
           <Text style={styles.BottomTextGame}>{props.gameName}</Text>
           <Text style={styles.BottomTextTeams}>
-            {props.teamA} v/s {props.teamB}
+            {props.details.location}
+          </Text>
+        </View>
+        <View>
+          <Text style={styles.BottomTextGame}>{formattedDate}</Text>
+          <Text style={styles.BottomTextTime}>
+            {formattedTime}
           </Text>
         </View>
         {/* <VoteButton/> */}
@@ -50,9 +71,6 @@ function UpcomingEventCard(props) {
 }
 
 export default UpcomingEventCard;
-
-const deviceWidth = Dimensions.get("window").width;
-const deviceHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   cardTop: {
@@ -92,10 +110,15 @@ const styles = StyleSheet.create({
   },
   BottomTextGame: {
     color: "white",
-    fontSize: 18,
+    fontSize: 16,
   },
   BottomTextTeams: {
     color: "gray",
+  },
+  BottomTextTime:{
+    color: "gray",
+    position: 'relative',
+    right: -18 
   },
   LeftImageContainer: {
     width: deviceWidth < 380 ? 26 : 57,

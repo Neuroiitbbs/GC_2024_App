@@ -52,7 +52,7 @@ function UpcomingScreen(props) {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          backend_link + "api/event/getCurrentlyLiveEvents"
+          backend_link + "api/event/getUpcomingEvents"
         );
 
         console.log(response.data);
@@ -74,9 +74,7 @@ function UpcomingScreen(props) {
               details: match_item.data.details,
               status: match_item.data.status,
               gameName: eventName,
-              id:
-                match_item.data.details.title.split(" ").join("") +
-                match_item.subEventId.split(" ").join(""),
+              id:matchId,
               teamA: teamA?.name || match_item.subEventId.split(" vs ")[0],
               teamB: teamB?.name || match_item.subEventId.split(" vs ")[1],
               scoreA: teamA?.points,
@@ -105,6 +103,7 @@ function UpcomingScreen(props) {
         renderItem={(itemData) => {
           return (
             <UpcomingEventCard
+              details={itemData.item.details}
               gameName={itemData.item.gameName}
               id={itemData.item.id}
               teamA={itemData.item.teamA}

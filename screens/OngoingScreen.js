@@ -13,14 +13,14 @@ import { backend_link } from "../utils/constants";
 function OngoingScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [ongoingEvents, setOngoingEvents] = useState([
-    {
-      gameName: "Basketball",
-      id: "Basketball",
-      teamA: "ECE-META",
-      teamB: "CSE",
-      scoreA: "4",
-      scoreB: "6",
-    },
+    // {
+    //   gameName: "Basketball",
+    //   id: "Basketball",
+    //   teamA: "ECE-META",
+    //   teamB: "CSE",
+    //   scoreA: "4",
+    //   scoreB: "6",
+    // },
     // {
     //     gameName: 'Cricket',
     //     id: 'Cricket',
@@ -46,52 +46,60 @@ function OngoingScreen(props) {
     //     scoreB: '6'
     // },
   ]);
+  console.log("hi123");
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          backend_link + "api/event/getAllLiveEvents"
+          backend_link + "api/event/getCurrentlyLiveEvents"
         );
-        console.log(response.data);
+        console.log("response.data   ",response.data);
         const data = response.data.events;
-        const newData = data.map((item) => {
-          const event = item.eventId;
-          const teams = item.subEvents;
-          console.log("teams", item);
-          const newSubEvents = teams.map((item1) => {
-            const teamA = item1.data.points
-              ? item1.data.points?.teamA
-              : item1.data.pointsTable?.teamA;
-            const teamB = item1.data.points
-              ? item1.data.points?.teamB
-              : item1.data.pointsTable?.teamB;
-            const idx = item1.data.details.title
-              .split(" ")
-              .findIndex((word) => word.toLowerCase() === "vs");
-            const gameName = item1.data.details.title
-              .split(" ")
-              .slice(0, idx - 1)
-              .join(" ");
+        const events = data.map((item) => {
+          console.log("item",item);
+          const eventName = item.eventId; //ex. Football BOYS
+          const subEvents = item.subEvents;
+          console.log("subEvents", subEvents);
+          const gameName = eventName;
+          const match = subEvents.map((match_item) => {
+            const teamA = match_item.data.points.teamA;
+            const teamB = match_item.data.points.teamB;
+            // const teamA = match_item.data.points
+            //   ? match_item.data.points?.teamA;
+            //   : match_item.data.pointsTable?.teamA;
+            // const teamB = match_item.data.points
+            //   ? match_item.data.points?.teamB
+            // : match_item.data.pointsTable?.teamB;
+            const details = match_item.data.details;
+            console.log("details", details);
+            // const idx = match_item.data.details.title
+            //   .split(" ")
+            //   .findIndex((word) => word.toLowerCase() === "vs");
+            // const gameName = match_item.data.details.title
+            //   .split(" ")
+            //   .slice(0, idx - 1)
+            //   .join(" ");
             return {
-              details: item1.data.details,
-              status: item1.data.status,
+              details: details,
+              status: match_item.data.status,
               gameName: gameName,
-              id:
-                item1.data.details.title.split(" ").join("") +
-                item1.subEventId.split(" ").join(""),
+              id: match_item.subEventId,
+                // match_item.data.details.title.split(" ").join("") +
+                // match_item.subEventId.split(" ").join(""),
               // teamA: item1.subEventId.split(" vs ")[0],
               // teamB: item1.subEventId.split(" vs ")[1],
-              teamA: teamA?.name || item1.subEventId.split(" vs ")[0],
-              teamB: teamB?.name || item1.subEventId.split(" vs ")[1],
+              teamA: teamA?.name || match_item.subEventId.split(" vs ")[0],
+              teamB: teamB?.name || match_item.subEventId.split(" vs ")[1],
               scoreA: teamA?.points,
               scoreB: teamB?.points,
             };
           });
-          return newSubEvents;
+          
+          return match;
         });
-        console.log(newData.flat());
+        console.log(events.flat());
         setIsLoading(false);
-        setOngoingEvents(newData.flat());
+        setOngoingEvents(events.flat());
       } catch (err) {
         console.log(err);
         setIsLoading(false);
@@ -109,6 +117,7 @@ function OngoingScreen(props) {
         renderItem={(itemData) => {
           return (
             <OngoingEventCard
+              details={itemData.item.details}
               gameName={itemData.item.gameName}
               id={itemData.item.id}
               teamA={itemData.item.teamA}

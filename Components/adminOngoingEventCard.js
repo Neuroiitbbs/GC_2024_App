@@ -16,7 +16,10 @@ import { backend_link } from "../utils/constants";
 
 import logoPaths from "../utils/logoPaths";
 import setProperTeamName from "../utils/setProperTeamName";
+
 function OngoingEventCard(props) {
+  console.log(props);
+
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);
 
@@ -60,11 +63,11 @@ function OngoingEventCard(props) {
       subEventId,
       email,
       points,
-      title: props.details?.title,
-      description: "Description",
-      location: props.details?.location,
-      timestamp: props.details?.timestamp || Date.now().toString(),
-      type: "Final",
+      // title: props.details?.title,
+      // description: "Description",
+      // location: props.details?.location,
+      // timestamp: props.details?.timestamp || Date.now().toString(),
+      // type: "Final",
       status: props.status,
     };
     console.log(body);
@@ -188,7 +191,7 @@ const styles = StyleSheet.create({
   },
   BottomTextGame: {
     color: "white",
-    fontSize: 18,
+    fontSize: 16,
   },
   BottomTextTeams: {
     color: "gray",
