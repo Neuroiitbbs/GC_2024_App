@@ -3,3 +3,7 @@
 ### Header done Add Events done
 ### Backend Integration ❌
 ### 
+
+ 
+## Install 
+### npm install @react-native-community/datetimepicker @react-native-picker/picker --save

@@ -8,7 +8,6 @@ import {
   View,
   Pressable,
 } from "react-native";
-
 import {
   AntDesign,
   FontAwesome5,
@@ -102,7 +101,7 @@ const AdminDashboard = ({ navigation }) => {
               styles.cardView,
               pressed ? styles.cardPressed : {},
             ]}
-            onPress={() => {navigation.navigate('LiveEvents');}}
+            onPress={() => {navigation.navigate('LiveEvent');}}
           >
             <View style={{ paddingVertical: 10 }}>
               <Image

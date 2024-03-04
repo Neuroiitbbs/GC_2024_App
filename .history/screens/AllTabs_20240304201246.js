@@ -153,7 +153,7 @@ export default function AllTabs() {
   // }, []);
 
   return (
-    
+    <NavigationContainer>
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -212,6 +212,6 @@ export default function AllTabs() {
         component={AdminDashboardStackNavigator}
       />
     </Tab.Navigator>
-    
+    </NavigationContainer>
   );
 }
