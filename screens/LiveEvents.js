@@ -12,14 +12,14 @@ const LiveEvents = ({ navigation }) => {
       <View style={[styles.buttonWrapper, {backgroundColor: '#0B0D11' }]}>
         <Button
           title="Add Live Event"
-          onPress={() => navigation.navigate('AddLiveEvent')}
+          onPress={() => navigation.navigate('AddingLiveEvent')}
           style={styles.button}   color="#0B0D11"
         />
       </View>
       <View style={[styles.buttonWrapper, {backgroundColor: '#0B0D11' }]}>
         <Button
           title="Update Existing Live Event"
-          onPress={() => navigation.navigate('UpdateLiveEvent')}
+          onPress={() => navigation.navigate('UpdatingLiveEvent')}
           style={styles.button}  color="#0B0D11"
         />
       </View>
