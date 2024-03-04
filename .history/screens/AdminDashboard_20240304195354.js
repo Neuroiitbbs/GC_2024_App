@@ -8,7 +8,6 @@ import {
   View,
   Pressable,
 } from "react-native";
-
 import {
   AntDesign,
   FontAwesome5,

@@ -15,6 +15,13 @@ import Header from "../Components/Header";
 import { getHeaderTitle } from "@react-navigation/elements";
 import AdminOngoingScreen from "./AdminOngoingScreen";
 
+import LiveEvents from "./screens/LiveEvents";
+import UpdateEvent from "./screens/UpdateEvent";
+import AddEvents from "./screens/AddEvent";
+
+
+
+
 
 
 
@@ -80,7 +87,6 @@ function AdminDashboardStackNavigator() {
 
 function MyTabs() {
   return (
-    
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -135,7 +141,6 @@ function MyTabs() {
       <Tab.Screen name="Events" component={Events} />
       <Tab.Screen name="Leaderboard" component={Leaderboard} />
     </Tab.Navigator>
-    
   );
 }
 export default function AllTabs() {
@@ -153,7 +158,6 @@ export default function AllTabs() {
   // }, []);
 
   return (
-    
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -212,6 +216,5 @@ export default function AllTabs() {
         component={AdminDashboardStackNavigator}
       />
     </Tab.Navigator>
-    
   );
 }

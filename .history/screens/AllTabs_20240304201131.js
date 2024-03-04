@@ -80,7 +80,7 @@ function AdminDashboardStackNavigator() {
 
 function MyTabs() {
   return (
-    
+    <NavigationContainer>
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -135,7 +135,7 @@ function MyTabs() {
       <Tab.Screen name="Events" component={Events} />
       <Tab.Screen name="Leaderboard" component={Leaderboard} />
     </Tab.Navigator>
-    
+    </NavigationContainer>
   );
 }
 export default function AllTabs() {
@@ -153,7 +153,6 @@ export default function AllTabs() {
   // }, []);
 
   return (
-    
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -212,6 +211,5 @@ export default function AllTabs() {
         component={AdminDashboardStackNavigator}
       />
     </Tab.Navigator>
-    
   );
 }
