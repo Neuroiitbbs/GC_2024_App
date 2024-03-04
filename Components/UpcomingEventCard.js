@@ -12,12 +12,17 @@ import VoteButton from "./VoteButton";
 function UpcomingEventCard(props) {
   return (
     <View>
+      
       <LinearGradient
         start={{ x: 0.2, y: 0.1 }}
         end={{ x: 0.65, y: 0.5 }}
         locations={[0.6, 1]}
         colors={["white", "#e3e3e3"]}
         style={styles.cardTop}>
+          <View>
+          <Text style={{fontWeight:"700",paddingBottom:20}}>ECE VS CSE</Text>
+          <Text style={{fontWeight:"700"}}>CSS Battle</Text>
+          </View>
         <Image
           style={styles.LeftImageContainer}
           source={require("../assets/images/ECE-META.jpg")}
@@ -61,6 +66,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.75,
+    alignItems:"center",
+    justifyContent:"center"
   },
   cardBottom: {
     marginBottom: 0.04 * deviceHeight,
@@ -88,9 +95,9 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   LeftImageContainer: {
-    width: deviceWidth < 380 ? 26 : 46,
-    height: deviceWidth < 380 ? 26 : 46,
-    borderRadius: deviceWidth < 380 ? 13 : 23,
+    width: deviceWidth < 380 ? 26 : 57,
+    height: deviceWidth < 380 ? 26 : 57,
+    borderRadius: deviceWidth < 380 ? 13 : 39,
     borderWidth: 3,
     overflow: "hidden",
     margin: 9,
@@ -99,9 +106,9 @@ const styles = StyleSheet.create({
     left: 9,
   },
   RightImageContainer: {
-    width: deviceWidth < 380 ? 26 : 46,
-    height: deviceWidth < 380 ? 26 : 46,
-    borderRadius: deviceWidth < 380 ? 13 : 23,
+    width: deviceWidth < 380 ? 26 : 57,
+    height: deviceWidth < 380 ? 26 : 57,
+    borderRadius: deviceWidth < 380 ? 13 : 39,
     borderWidth: 3,
     overflow: "hidden",
     margin: 9,
@@ -113,7 +120,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: "#322d2d",
     position: "absolute",
-    left: 70,
+    left: 90,
     margin: 9,
     marginTop: 38,
   },
@@ -121,7 +128,7 @@ const styles = StyleSheet.create({
     color: "#322d2d",
     fontSize: 26,
     position: "absolute",
-    right: 70,
+    right:90,
     margin: 9,
     marginTop: 38,
   },

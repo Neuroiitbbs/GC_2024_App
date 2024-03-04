@@ -11,7 +11,7 @@ import VoteButton from "./VoteButton";
 
 function OngoingEventCard(props) {
   return (
-    <View>
+    <>
       <LinearGradient
         start={{ x: 0.2, y: 0.1 }}
         end={{ x: 0.65, y: 0.5 }}
@@ -22,6 +22,7 @@ function OngoingEventCard(props) {
           style={styles.LeftImageContainer}
           source={require("../assets/images/ECE-META.jpg")}
         />
+      
         <Image />
         <Text style={styles.LEFTscoreText}>{props.scoreA}</Text>
         <Text style={styles.RIGHTscoreText}>{props.scoreB}</Text>
@@ -39,7 +40,7 @@ function OngoingEventCard(props) {
         </View>
         <VoteButton/>
       </View>
-    </View>
+    </>
   );
 }
 
@@ -63,6 +64,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.75,
+    alignItems:"center",
+    justifyContent:"center",
   },
   cardBottom: {
     marginBottom: 0.04 * deviceHeight,
@@ -90,9 +93,9 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   LeftImageContainer: {
-    width: deviceWidth < 380 ? 26 : 46,
-    height: deviceWidth < 380 ? 26 : 46,
-    borderRadius: deviceWidth < 380 ? 13 : 23,
+    width: deviceWidth < 380 ? 26 : 57,
+    height: deviceWidth < 380 ? 26 : 57,
+    borderRadius: deviceWidth < 380 ? 13 : 39,
     borderWidth: 3,
     overflow: "hidden",
     margin: 9,
@@ -101,9 +104,9 @@ const styles = StyleSheet.create({
     left: 9,
   },
   RightImageContainer: {
-    width: deviceWidth < 380 ? 26 : 46,
-    height: deviceWidth < 380 ? 26 : 46,
-    borderRadius: deviceWidth < 380 ? 13 : 23,
+    width: deviceWidth < 380 ? 26 : 57,
+    height: deviceWidth < 380 ? 26 : 57,
+    borderRadius: deviceWidth < 380 ? 13 : 39,
     borderWidth: 3,
     overflow: "hidden",
     margin: 9,
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: "#322d2d",
     position: "absolute",
-    left: 70,
+    left: 90,
     margin: 9,
     marginTop: 38,
   },
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
     color: "#322d2d",
     fontSize: 26,
     position: "absolute",
-    right: 70,
+    right:90,
     margin: 9,
     marginTop: 38,
   },
