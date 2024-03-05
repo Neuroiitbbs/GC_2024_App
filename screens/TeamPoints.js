@@ -12,47 +12,47 @@ export default function TeamPoints({ route }) {
   const BranchesData = [
     {
       Name: "BasketBall",
-      Score: 1000,
+      Score: 0,
     },
     {
       Name: "Cricket",
-      Score: 5320,
+      Score: 0,
     },
     {
       Name: "Football",
-      Score: -450,
+      Score: 0,
     },
     {
       Name: "CSS Battle",
-      Score: 360,
+      Score: 0,
     },
     {
       Name: "Solo Dance",
-      Score: 360,
+      Score: 0,
     },
     {
       Name: "Chess",
-      Score: 390,
+      Score: 0,
     },
     {
       Name: "Tennis",
-      Score: 380,
+      Score: 0,
     },
     {
       Name: "Monoact",
-      Score: 3000,
+      Score: 0,
     },
     {
       Name: "BasketBall",
-      Score: 1000,
+      Score: 0,
     },
     {
       Name: "Cricket",
-      Score: -200,
+      Score: 0,
     },
     {
       Name: "Football",
-      Score: 3170,
+      Score: 0,
     },
   ];
   //BranchesData.sort((a, b) => b.Score - a.Score);

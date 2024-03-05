@@ -38,7 +38,7 @@ export default function Leaderboard() {
     },
     {
       Name: "M.Tech",
-      Score: 120,
+      Score: 0,
     },
     {
       Name: "PhD",
