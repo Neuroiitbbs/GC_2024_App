@@ -2,18 +2,13 @@ import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import TeamPointsComponent from "../Components/TeamPointsComponent";
 import { LinearGradient } from "expo-linear-gradient";
-
-const logoPaths = {
-  CSE: require("../assets/logos/CSE.png"),
-  EE: require("../assets/logos/EE.png"),
-  ECEMETA: require("../assets/logos/ECE+META.png"),
-  CIVIL: require("../assets/logos/CIVIL.png"),
-  MECH: require("../assets/logos/MECH.png"),
-  MSc: require("../assets/logos/MSc.png"),
-  MTech: require("../assets/logos/MTech.png"),
-  PhD: require("../assets/logos/PhD.png"),
-};
-export default function TeamPoints() {
+import logoPaths from "../utils/logoPaths";
+import setProperTeamName from "../utils/setProperTeamName";
+import teamColors from "../utils/teamColors";
+export default function TeamPoints({ route }) {
+  const branch = route.params?.branch || "CSE";
+  console.log("branch", branch);
+  const team = setProperTeamName(branch);
   const BranchesData = [
     {
       Name: "BasketBall",
@@ -75,20 +70,19 @@ export default function TeamPoints() {
   };
   return (
     <View style={styles.container}>
-        
-        <View style={styles.containertop}>
-            <LinearGradient
-        start={{ x: 0.0, y: 1.0 }}
-        end={{ x: 0.0, y: 0.0 }}
-        locations={[0.6, 1]}
-        colors={["#CC9000", "#8c6404"]}
-        style={styles.containertop}
-      >
-            <Image style={styles.branchLogoImage} source={require('./../assets/logos/ECE+META.png')} />
-            <Text style={styles.branchTotalPoints}>31050 PTS</Text>
-            </LinearGradient>
-        </View>
-      
+      <View style={styles.containertop}>
+        <LinearGradient
+          start={{ x: 0.0, y: 1.0 }}
+          end={{ x: 0.0, y: 0.0 }}
+          locations={[0.6, 1]}
+          colors={[teamColors[team].topColor, teamColors[team].bottomColor]}
+          style={styles.containertop}
+        >
+          <Image style={styles.branchLogoImage} source={logoPaths[team]} />
+          <Text style={styles.branchTotalPoints}>31050 PTS</Text>
+        </LinearGradient>
+      </View>
+
       <View style={styles.container2}>
         <FlatList
           data={restData}
@@ -98,7 +92,7 @@ export default function TeamPoints() {
       </View>
       <View style={styles.bottomcont}>
         <Text style={styles.text01}>Last Updated on: </Text>
-        <Text style={styles.text02}>05/03/2023</Text>
+        <Text style={styles.text02}>05/03/2024</Text>
       </View>
       <View style={styles.bottomnav}></View>
     </View>
@@ -106,18 +100,18 @@ export default function TeamPoints() {
 }
 
 const styles = StyleSheet.create({
-    branchLogoImage:{
-        height:100,
-        width:100,
-        marginTop:30
-    },
-    branchTotalPoints:{
-        color:'white',
-        padding:30,
-        paddingTop:20,
-        fontSize: 38,
-        fontWeight:'bold'
-    },
+  branchLogoImage: {
+    height: 100,
+    width: 100,
+    marginTop: 30,
+  },
+  branchTotalPoints: {
+    color: "white",
+    padding: 30,
+    paddingTop: 20,
+    fontSize: 38,
+    fontWeight: "bold",
+  },
   container: {
     flex: 1,
     width: "100%",
@@ -133,11 +127,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#CC9E32",
     color: "white",
     flexDirection: "column",
-    width:"100%",
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    borderTopLeftRadius:50,
-    borderTopRightRadius:50,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
   },
   containertop1: {
     flex: 1,

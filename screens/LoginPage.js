@@ -7,8 +7,7 @@ import {
   Text,
   Image,
   SafeAreaView,
-  Dimensions,
-  TouchableOpacity, // Added for custom button styling
+  TouchableOpacity,
 } from "react-native";
 
 const Login = ({ authenticateUser }) => {
@@ -23,7 +22,6 @@ const Login = ({ authenticateUser }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topbar}>
-        {/* Using TouchableOpacity for custom styling */}
         <TouchableOpacity onPress={AdminLogin} style={styles.topbtn}>
           <Text style={{ color: "black", fontSize: 16, fontWeight: "bold" }}>
             Admin
@@ -68,12 +66,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#000",
     alignItems: "center",
+    paddingTop: 50,
   },
   topbtn: {
     backgroundColor: "white",
     padding: 10,
     borderRadius: 30, // Added for rounded corners
-    width: "20%",
+    width: "25%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -81,8 +80,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     width: "100%",
     height: 50,
-    marginTop: 40,
-    marginRight: 20,
+    paddingRight: 20,
     justifyContent: "center",
   },
 

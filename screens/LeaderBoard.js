@@ -1,17 +1,15 @@
-import { View, Text, StyleSheet, Image, FlatList,SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import LeaderBoardElement from "../Components/LeaderBoardElement";
+import logoPaths from "../utils/logoPaths";
 
-const logoPaths = {
-  CSE: require("../assets/logos/CSE.png"),
-  EE: require("../assets/logos/EE.png"),
-  ECEMETA: require("../assets/logos/ECE+META.png"),
-  CIVIL: require("../assets/logos/CIVIL.png"),
-  MECH: require("../assets/logos/MECH.png"),
-  MSc: require("../assets/logos/MSc.png"),
-  MTech: require("../assets/logos/MTech.png"),
-  PhD: require("../assets/logos/PhD.png"),
-};
 export default function Leaderboard() {
   const BranchesData = [
     {
@@ -55,7 +53,7 @@ export default function Leaderboard() {
   const renderItem = ({ item }) => {
     // console.log(item);
     return (
-      <View style={{ padding: 5,margin:6,marginBottom:0 }}>
+      <View style={{ padding: 5, margin: 6, marginBottom: 0 }}>
         <LeaderBoardElement branchData={item} logoPaths={logoPaths} />
       </View>
     );
@@ -208,7 +206,7 @@ const styles = StyleSheet.create({
   },
   container2: {
     flex: 2,
-    width:"100%",
+    width: "100%",
     backgroundColor: "#000",
     color: "white",
     flexDirection: "row",

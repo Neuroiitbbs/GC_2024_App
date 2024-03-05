@@ -18,7 +18,7 @@ import LiveEvents from "./LiveEvents";
 import AddLiveEvents from "./AddLiveEvents";
 import UpdateLiveEvents from "./UpdateLiveEvents";
 import SpecificEvents from "./SpecificEvents";
-import Homepage from './Homepage'
+import Homepage from "./Homepage";
 import TeamPoints from "./TeamPoints";
 import NewsPage from "./NewsPage";
 
@@ -36,7 +36,6 @@ function EventsStackNavigator() {
         name="EventsStack"
         component={Events}
         options={({ route }) => ({
-
           headerTitle: () => <Header events={true} />,
           headerStyle: { backgroundColor: "#111319", height: 100 },
           field: route.params?.field || "Sports",
@@ -73,9 +72,6 @@ function LeaderboardStackNavigator() {
 }
 function HomepageStackNavigator() {
   return (
-
-
-
     <HomepageStack.Navigator initialRouteName="HomePageStack">
       <HomepageStack.Screen
         name="HomepageStack"
@@ -95,7 +91,6 @@ function HomepageStackNavigator() {
           headerStyle: { backgroundColor: "#111319", height: 100 },
         }}
       />
-
     </HomepageStack.Navigator>
   );
 }
@@ -264,10 +259,9 @@ export default function AllTabs() {
           } else if (route.name === "AdminDashboard") {
             iconName = focused ? "cog" : "cog-outline";
             // Using React Native Elements for Icons
-          } else if (route.name === '   ') {
+          } else if (route.name === "   ") {
             iconName = focused ? "account-group" : "account-group-outline";
-          }
-          else if (route.name === '    ') {
+          } else if (route.name === "    ") {
             iconName = focused ? "home" : "home-outline";
           }
           return (
@@ -290,8 +284,13 @@ export default function AllTabs() {
         name="AdminDashboard"
         component={AdminDashboardStackNavigator}
       /> */}
-      <Tab.Screen name="   " component={TeamPoints} />
-
+      <Tab.Screen
+        name="   "
+        component={TeamPoints}
+        options={({ route }) => ({
+          branch: route.params?.branch || "CSE",
+        })}
+      />
     </Tab.Navigator>
   );
 }
