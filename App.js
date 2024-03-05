@@ -30,7 +30,7 @@ export default function App() {
 
   return (
     <PaperProvider>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <NavigationContainer>
           <StatusBar style="light" />
           {isAuthenticated ? (
@@ -45,7 +45,7 @@ export default function App() {
             </Stack.Navigator>
           )}
         </NavigationContainer>
-      </SafeAreaView>
+      </View>
     </PaperProvider>
   );
 }
@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#ECF0F1",
+    backgroundColor: "#000",
   },
 });

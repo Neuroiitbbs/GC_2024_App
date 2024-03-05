@@ -32,6 +32,7 @@ function EventsStackNavigator() {
         name="EventsStack"
         component={Events}
         options={({ route }) => ({
+          
           headerTitle: () => <Header events={true} />,
           headerStyle: { backgroundColor: "#111319", height: 100 },
           field: route.params?.field || "Sports",
@@ -42,7 +43,7 @@ function EventsStackNavigator() {
         component={SpecificEvents}
         options={({ route }) => ({
           headerTitle: () => <Header />,
-          headerStyle: { backgroundColor: "#111319", height: 100 },
+          headerStyle: { backgroundColor: "#111319", height:120 },
           headerTintColor: "white",
           data: route.params.data,
         })}
@@ -58,7 +59,8 @@ function LeaderboardStackNavigator() {
         name="LeaderboardStack"
         component={Leaderboard}
         options={{
-          headerTitle: (props) => <Header />,
+          headerShown: false,
+          // headerTitle: (props) => <Header />,
           headerStyle: { backgroundColor: "#111319", height: 100 },
         }}
       />
@@ -73,54 +75,60 @@ function AdminDashboardStackNavigator() {
         name="AdminDashboardStack"
         component={AdminDashboard}
         options={{
-          headerTitle: () => <Header />,
-          headerStyle: { backgroundColor: "#111319", height: 100 },
+          headerShown: false,
+          // headerTitle: () => <Header />,
+          // headerStyle: { backgroundColor: "#111319", height: 100 },
         }}
       />
       <AdminDashboardStack.Screen
         name="AdminAddScoreStack"
         component={AdminOngoingScreen}
         options={{
-          headerTitle: () => <Header />,
-          headerTintColor: "white",
-          headerLeft: null,
-          headerStyle: { backgroundColor: "#111319" },
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white",
+          // headerLeft: null,
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
         }}
       />
       <AdminDashboardStack.Screen
         name="LiveEvents"
         component={LiveEvents}
         options={{
-          headerTitle: () => <Header />,
-          headerTintColor: "white", // YAY! Proper format!
-          headerStyle: { backgroundColor: "#111319" },
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
         }}
       />
       <AdminDashboardStack.Screen
         name="AddLiveEvent"
         component={LiveEvents}
         options={{
-          headerTitle: () => <Header />,
-          headerTintColor: "white", // YAY! Proper format!
-          headerStyle: { backgroundColor: "#111319" },
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
         }}
       />
       <AdminDashboardStack.Screen
         name="AddingLiveEvent"
         component={AddLiveEvents}
         options={{
-          headerTitle: () => <Header />,
-          headerTintColor: "white", // YAY! Proper format!
-          headerStyle: { backgroundColor: "#111319" },
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
         }}
       />
       <AdminDashboardStack.Screen
         name="UpdatingLiveEvent"
         component={UpdateLiveEvents}
         options={{
-          headerTitle: () => <Header />,
-          headerTintColor: "white", // YAY! Proper format!
-          headerStyle: { backgroundColor: "#111319" },
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
         }}
       />
     </AdminDashboardStack.Navigator>
@@ -165,7 +173,6 @@ function MyTabs() {
           } else if (route.name === "Leaderboard") {
             iconName = focused ? "trophy" : "trophy-outline";
           }
-          // Using React Native Elements for Icons
           return (
             <Icon
               name={iconName}

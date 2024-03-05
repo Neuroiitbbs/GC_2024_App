@@ -7,6 +7,7 @@ import {
   Text,
   Image,
   SafeAreaView,
+  Dimensions,
   TouchableOpacity, // Added for custom button styling
 } from "react-native";
 
@@ -80,6 +81,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     width: "100%",
     height: 50,
+    marginTop: 40,
+    marginRight: 20,
     justifyContent: "center",
   },
 

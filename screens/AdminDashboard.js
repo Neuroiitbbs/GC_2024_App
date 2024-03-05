@@ -27,13 +27,14 @@ const AdminDashboard = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      <View style={{ maxHeight: "85%" }}>
-        <ScrollView>
+      <View style={{ maxHeight: "95%",paddingTop:40 }}>
+        
           <Text style={styles.heading}>Admin</Text>
           <Text style={styles.text}>
             Please click on the specific tile for the options related to that
             particular feature/option.
           </Text>
+          <ScrollView>
           <View style={styles.subcontainer}>
             {/* Left Column */}
             <View style={styles.column}>
