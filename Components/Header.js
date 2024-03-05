@@ -35,20 +35,13 @@ export default function Header({ events }) {
       //     alignItems: 'center',
       // }}
     >
-      <View
-      // style={{
-      //   flexDirection: "row",
-      //   justifyContent: "center",
-      //   alignItems: "center",
-      // }}
-      >
+      
         <Image
           source={require("../assets/logo.png")}
           style={{ width: 60, height: 60, resizeMode: "center" }} // Set explicit dimensions
         />
-      </View>
-      <View>
-        {/* <Text style={styles.newsTitle}>GC 2024</Text> */}
+  
+     
         <MaskedView
           maskElement={
             <Text
@@ -56,47 +49,46 @@ export default function Header({ events }) {
                 fontSize: 25,
                 fontWeight: "bold",
                 alignItems: "center",
-                justifyContent: "center",
                 textAlign: "center",
               }}
             >
               GC 2024
             </Text>
           }
+          style={{height:50,alignItems:"center" ,justifyContent:"center" ,flex:1}}
         >
           <LinearGradient
             colors={["#88345E", "#516FAD", "#4D73B2"]}
             start={[0, 0]}
             end={[1, 0]}
             style={{
-              padding: 25,
-              alignItems: "center",
-              borderRadius: 5,
+              padding: 55,
+              
               width: events ? 125 : 250,
               backgroundColor: "black",
             }}
           ></LinearGradient>
         </MaskedView>
-      </View>
-      <View style={{ backgroundColor: "black" }}>
+
+      <View style={{ backgroundColor: "black" ,height:50 ,alignItems :"center"}}>
         {events && <EventDropDown />}
       </View>
-      <View>
+      {/* <View>
         <TouchableOpacity onPress={openModal}>
           <Icon name="menu" size={30} color="white" />
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 }
 styles = StyleSheet.create({
   header: {
-    // width: "100%",
-    flex: 1,
-    height: "100%",
+
     flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#111319",
     justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",flex:0.4,
+  
+    backgroundColor: "#111319",
   },
 });

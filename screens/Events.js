@@ -9,6 +9,7 @@ import axios from "axios";
 import { backend_link } from "../utils/constants";
 import TechEventScreen from "./TechEventScreen";
 import CultEventScreen from "./CultEventScreen";
+import Header from "../Components/Header";
 
 export default function Events({ route, navigation }) {
   const field = route?.params?.field || "Sports";

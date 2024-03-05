@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, FlatList } from "react-native";
+import { View, Text, StyleSheet, Image, FlatList,SafeAreaView } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import LeaderBoardElement from "../Components/LeaderBoardElement";
 
@@ -16,35 +16,35 @@ export default function Leaderboard() {
   const BranchesData = [
     {
       Name: "CSE",
-      Score: 100000,
+      Score: 0,
     },
     {
       Name: "ECE+META",
-      Score: 53200,
+      Score: 0,
     },
     {
       Name: "EE",
-      Score: 31700,
+      Score: 0,
     },
     {
       Name: "MECH",
-      Score: 93600,
+      Score: 0,
     },
     {
       Name: "CIVIL",
-      Score: 3612,
+      Score: 0,
     },
     {
       Name: "M.Sc",
-      Score: 3900,
+      Score: 0,
     },
     {
       Name: "M.Tech",
-      Score: 3678,
+      Score: 120,
     },
     {
       Name: "PhD",
-      Score: 3000,
+      Score: 0,
     },
   ];
   BranchesData.sort((a, b) => b.Score - a.Score);
@@ -55,13 +55,13 @@ export default function Leaderboard() {
   const renderItem = ({ item }) => {
     // console.log(item);
     return (
-      <View style={{ padding: 5 }}>
+      <View style={{ padding: 5,margin:6,marginBottom:0 }}>
         <LeaderBoardElement branchData={item} logoPaths={logoPaths} />
       </View>
     );
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.containertop}>
         <View style={styles.containertop1}>
           <View style={styles.number2top}>
@@ -127,7 +127,7 @@ export default function Leaderboard() {
         <Text style={styles.text02}>05/03/2023</Text>
       </View>
       <View style={styles.bottomnav}></View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -208,7 +208,8 @@ const styles = StyleSheet.create({
   },
   container2: {
     flex: 2,
-    backgroundColor: "#000000",
+    width:"100%",
+    backgroundColor: "#000",
     color: "white",
     flexDirection: "row",
     paddingTop: 10,

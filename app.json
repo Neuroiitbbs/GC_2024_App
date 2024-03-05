@@ -4,10 +4,10 @@
     "slug": "GC_App_2024",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/GClogo.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "dark",
     "splash": {
-      "image": "./assets/GClogoW.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "black"
     },
@@ -20,7 +20,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/GClogoW.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#000"
       }
     },
     "web": {

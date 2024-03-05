@@ -16,59 +16,62 @@ const CustomHeader = () => {
     navigation.navigate("EventsStack", { field: field });
   };
   return (
-    <View style={styles.headerContainer}>
-      <TouchableOpacity onPress={openMenu}>
-        <View
-          style={{
-            flexDirection: "row",
-          }}
+    <TouchableOpacity onPress={openMenu} style={styles.headerContainer}>
+      <View
+        style={{
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+        }}
+      >
+        <Text style={styles.title}>{currentField} </Text>
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={<AntDesign name="downcircleo" size={24} color="white" />}
+          style={{ backgroundColor: "transparent" }}
         >
-          <Text style={styles.title}>{currentField} </Text>
-          <Menu
-            visible={visible}
-            onDismiss={closeMenu}
-            anchor={<AntDesign name="upcircleo" size={24} color="white" />}
-          >
-            {currentField !== "Sports" && (
-              <Menu.Item
-                onPress={() => {
-                  setCurrentFieldHandler("Sports");
-                }}
-                title="Sports"
-              />
-            )}
-            <Divider />
-            {currentField !== "Cultural" && (
-              <Menu.Item
-                onPress={() => {
-                  setCurrentFieldHandler("Cultural");
-                }}
-                title="Cultural"
-              />
-            )}
-            <Divider />
-            {currentField !== "Tech" && (
-              <Menu.Item
-                onPress={() => {
-                  setCurrentFieldHandler("Tech");
-                }}
-                title="Tech"
-              />
-            )}
-          </Menu>
-        </View>
-      </TouchableOpacity>
-    </View>
+          {["Sports", "Cultural", "Tech"].map((item, index) => {
+            if (currentField !== item) {
+              return (
+                <React.Fragment key={item}>
+                  <Menu.Item
+                    onPress={() => {
+                      setCurrentFieldHandler(item);
+                    }}
+                    title={item}
+                    titleStyle={{ color: "white", fontWeight: "bold" }}
+                    style={{
+                      backgroundColor: "#111319",
+                      padding: 10,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  />
+
+                  {index < 2 && (
+                    <Divider style={{ backgroundColor: "white" }} />
+                  )}
+                </React.Fragment>
+              );
+            }
+            return null;
+          })}
+        </Menu>
+      </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   headerContainer: {
+    flex: 1,
     flexDirection: "row",
     backgroundColor: "#111319",
     alignItems: "center",
-    paddingHorizontal: 10,
-    height: 56,
+    width: 100,
+    height: 100,
     elevation: 4, // for Android
     shadowColor: "#000", // for iOS
     shadowOffset: { width: 0, height: 2 }, // for iOS
@@ -76,9 +79,9 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84, // for iOS
   },
   title: {
-    fontSize: 15,
+    fontSize: 20,
     color: "white",
-    // fontWeight: "bold",
+    //fontWeight: "bold",
   },
 });
 
