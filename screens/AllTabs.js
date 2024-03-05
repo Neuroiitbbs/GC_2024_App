@@ -20,11 +20,13 @@ import UpdateLiveEvents from "./UpdateLiveEvents";
 import SpecificEvents from "./SpecificEvents";
 import Homepage from './Homepage'
 import TeamPoints from "./TeamPoints";
+import NewsPage from "./NewsPage";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
 const LeaderboardStack = createStackNavigator();
 const AdminDashboardStack = createStackNavigator();
+const HomepageStack = createStackNavigator();
 
 // Create a stack navigator for each tab to include the Header
 function EventsStackNavigator() {
@@ -34,7 +36,7 @@ function EventsStackNavigator() {
         name="EventsStack"
         component={Events}
         options={({ route }) => ({
-          
+
           headerTitle: () => <Header events={true} />,
           headerStyle: { backgroundColor: "#111319", height: 100 },
           field: route.params?.field || "Sports",
@@ -45,7 +47,7 @@ function EventsStackNavigator() {
         component={SpecificEvents}
         options={({ route }) => ({
           headerTitle: () => <Header />,
-          headerStyle: { backgroundColor: "#111319", height:120 },
+          headerStyle: { backgroundColor: "#111319", height: 120 },
           headerTintColor: "white",
           data: route.params.data,
         })}
@@ -69,7 +71,34 @@ function LeaderboardStackNavigator() {
     </LeaderboardStack.Navigator>
   );
 }
+function HomepageStackNavigator() {
+  return (
 
+
+
+    <HomepageStack.Navigator initialRouteName="HomePageStack">
+      <HomepageStack.Screen
+        name="HomepageStack"
+        component={Homepage}
+        options={{
+          headerShown: true,
+          headerTitle: (props) => <Header />,
+          headerStyle: { backgroundColor: "#111319", height: 100 },
+        }}
+      />
+      <HomepageStack.Screen
+        name="NewsPage"
+        component={NewsPage}
+        options={{
+          headerShown: false,
+          headerTitle: (props) => <Header />,
+          headerStyle: { backgroundColor: "#111319", height: 100 },
+        }}
+      />
+
+    </HomepageStack.Navigator>
+  );
+}
 function AdminDashboardStackNavigator() {
   return (
     <AdminDashboardStack.Navigator>
@@ -223,29 +252,29 @@ export default function AllTabs() {
           alignContent: "center",
           justifyContent: "center",
           width: "100%",
-          height: 30,
+          height: 40,
         },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Events") {
+          if (route.name === " ") {
             iconName = focused ? "calendar" : "calendar-outline";
-          } else if (route.name === "Leaderboard") {
+          } else if (route.name === "  ") {
             iconName = focused ? "trophy" : "trophy-outline";
           } else if (route.name === "AdminDashboard") {
             iconName = focused ? "cog" : "cog-outline";
             // Using React Native Elements for Icons
-          } else if (route.name === 'Your Team') {
+          } else if (route.name === '   ') {
             iconName = focused ? "account-group" : "account-group-outline";
           }
-          else if (route.name === 'Homepage') {
+          else if (route.name === '    ') {
             iconName = focused ? "home" : "home-outline";
           }
           return (
             <Icon
               name={iconName}
               type="material-community"
-              size={20}
+              size={27}
               color={color}
             />
           );
@@ -254,14 +283,14 @@ export default function AllTabs() {
         tabBarInactiveTintColor: "black",
       })}
     >
-      <Tab.Screen name="Events" component={EventsStackNavigator} />
-      <Tab.Screen name="Leaderboard" component={LeaderboardStackNavigator} />
-      <Tab.Screen name="Homepage" component={Homepage} />
-      <Tab.Screen
+      <Tab.Screen name=" " component={EventsStackNavigator} />
+      <Tab.Screen name="  " component={LeaderboardStackNavigator} />
+      <Tab.Screen name="    " component={HomepageStackNavigator} />
+      {/* <Tab.Screen
         name="AdminDashboard"
         component={AdminDashboardStackNavigator}
-      />
-      <Tab.Screen name="Your Team" component={TeamPoints} />
+      /> */}
+      <Tab.Screen name="   " component={TeamPoints} />
 
     </Tab.Navigator>
   );

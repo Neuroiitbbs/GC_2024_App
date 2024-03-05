@@ -73,7 +73,8 @@ export default function homePage() {
                         slideStyle={{ display: 'flex', alignItems: 'center' }}
                         onSnapToItem={(index) => setActiveIndex(index)}
                         autoplay={true}
-                    // enableSnap={true}
+                        // enableSnap={true}
+                        loop={true}
                     />
                     {renderPagination()}
                 </View>
@@ -101,7 +102,7 @@ export default function homePage() {
                         inactiveSlideOpacity={0}
                         vertical={false}
                         slideStyle={{ display: 'flex', alignItems: 'center' }}
-
+                        loop={true}
                         autoplay={true}
                     // enableSnap={true}
                     />
@@ -120,7 +121,7 @@ export default function homePage() {
                         inactiveSlideOpacity={0}
                         vertical={false}
                         slideStyle={{ display: 'flex', alignItems: 'center' }}
-
+                        loop={true}
                         autoplay={true}
                     // enableSnap={true}
                     />
@@ -164,13 +165,15 @@ const styles = StyleSheet.create({
         height: 160,
         marginTop: 30,
         paddingHorizontal: 5,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        padding: 5
     },
     newsTitle: {
         fontWeight: 'bold',
         fontSize: 16,
         marginBottom: 10,
         color: 'white',
+        paddingLeft: 5
     },
     teamsSection: {
         width: 358,
@@ -183,7 +186,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
         marginBottom: 10,
-        color: 'white'
+        color: 'white',
+        padding: 5,
     },
     socialMediaSection: {
         marginTop: 20,

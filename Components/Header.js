@@ -26,51 +26,53 @@ export default function Header({ events }) {
   return (
     <View
       style={styles.header}
-      // style={{
-      //     // Transparent background because mask is based off alpha channel.
-      //     margin: 20,
-      //     backgroundColor: 'transparent',
-      //     flex: 1,
-      //     justifyContent: 'space-evenly',
-      //     alignItems: 'center',
-      // }}
+    // style={{
+    //     // Transparent background because mask is based off alpha channel.
+    //     margin: 20,
+    //     backgroundColor: 'transparent',
+    //     flex: 1,
+    //     justifyContent: 'space-evenly',
+    //     alignItems: 'center',
+    // }}
     >
-      
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '62%' }}>
+
         <Image
           source={require("../assets/logo.png")}
           style={{ width: 60, height: 60, resizeMode: "center" }} // Set explicit dimensions
         />
-  
-     
-        <MaskedView
-          maskElement={
-            <Text
-              style={{
-                fontSize: 25,
-                fontWeight: "bold",
-                alignItems: "center",
-                textAlign: "center",
-              }}
-            >
-              GC 2024
-            </Text>
-          }
-          style={{height:50,alignItems:"center" ,justifyContent:"center" ,flex:1}}
-        >
-          <LinearGradient
-            colors={["#88345E", "#516FAD", "#4D73B2"]}
-            start={[0, 0]}
-            end={[1, 0]}
-            style={{
-              padding: 55,
-              
-              width: events ? 125 : 250,
-              backgroundColor: "black",
-            }}
-          ></LinearGradient>
-        </MaskedView>
+        <Text style={{ color: 'white', fontSize: 23, fontWeight: 'bold' }}> GC 2024</Text>
 
-      <View style={{ backgroundColor: "black" ,height:50 ,alignItems :"center"}}>
+      </View>
+      {/* <MaskedView
+        maskElement={
+          <Text
+            style={{
+              fontSize: 25,
+              fontWeight: "bold",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+          >
+            GC 2024
+          </Text>
+        }
+        style={{ height: 50, alignItems: "center", justifyContent: "center", flex: 1 }}
+      >
+        <LinearGradient
+          colors={["#88345E", "#516FAD", "#4D73B2"]}
+          start={[0, 0]}
+          end={[1, 0]}
+          style={{
+            padding: 55,
+
+            width: events ? 125 : 250,
+            backgroundColor: "black",
+          }}
+        ></LinearGradient>
+      </MaskedView> */}
+
+      <View style={{ backgroundColor: "black", height: 50, alignItems: "center" }}>
         {events && <EventDropDown />}
       </View>
       {/* <View>
@@ -87,8 +89,8 @@ styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "100%",flex:0.4,
-  
+    width: "100%", flex: 0.4,
+
     backgroundColor: "#111319",
   },
 });

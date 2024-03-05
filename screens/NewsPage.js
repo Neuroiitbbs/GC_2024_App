@@ -1,5 +1,5 @@
 import React from 'react'
-import Card from '../components/Card';
+import CarouselCard from '../Components/CarouselCard';
 import { FlatList, SafeAreaView, StyleSheet, View, Image, ScrollView } from 'react-native';
 
 const NewsPage = () => {
@@ -46,11 +46,14 @@ const NewsPage = () => {
                     data={data.news} // Corrected data structure
                     renderItem={({ item }) =>
                         <View style={styles.card}>
-                            <Card item={item.content} height={'100%'} width={'100%'} />
+                            <CarouselCard item={item.content} height={'100%'} width={'100%'} />
                         </View>
                     }
                     keyExtractor={item => item.id.toString()} // Converted id to string
                 />
+                <View style={{ height: 50 }}>
+
+                </View>
             </View>
         </SafeAreaView>
     )
