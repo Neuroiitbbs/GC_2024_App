@@ -14,6 +14,7 @@ import LoginScreen from "./screens/LoginPage";
 import AllTabs from "./screens/AllTabs";
 import axios from "axios";
 import AddLiveEvents from "./screens/AddLiveEvents";
+import TeamPoints from "./screens/TeamPoints";
 
 //update score Admin
 // import AdminOngoingScreen from './screens/AdminOngoingScreen';
