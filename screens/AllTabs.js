@@ -18,6 +18,7 @@ import LiveEvents from "./LiveEvents";
 import AddLiveEvents from "./AddLiveEvents";
 import UpdateLiveEvents from "./UpdateLiveEvents";
 import SpecificEvents from "./SpecificEvents";
+import Homepage from './Homepage'
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -242,6 +243,7 @@ export default function AllTabs() {
     >
       <Tab.Screen name="Events" component={EventsStackNavigator} />
       <Tab.Screen name="Leaderboard" component={LeaderboardStackNavigator} />
+      <Tab.Screen name="Homepage" component={Homepage} />
       <Tab.Screen
         name="AdminDashboard"
         component={AdminDashboardStackNavigator}
