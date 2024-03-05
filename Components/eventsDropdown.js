@@ -30,9 +30,8 @@ const CustomHeader = () => {
           visible={visible}
           onDismiss={closeMenu}
           anchor={<AntDesign name="downcircleo" size={24} color="white" />}
-          style={{ backgroundColor: "transparent" }} 
+          style={{ backgroundColor: "transparent" }}
         >
-       
           {["Sports", "Cultural", "Tech"].map((item, index) => {
             if (currentField !== item) {
               return (
@@ -42,17 +41,22 @@ const CustomHeader = () => {
                       setCurrentFieldHandler(item);
                     }}
                     title={item}
-                    titleStyle={{ color: "white", fontWeight: "bold" }} 
-                    style={{ backgroundColor: "#111319" ,padding: 10,alignItems: "center",justifyContent  : "center"}} 
+                    titleStyle={{ color: "white", fontWeight: "bold" }}
+                    style={{
+                      backgroundColor: "#111319",
+                      padding: 10,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   />
-                  
+
                   {index < 2 && (
-                    <Divider style={{ backgroundColor: "white" ,margin:10}} />
+                    <Divider style={{ backgroundColor: "white" }} />
                   )}
                 </React.Fragment>
               );
             }
-            return null; 
+            return null;
           })}
         </Menu>
       </View>
