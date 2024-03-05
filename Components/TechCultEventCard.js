@@ -48,7 +48,7 @@ function TechCultEventCard(props) {
         >
           <View>
             <Text
-              style={{ fontSize: 25, fontWeight: "700", paddingBottom: 20 }}
+              style={{ fontSize: 20, fontWeight: "700", paddingBottom: 12 , color:'#d41d77'}}
             >
               {props.details?.title}
             </Text>
@@ -133,13 +133,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   BottomTextTeams: {
-    color: "gray",
-    fontSize: 20,
+    color: "white",
+    fontSize: 18,
   },
   BottomTextTime: {
     color: "gray",
     position: "relative",
-    right: -18,
+    right: -26,
   },
   LeftImageContainer: {
     width: deviceWidth < 380 ? 26 : 46,

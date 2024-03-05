@@ -3,6 +3,17 @@ import React from "react";
 
 const SpecificEvents = ({ route }) => {
   const data = route.params?.data;
+
+  const timestamp = data.details?.timestamp;
+  const date = new Date(timestamp);
+  const formattedDate = date.toLocaleDateString(); // Date component
+  let hour = date.getHours();
+  const minute = date.getMinutes();
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  hour = hour % 12;
+  hour = hour ? hour : 12; 
+  const formattedTime = `${hour}:${minute < 10 ? '0' : ''}${minute} ${ampm}`;
+
   console.log("data", data);
   const renderItem = ({ item }) => (
     console.log(item, pointsTable[item].points),
@@ -34,9 +45,14 @@ const SpecificEvents = ({ route }) => {
         justifyContent: "center",
       }}
     >
-      <Text style={{ color: "white" }}>{data.details.title}</Text>
-      <Text style={{ color: "white" }}>{data.details.location}</Text>
-      <Text style={{ color: "white" }}>{data.details.description}</Text>
+      <View style={{marginLeft: 10}}>
+        <Text style={{ color: "white", fontWeight: 'bold' }}>{data.details.title}</Text>
+        <Text style={{ color: "#b0afac", marginTop:4 }}>{data.details.location}</Text>
+        <Text style={{ color: "#b0afac"}}>{formattedDate}</Text>
+        <Text style={{ color: "#b0afac" }}>{formattedTime}</Text>
+        <Text style={{ color: "white", marginTop:4 }}>{data.details.description}</Text>
+      </View>
+      
       {pointsTable && (
         <View style={styles.container}>
           <View style={styles.header}>
