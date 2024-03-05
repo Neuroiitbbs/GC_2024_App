@@ -2,16 +2,14 @@ import { useState } from 'react';
 
 import { StatusBar } from 'expo-status-bar';
 import { Image, StyleSheet, Text, View, Dimensions, SafeAreaView, TouchableOpacity } from 'react-native';
-import CarouselCard from '../Components/CarouselCard';
 
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import MaskedView from '@react-native-masked-view/masked-view';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Modal from '../components/modal';
 import { useNavigation } from '@react-navigation/native';
-
+import CarouselCard from '../Components/CarouselCard';
 
 var { width, height } = Dimensions.get('window');
 
@@ -20,16 +18,12 @@ export default function homePage() {
     const navigation = useNavigation();
 
     const [activeIndex, setActiveIndex] = useState(0);
-    const [modalVisible, setModalVisible] = useState(false);
-    const openModal = () => {
-        setModalVisible(true);
-    };
+
 
     data = {
-        logo: require('../assets/GClogowhite.png'),
         banners: [
-            require('../assets/Banners/Banner1.jpg'),
-            require('../assets/Banners/Banner1.jpg'),
+            require('../assets/CarouselBanners/Banner1.jpg'),
+            require('../assets/CarouselBanners/Banner1.jpg'),
 
         ],
         teams: [require('../assets/Team Banners/CSE.jpg'),
@@ -70,7 +64,7 @@ export default function homePage() {
 
                     <Carousel
                         data={data.banners}
-                        renderItem={({ item }) => <CrouselCard item={item} height={'100%'} width={width * 0.9} />}
+                        renderItem={({ item }) => <CarouselCard item={item} height={'100%'} width={width * 0.9} />}
                         firstItem={1}
                         sliderWidth={width}
                         itemWidth={width * 0.62}
@@ -100,7 +94,7 @@ export default function homePage() {
                     <Carousel
                         layout="default"
                         data={data.news}
-                        renderItem={({ item }) => <Card item={item} height={'100%'} width={width * 0.9} />}
+                        renderItem={({ item }) => <CarouselCard item={item} height={'100%'} width={width * 0.9} />}
                         firstItem={1}
                         sliderWidth={width}
                         itemWidth={width * 0.62}
@@ -119,7 +113,7 @@ export default function homePage() {
                     <Carousel
                         layout="default"
                         data={data.teams}
-                        renderItem={({ item }) => <Card item={item} height={'100%'} width={width * 0.9} />}
+                        renderItem={({ item }) => <CarouselCard item={item} height={'100%'} width={width * 0.9} />}
                         firstItem={1}
                         sliderWidth={width}
                         itemWidth={width * 0.62}
@@ -131,7 +125,6 @@ export default function homePage() {
                     // enableSnap={true}
                     />
                 </View>
-                <Modal modalVisible={modalVisible} setModalVisible={setModalVisible} />
 
             </ScrollView >
         </SafeAreaView >
@@ -205,18 +198,5 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         borderRadius: 10,
     },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    modalContent: {
-        backgroundColor: 'white',
-        width: '100%',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        padding: 20,
-        alignItems: 'center',
-    },
+
 });

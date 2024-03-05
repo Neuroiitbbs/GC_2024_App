@@ -19,6 +19,7 @@ import AddLiveEvents from "./AddLiveEvents";
 import UpdateLiveEvents from "./UpdateLiveEvents";
 import SpecificEvents from "./SpecificEvents";
 import Homepage from './Homepage'
+import TeamPoints from "./TeamPoints";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -226,8 +227,13 @@ export default function AllTabs() {
             iconName = focused ? "trophy" : "trophy-outline";
           } else if (route.name === "AdminDashboard") {
             iconName = focused ? "cog" : "cog-outline";
+            // Using React Native Elements for Icons
+          } else if (route.name === 'Your Team') {
+            iconName = focused ? "account-group" : "account-group-outline";
           }
-          // Using React Native Elements for Icons
+          else if (route.name === 'Homepage') {
+            iconName = focused ? "home" : "home-outline";
+          }
           return (
             <Icon
               name={iconName}
@@ -248,6 +254,8 @@ export default function AllTabs() {
         name="AdminDashboard"
         component={AdminDashboardStackNavigator}
       />
+      <Tab.Screen name="Your Team" component={TeamPoints} />
+
     </Tab.Navigator>
   );
 }
