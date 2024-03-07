@@ -17,6 +17,7 @@ const deviceHeight = Dimensions.get("window").height;
 
 function OngoingEventCard(props) {
   // console.log(props);
+  console.log(props);
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);
 
@@ -25,25 +26,32 @@ function OngoingEventCard(props) {
   const formattedDate = date.toLocaleDateString(); // Date component
   let hour = date.getHours();
   const minute = date.getMinutes();
-  const ampm = hour >= 12 ? 'PM' : 'AM';
+  const ampm = hour >= 12 ? "PM" : "AM";
   hour = hour % 12;
-  hour = hour ? hour : 12; 
-  const formattedTime = `${hour}:${minute < 10 ? '0' : ''}${minute} ${ampm}`;
+  hour = hour ? hour : 12;
+  const formattedTime = `${hour}:${minute < 10 ? "0" : ""}${minute} ${ampm}`;
 
   return (
     <View>
       <LinearGradient
-        start={{ x: 0.2, y: 0.1 }}
-        end={{ x: 0.65, y: 0.5 }}
-        locations={[0.6, 1]}
-        colors={["white", "#e3e3e3"]}
+        start={{ x: -0.4, y: 0.0 }}
+        end={{ x: 0.7, y: 1 }}
+        locations={[0.5, 1]}
+        colors={["#E95793", "#C060A1"]}
         style={styles.cardTop}
       >
         <View>
-          <Text style={{ fontWeight: "700", paddingBottom: 20  }}>
+          <Text style={{ fontWeight: "700", paddingBottom: 20 }}>
             {props.teamA} v/s {props.teamB}
           </Text>
-          <Text style={{ fontWeight: "700", paddingBottom: 20, position:'relative', left:deviceWidth*0.04}}>
+          <Text
+            style={{
+              fontWeight: "700",
+              paddingBottom: 20,
+              position: "relative",
+              left: deviceWidth * 0.04,
+            }}
+          >
             {props.id}
           </Text>
           {/* <Text style={{ fontWeight: "700" }}>{props.data.details.location}</Text> */}
@@ -59,15 +67,11 @@ function OngoingEventCard(props) {
       <View style={styles.cardBottom}>
         <View>
           <Text style={styles.BottomTextGame}>{props.gameName}</Text>
-          <Text style={styles.BottomTextTeams}>
-            {props.details.location}
-          </Text>
+          <Text style={styles.BottomTextTeams}>{props.details.location}</Text>
         </View>
         <View>
           <Text style={styles.BottomTextGame}>{formattedDate}</Text>
-          <Text style={styles.BottomTextTime}>
-            {formattedTime}
-          </Text>
+          <Text style={styles.BottomTextTime}>{formattedTime}</Text>
         </View>
         {/* <VoteButton /> */}
       </View>
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     marginHorizontal: 0.04 * deviceWidth,
     padding: 16,
-    backgroundColor: "white",
+    backgroundColor: "black",
     borderTopRightRadius: 16,
     borderTopLeftRadius: 16,
     elevation: 4,
@@ -97,17 +101,17 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   cardBottom: {
-    marginBottom: 0.04 * deviceHeight,
+    marginBottom: 0.01 * deviceHeight,
     height: 0.09 * deviceHeight,
     marginHorizontal: "4%",
     padding: 10,
-    backgroundColor: "black",
+    backgroundColor: "#1A1A2E",
     borderBottomRightRadius: 16,
     borderBottomLeftRadius: 16,
-    elevation: 20,
-    shadowColor: "rgb(192, 9, 99)",
+    elevation: 6,
+    shadowColor: "white",
     shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 1,
+    shadowRadius: 0.5,
     shadowOpacity: 1,
     display: "flex",
     flexDirection: "row",
@@ -120,10 +124,10 @@ const styles = StyleSheet.create({
   BottomTextTeams: {
     color: "gray",
   },
-  BottomTextTime:{
+  BottomTextTime: {
     color: "gray",
-    position: 'relative',
-    right: -18 
+    position: "relative",
+    right: -18,
   },
   LeftImageContainer: {
     width: deviceWidth < 380 ? 30 : 52,

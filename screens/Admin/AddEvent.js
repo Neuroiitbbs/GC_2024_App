@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 
-const UpdateEvent = () => {
+const AddEvent = () => {
   const [name, setName] = useState("");
   const [selectedVenue, setSelectedVenue] = useState("");
   const [selectedType, setSelectedType] = useState("");
@@ -45,7 +45,7 @@ const UpdateEvent = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Live Events</Text>
-      <Text style={styles.subtitle}>Update Existing Live Event</Text>
+      <Text style={styles.subtitle}>Add Live Event</Text>
       <View>
         <TextInput
           style={styles.input}
@@ -179,7 +179,7 @@ const UpdateEvent = () => {
           }}
         >
           {" "}
-          Update Event
+          Create Event
         </Text>
       </View>
     </View>
@@ -255,4 +255,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UpdateEvent;
+export default AddEvent;

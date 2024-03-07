@@ -19,7 +19,7 @@ function OngoingUpcomingButton({
         <View style={styles.textContainer}>
           <Text
             style={
-              currentScreen != currentButton
+              currentScreen === currentButton
                 ? styles.activeButton
                 : styles.inactiveButton
             }
@@ -39,7 +39,7 @@ const deviceHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   buttonInnerContainer: {
-    borderRadius: 16,
+    borderRadius: 8,
     marginTop: 0.005 * deviceHeight,
     overflow: "hidden",
     alignContent: "center",
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "black",
     paddingTop: "12%",
-    paddingHorizontal: "12%",
+    paddingHorizontal: "4%",
     elevation: 2,
   },
   inactiveButton: {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     textDecorationLine: "underline",
-    lineHeight: 30,
+    lineHeight: 35,
   },
   activeButton: {
     color: "#d41d77",

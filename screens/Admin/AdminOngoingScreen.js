@@ -1,51 +1,59 @@
-import TopMostCard from "../Components/TopMostCard";
-import OngoingEventCard from "../Components/OngoingEventCard";
-import AdminOngoingEventCard from "../Components/adminOngoingEventCard";
+import TopMostCard from "../../Components/TopMostCard";
+import OngoingEventCard from "../../Components/OngoingEventCard";
+import AdminOngoingEventCard from "../../Components/adminOngoingEventCard";
 import { useState, useEffect } from "react";
 import { Alert, FlatList, StyleSheet } from "react-native";
 import { ScrollView } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 import { View } from "react-native";
 import axios from "axios";
-import Loader from "../Components/Loader";
-import { backend_link } from "../utils/constants";
+import Loader from "../../Components/Loader";
+import { backend_link } from "../../utils/constants";
 function OngoingScreen(props) {
   console.log(props);
   const [isEventUpdated, setIsEventUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [ongoingEvents, setOngoingEvents] = useState([
-    // {
-    //   gameName: "Basketball",
-    //   id: "Basketball",
-    //   teamA: "ECE-META",
-    //   teamB: "CSE",
-    //   scoreA: "4",
-    //   scoreB: "6",
-    // },
-    // {
-    //     gameName: 'Cricket',
-    //     id: 'Cricket',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
-    // },
-    // {
-    //     gameName: 'Football',
-    //     id: 'Football',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
-    // },
-    // {
-    //     gameName: 'Tennis',
-    //     id: 'Tennis',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
-    // },
+    {
+      gameName: "Basketball",
+      id: "Basketball",
+      teamA: "ECE-META",
+      teamB: "CSE",
+      scoreA: "4",
+      scoreB: "6",
+      location: "BHR",
+      timestamp: 1709644800000,
+    },
+    {
+      gameName: "Cricket",
+      id: "Cricket",
+      teamA: "ECE-META",
+      teamB: "CSE",
+      scoreA: "4",
+      scoreB: "6",
+      location: "BHR",
+      timestamp: 1709644800000,
+    },
+    {
+      gameName: "Football",
+      id: "Football",
+      teamA: "ECE-META",
+      teamB: "CSE",
+      scoreA: "4",
+      scoreB: "6",
+      location: "BHR",
+      timestamp: 1709644800000,
+    },
+    {
+      gameName: "Tennis",
+      id: "Tennis",
+      teamA: "ECE-META",
+      teamB: "CSE",
+      scoreA: "4",
+      scoreB: "6",
+      location: "BHR",
+      timestamp: 1709644800000,
+    },
   ]);
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +65,7 @@ function OngoingScreen(props) {
         console.log(response.data.events[0]);
         const data = response.data.events;
         const newData = data.map((item) => {
-          const gameName = item.eventId;;
+          const gameName = item.eventId;
           const teams = item.subEvents;
           console.log("teams", item);
           const newSubEvents = teams.map((item1) => {

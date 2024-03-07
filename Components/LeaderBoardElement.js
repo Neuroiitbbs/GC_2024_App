@@ -36,11 +36,11 @@ const screenWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   LeaderBoardElement: {
     flexDirection: "row",
-    flex: 0.08,
+    flex: 0.07,
     backgroundColor: "#252728",
     alignItems: "center",
     justifyContent: "center",
-    width: screenWidth * 0.95,
+    width: screenWidth * 0.85,
     height: 72,
     borderRadius: 12,
   },

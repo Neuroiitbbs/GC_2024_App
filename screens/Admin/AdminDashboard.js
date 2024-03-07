@@ -18,23 +18,23 @@ import {
 } from "@expo/vector-icons";
 
 import LiveEvents from "./LiveEvents";
-import UpdateEvent from "./UpdateEvent";
+import UpdateEvent from "../UpdateEvent";
 import AddEvent from "./AddEvent";
 
 const AdminDashboard = ({ navigation }) => {
   const AddPoints = () => {
     return navigation.navigate("AdminAddScoreStack");
   };
+
   return (
     <View style={styles.container}>
-      <View style={{ maxHeight: "95%",paddingTop:40 }}>
-        
-          <Text style={styles.heading}>Admin</Text>
-          <Text style={styles.text}>
-            Please click on the specific tile for the options related to that
-            particular feature/option.
-          </Text>
-          <ScrollView>
+      <View style={{ maxHeight: "95%", paddingTop: 40 }}>
+        <Text style={styles.heading}>Admin</Text>
+        <Text style={styles.text}>
+          Please click on the specific tile for the options related to that
+          particular feature/option.
+        </Text>
+        <ScrollView>
           <View style={styles.subcontainer}>
             {/* Left Column */}
             <View style={styles.column}>
@@ -67,7 +67,7 @@ const AdminDashboard = ({ navigation }) => {
               >
                 <View style={{ paddingVertical: 15 }}>
                   <Image
-                    source={require("../assets/news.png")}
+                    source={require("../../assets/news.png")}
                     style={{ alignSelf: "center" }}
                   />
                 </View>
@@ -104,11 +104,13 @@ const AdminDashboard = ({ navigation }) => {
                   styles.cardView,
                   pressed ? styles.cardPressed : {},
                 ]}
-                onPress={() => {}}
+                onPress={() => {
+                  navigation.navigate("LiveEvents");
+                }}
               >
                 <View style={{ paddingVertical: 10 }}>
                   <Image
-                    source={require("../assets/liveEvents.png")}
+                    source={require("../../assets/liveEvents.png")}
                     style={{ alignSelf: "center" }}
                   />
                 </View>
@@ -160,7 +162,7 @@ const AdminDashboard = ({ navigation }) => {
                 onPress={() => {navigation.navigate("AddCarouselImage")}}
               >
                 <Image
-                  source={require("../assets/carousel.png")}
+                  source={require("../../assets/carousel.png")}
                   style={{ alignSelf: "center" }}
                 />
                 <Text style={styles.cardTitle}>Carousel Image</Text>

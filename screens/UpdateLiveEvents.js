@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useForm, Controller} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import {
   View,
   Text,
@@ -26,7 +26,7 @@ const UpdateLiveEvents = () => {
   const [team2, setTeam2] = useState("");
 
   const updateLiveEventHandler = (event) => {
-    const data=[name,venue,type,date,time,team1,team2];
+    const data = [name, venue, type, date, time, team1, team2];
     console.log(data);
   };
 

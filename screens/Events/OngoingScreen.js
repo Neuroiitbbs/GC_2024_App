@@ -1,14 +1,10 @@
-import TopMostCard from "../Components/TopMostCard";
-import OngoingEventCard from "../Components/OngoingEventCard";
-import AdminOngoingEventCard from "../Components/adminOngoingEventCard";
+import OngoingEventCard from "../../Components/OngoingEventCard";
 import { useState, useEffect } from "react";
 import { Alert, FlatList, StyleSheet } from "react-native";
-import { ScrollView } from "react-native";
-import { TouchableWithoutFeedback } from "react-native";
 import { View } from "react-native";
 import axios from "axios";
-import Loader from "../Components/Loader";
-import { backend_link } from "../utils/constants";
+import Loader from "../../Components/Loader";
+import { backend_link } from "../../utils/constants";
 
 function OngoingScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,6 +16,8 @@ function OngoingScreen(props) {
     //   teamB: "CSE",
     //   scoreA: "4",
     //   scoreB: "6",
+    //   location: "BHR",
+    //   timestamp: 1709644800000,
     // },
     // {
     //   gameName: "Basketball",
@@ -28,30 +26,38 @@ function OngoingScreen(props) {
     //   teamB: "CSE",
     //   scoreA: "4",
     //   scoreB: "6",
+    //   location: "BHR",
+    //   timestamp: 1709644800000,
     // },
     // {
-    //     gameName: 'Cricket',
-    //     id: 'Cricket',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
+    //   gameName: "Cricket",
+    //   id: "Cricket",
+    //   teamA: "ECE-META",
+    //   teamB: "CSE",
+    //   scoreA: "4",
+    //   scoreB: "6",
+    //   location: "BHR",
+    //   timestamp: 1709644800000,
     // },
     // {
-    //     gameName: 'Football',
-    //     id: 'Football',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
+    //   gameName: "Football",
+    //   id: "Football",
+    //   teamA: "ECE-META",
+    //   teamB: "CSE",
+    //   scoreA: "4",
+    //   scoreB: "6",
+    //   location: "BHR",
+    //   timestamp: 1709644800000,
     // },
     // {
-    //     gameName: 'Tennis',
-    //     id: 'Tennis',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
+    //   gameName: "Tennis",
+    //   id: "Tennis",
+    //   teamA: "ECE-META",
+    //   teamB: "CSE",
+    //   scoreA: "4",
+    //   scoreB: "6",
+    //   location: "BHR",
+    //   timestamp: 1709644800000,
     // },
   ]);
   // console.log("hi123");
@@ -141,12 +147,12 @@ function OngoingScreen(props) {
         }}
         alwaysBounceVertical={false}
       />
-      {/* <Loader
+      <Loader
         visible={isLoading}
         top={250}
         bottom={0}
         setModalVisible={setIsLoading}
-      /> */}
+      />
     </View>
   );
 }

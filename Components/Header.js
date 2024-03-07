@@ -18,7 +18,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import Modal from "./Modal";
 import EventDropDown from "./eventsDropdown";
 
-export default function Header({ events }) {
+export default function Header({ events, showmodal }) {
   const [modalVisible, setModalVisible] = useState(false);
   const openModal = () => {
     setModalVisible(true);
@@ -26,23 +26,31 @@ export default function Header({ events }) {
   return (
     <View
       style={styles.header}
-    // style={{
-    //     // Transparent background because mask is based off alpha channel.
-    //     margin: 20,
-    //     backgroundColor: 'transparent',
-    //     flex: 1,
-    //     justifyContent: 'space-evenly',
-    //     alignItems: 'center',
-    // }}
+      // style={{
+      //     // Transparent background because mask is based off alpha channel.
+      //     margin: 20,
+      //     backgroundColor: 'transparent',
+      //     flex: 1,
+      //     justifyContent: 'space-evenly',
+      //     alignItems: 'center',
+      // }}
     >
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '62%' }}>
-
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "62%",
+        }}
+      >
         <Image
           source={require("../assets/logo.png")}
           style={{ width: 60, height: 60, resizeMode: "center" }} // Set explicit dimensions
         />
-        <Text style={{ color: 'white', fontSize: 23, fontWeight: 'bold' }}> GC 2024</Text>
-
+        <Text style={{ color: "white", fontSize: 23, fontWeight: "bold" }}>
+          {" "}
+          GC 2024
+        </Text>
       </View>
       {/* <MaskedView
         maskElement={
@@ -72,25 +80,30 @@ export default function Header({ events }) {
         ></LinearGradient>
       </MaskedView> */}
 
-      <View style={{ backgroundColor: "black", height: 50, alignItems: "center" }}>
+      <View
+        style={{ backgroundColor: "black", height: 50, alignItems: "center" }}
+      >
         {events && <EventDropDown />}
       </View>
-      {/* <View>
-        <TouchableOpacity onPress={openModal}>
-          <Icon name="menu" size={30} color="white" />
-        </TouchableOpacity>
-      </View> */}
+      {showmodal && (
+        <View>
+          <TouchableOpacity onPress={openModal}>
+            <Icon name="menu" size={30} color="white" />
+          </TouchableOpacity>
+        </View>
+      )}
+      <Modal modalVisible={modalVisible} setModalVisible={setModalVisible} />
     </View>
   );
 }
 styles = StyleSheet.create({
   header: {
-
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "100%", flex: 0.4,
-
+    width: "100%",
+    flex: 0.4,
+    minHeight: 50,
     backgroundColor: "#111319",
   },
 });

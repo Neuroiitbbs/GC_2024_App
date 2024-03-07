@@ -12,7 +12,9 @@ import {
   Pressable,
 } from "react-native";
 
-import Carousel, { Pagination } from "react-native-snap-carousel";
+import AddEvent from "./Admin/AddEvent";
+import AddLiveEvents from "./AddLiveEvents";
+import Carousel, { Pagination } from "react-native-snap-carousel-new";
 import { ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
@@ -37,33 +39,42 @@ export default function HomePage() {
       require("../assets/CarouselBanners/Banner1.jpg"),
       require("../assets/CarouselBanners/Banner1.jpg"),
     ],
+    // teams: [
+    //   {
+    //     team: "CSE",
+    //     image: require("../assets/Team Banners/CSE.jpg"),
+    //   },
+    //   {
+    //     team: "ECE",
+    //     image: require("../assets/Team Banners/ECE.jpg"),
+    //   },
+    //   {
+    //     team: "EE",
+    //     image: require("../assets/Team Banners/EE.jpg"),
+    //   },
+    //   {
+    //     team: "CIVIL",
+    //     image: require("../assets/Team Banners/CE.jpg"),
+    //   },
+    //   {
+    //     team: "MECH",
+    //     image: require("../assets/Team Banners/ME.jpg"),
+    //   },
+    // ],
     teams: [
-      {
-        team: "CSE",
-        image: require("../assets/Team Banners/CSE.jpg"),
-      },
-      {
-        team: "ECE",
-        image: require("../assets/Team Banners/ECE.jpg"),
-      },
-      {
-        team: "EE",
-        image: require("../assets/Team Banners/EE.jpg"),
-      },
-      {
-        team: "CIVIL",
-        image: require("../assets/Team Banners/CE.jpg"),
-      },
-      {
-        team: "MECH",
-        image: require("../assets/Team Banners/ME.jpg"),
-      },
+      require("../assets/Team Banners/CSE.jpg"),
+      require("../assets/Team Banners/ECE.jpg"),
+      require("../assets/Team Banners/EE.jpg"),
+      require("../assets/Team Banners/CE.jpg"),
+      require("../assets/Team Banners/ME.jpg"),
     ],
     news: [
       require("../assets/news/news1.jpg"),
       require("../assets/news/news1.jpg"),
     ],
   };
+
+  const teams = ["CSE", "ECE", "EE", "CIVIL", "MECH"];
 
   const renderPagination = () => {
     return (
@@ -78,9 +89,9 @@ export default function HomePage() {
     );
   };
   const handlePress = () => {
-    console.log(data.teams[currentItemIndex].team);
+    console.log(teams[currentItemIndex]);
     navigation.navigate("   ", {
-      branch: data.teams[currentItemIndex].team,
+      branch: teams[currentItemIndex],
     });
   };
 
@@ -115,7 +126,7 @@ export default function HomePage() {
             {renderPagination()}
           </View>
 
-          <View style={styles.newsSection}>
+          <View style={styles.newsSection1}>
             <View
               style={{
                 flexDirection: "row",
@@ -156,7 +167,7 @@ export default function HomePage() {
                 data={data.teams}
                 renderItem={({ item }) => (
                   <CarouselCard
-                    item={item.image}
+                    item={item}
                     height={"100%"}
                     width={width * 0.9}
                   />
@@ -170,6 +181,7 @@ export default function HomePage() {
                 slideStyle={{ display: "flex", alignItems: "center" }}
                 loop={true}
                 autoplay={true}
+
                 // enableSnap={true}
               />
             </Pressable>
@@ -180,6 +192,8 @@ export default function HomePage() {
               height: 100,
             }}
           ></View>
+          {/* <AddEvent />
+          <AddLiveEvents /> */}
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -204,7 +218,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingTop: 20,
+    // paddingTop: 20,
   },
   bannerContainer: {
     height: 200,
@@ -215,8 +229,16 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   newsSection: {
-    width: 358,
-    height: 160,
+    width: "90%",
+    height: 220,
+    marginTop: 30,
+    paddingHorizontal: 5,
+    justifyContent: "center",
+    padding: 5,
+  },
+  newsSection1: {
+    width: "90%",
+    height: 180,
     marginTop: 30,
     paddingHorizontal: 5,
     justifyContent: "center",
@@ -249,7 +271,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingVertical: 20,
   },
-  // Additional styles for news items, team icons, etc.
   newsImage: {
     width: "100%",
     height: 200,

@@ -6,7 +6,7 @@ import logoPaths from "../utils/logoPaths";
 import setProperTeamName from "../utils/setProperTeamName";
 import teamColors from "../utils/teamColors";
 export default function TeamPoints({ route }) {
-  const branch = route.params?.branch || "CSE";
+  const branch = route.params?.branch || "ECE+META";
   console.log("branch", branch);
   const team = setProperTeamName(branch);
   const BranchesData = [
@@ -56,12 +56,12 @@ export default function TeamPoints({ route }) {
     },
   ];
   //BranchesData.sort((a, b) => b.Score - a.Score);
-  const top3 = BranchesData.slice(0, 3);
-  let restData = BranchesData.slice(0).map((item, index) => {
-    return { ...item, rank: index + 4 };
+  // const top3 = BranchesData.slice(0, 3);
+  let restData = BranchesData.map((item, index) => {
+    return { ...item, rank: index + 1 };
   });
   const renderItem = ({ item }) => {
-    // console.log(item);
+    console.log(item);
     return (
       <View style={{ padding: 5 }}>
         <TeamPointsComponent branchData={item} logoPaths={logoPaths} />

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import {
   View,
-  TextInput,
-  Button,
   StyleSheet,
   Text,
   Image,
@@ -10,12 +8,15 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const Login = ({ authenticateUser }) => {
+const Login = ({ authenticateUser, promptAsync }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const AdminLogin = () => {
+    promptAsync();
+  };
+  const userLogin = () => {
     authenticateUser(true);
   };
 
@@ -43,7 +44,7 @@ const Login = ({ authenticateUser }) => {
       </View>
       <View style={styles.bottombar}>
         {/* Moved the login button to the bottom and made it bigger */}
-        <TouchableOpacity onPress={AdminLogin} style={styles.loginButton}>
+        <TouchableOpacity onPress={userLogin} style={styles.loginButton}>
           <Image
             source={require("../assets/Neuro.png")}
             style={{ width: 30, height: 30, marginRight: 100 }}
@@ -52,7 +53,7 @@ const Login = ({ authenticateUser }) => {
             Login
           </Text>
         </TouchableOpacity>
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
+        {/* <Text style={styles.forgotPassword}>Forgot Password?</Text> */}
       </View>
       {errorMessage ? (
         <Text style={styles.errorMessage}>{errorMessage}</Text>

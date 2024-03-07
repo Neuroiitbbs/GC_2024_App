@@ -1,27 +1,23 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Icon } from "react-native-elements";
-import AdminDashboard from "./AdminDashboard";
-import TopMostCard from "../Components/TopMostCard";
-import OngoingUpcomingButton from "../Components/OngoingUpcomingButtons";
-import { NavigationContainer } from "@react-navigation/native";
+import AdminDashboard from "./Admin/AdminDashboard";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Leaderboard from "./LeaderBoard";
-import Events from "./Events";
-import LoginScreen from "./LoginPage";
+import Events from "./Events/Events";
 import Header from "../Components/Header";
-import { getHeaderTitle } from "@react-navigation/elements";
-import AdminOngoingScreen from "./AdminOngoingScreen";
-import LiveEvents from "./LiveEvents";
-import AddLiveEvents from "./AddLiveEvents";
-import UpdateLiveEvents from "./UpdateLiveEvents";
-import SpecificEvents from "./SpecificEvents";
+import AdminOngoingScreen from "./Admin/AdminOngoingScreen";
+import LiveEvents from "./Admin/LiveEvents";
+import SpecificEvents from "./Events/SpecificEvents";
 import Homepage from "./Homepage";
 import TeamPoints from "./TeamPoints";
 import NewsPage from "./NewsPage";
-import AddCarouselImage from "./AddCarouselImage";
+import AddCarouselImage from "./Admin/AddCarouselImage";
+import { LoginContext } from "../store/LoginContext";
+
+import AddTechCultEvent from "./Admin/AddTechCultEvent";
+import UpdateTechCultEvents from "./Admin/UpdateTechCultEvent";
+import CheckUpdateTechCultEvents from "../Components/CheckUpdateEvent";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -79,7 +75,7 @@ function HomepageStackNavigator() {
         component={Homepage}
         options={{
           headerShown: true,
-          headerTitle: (props) => <Header />,
+          headerTitle: (props) => <Header showmodal={true} />,
           headerStyle: { backgroundColor: "#111319", height: 100 },
         }}
       />
@@ -111,11 +107,11 @@ function AdminDashboardStackNavigator() {
         name="AdminAddScoreStack"
         component={AdminOngoingScreen}
         options={{
-          // headerTitle: () => <Header />,
-          // headerTintColor: "white",
+          headerTitle: () => <Header />,
+          headerTintColor: "white",
           // headerLeft: null,
-          // headerStyle: { backgroundColor: "#111319" },
-          headerShown: false,
+          headerStyle: { backgroundColor: "#111319" },
+          // headerShown: false,
         }}
       />
       <AdminDashboardStack.Screen
@@ -129,7 +125,7 @@ function AdminDashboardStackNavigator() {
         }}
       />
       <AdminDashboardStack.Screen
-        name="AddLiveEvent"
+        name="AddSportEvent"
         component={LiveEvents}
         options={{
           // headerTitle: () => <Header />,
@@ -139,8 +135,8 @@ function AdminDashboardStackNavigator() {
         }}
       />
       <AdminDashboardStack.Screen
-        name="AddingLiveEvent"
-        component={AddLiveEvents}
+        name="AddTechCultEvent"
+        component={AddTechCultEvent}
         options={{
           // headerTitle: () => <Header />,
           // headerTintColor: "white", // YAY! Proper format!
@@ -149,8 +145,18 @@ function AdminDashboardStackNavigator() {
         }}
       />
       <AdminDashboardStack.Screen
-        name="UpdatingLiveEvent"
-        component={UpdateLiveEvents}
+        name="CheckUpdateTechCultEvent"
+        component={CheckUpdateTechCultEvents}
+        options={{
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
+        }}
+      />
+      <AdminDashboardStack.Screen
+        name="UpdateTechCultEvent"
+        component={UpdateTechCultEvents}
         options={{
           // headerTitle: () => <Header />,
           // headerTintColor: "white", // YAY! Proper format!
@@ -230,6 +236,7 @@ function MyTabs() {
   );
 }
 export default function AllTabs() {
+  const LoginCtx = useContext(LoginContext);
   const [events, setEvents] = useState([]);
 
   return (
@@ -287,21 +294,24 @@ export default function AllTabs() {
         tabBarActiveTintColor: "#D41D77",
         tabBarInactiveTintColor: "black",
       })}
+      initialRouteName="    "
     >
       <Tab.Screen name=" " component={EventsStackNavigator} />
       <Tab.Screen name="  " component={LeaderboardStackNavigator} />
       <Tab.Screen name="    " component={HomepageStackNavigator} />
       <Tab.Screen
-        name="AdminDashboard"
-        component={AdminDashboardStackNavigator}
-      />
-      <Tab.Screen
         name="   "
         component={TeamPoints}
         options={({ route }) => ({
-          branch: route.params?.branch || "CSE",
+          branch: route.params?.branch || "ECE",
         })}
       />
+      {LoginCtx.isAdmin && (
+        <Tab.Screen
+          name="AdminDashboard"
+          component={AdminDashboardStackNavigator}
+        />
+      )}
     </Tab.Navigator>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text } from "react-native";
 import AnimatedLoader from "./InnerLoaderComponent";
+import { ActivityIndicator } from "react-native-paper";
 
 const Loader = ({ visible, top, bottom, setModalVisible }) => {
   return (
@@ -14,7 +15,7 @@ const Loader = ({ visible, top, bottom, setModalVisible }) => {
       setModalVisible={setModalVisible}
       animationType={"fade"}
     >
-      <Text>Loading...</Text>
+      <ActivityIndicator animating={true} color="white" size="large" />
     </AnimatedLoader>
   );
 };

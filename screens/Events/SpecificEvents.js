@@ -9,10 +9,10 @@ const SpecificEvents = ({ route }) => {
   const formattedDate = date.toLocaleDateString(); // Date component
   let hour = date.getHours();
   const minute = date.getMinutes();
-  const ampm = hour >= 12 ? 'PM' : 'AM';
+  const ampm = hour >= 12 ? "PM" : "AM";
   hour = hour % 12;
-  hour = hour ? hour : 12; 
-  const formattedTime = `${hour}:${minute < 10 ? '0' : ''}${minute} ${ampm}`;
+  hour = hour ? hour : 12;
+  const formattedTime = `${hour}:${minute < 10 ? "0" : ""}${minute} ${ampm}`;
 
   console.log("data", data);
   const renderItem = ({ item }) => (
@@ -37,37 +37,45 @@ const SpecificEvents = ({ route }) => {
   console.log(sortedPointsTable);
   console.log("pointsTable", pointsTable);
   return (
-    <View
-      style={{
-        backgroundColor: "black",
-        flexDirection: "column",
-        flex: 1,
-        justifyContent: "center",
-      }}
-    >
-      <View style={{marginLeft: 10}}>
-        <Text style={{ color: "white", fontWeight: 'bold' }}>{data.details.title}</Text>
-        <Text style={{ color: "#b0afac", marginTop:4 }}>{data.details.location}</Text>
-        <Text style={{ color: "#b0afac"}}>{formattedDate}</Text>
-        <Text style={{ color: "#b0afac" }}>{formattedTime}</Text>
-        <Text style={{ color: "white", marginTop:4 }}>{data.details.description}</Text>
-      </View>
-      
-      {pointsTable && (
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Text style={[styles.cell, styles.headerText]}>Branch</Text>
-            <Text style={[styles.cell, styles.headerText]}>Points</Text>
-            <Text style={[styles.cell, styles.headerText]}>Position</Text>
-          </View>
-          <FlatList
-            data={Object.keys(pointsTable)}
-            renderItem={renderItem}
-            keyExtractor={(item) => item}
-          />
+    <ScrollView>
+      <View
+        style={{
+          backgroundColor: "black",
+          flexDirection: "column",
+          flex: 1,
+          justifyContent: "center",
+        }}
+      >
+        <View style={{ marginLeft: 10 }}>
+          <Text style={{ color: "white", fontWeight: "bold" }}>
+            {data.details.title}
+          </Text>
+          <Text style={{ color: "#b0afac", marginTop: 4 }}>
+            {data.details.location}
+          </Text>
+          <Text style={{ color: "#b0afac" }}>{formattedDate}</Text>
+          <Text style={{ color: "#b0afac" }}>{formattedTime}</Text>
+          <Text style={{ color: "white", marginTop: 4 }}>
+            {data.details.description}
+          </Text>
         </View>
-      )}
-    </View>
+
+        {pointsTable && (
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <Text style={[styles.cell, styles.headerText]}>Branch</Text>
+              <Text style={[styles.cell, styles.headerText]}>Points</Text>
+              <Text style={[styles.cell, styles.headerText]}>Position</Text>
+            </View>
+            <FlatList
+              data={Object.keys(pointsTable)}
+              renderItem={renderItem}
+              keyExtractor={(item) => item}
+            />
+          </View>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 

@@ -1,58 +1,20 @@
-import TopMostCard from "../Components/TopMostCard";
-import OngoingEventCard from "../Components/OngoingEventCard";
-import AdminOngoingEventCard from "../Components/adminOngoingEventCard";
 import { useState, useEffect } from "react";
 import { Alert, FlatList, StyleSheet } from "react-native";
-import { ScrollView } from "react-native";
-import { TouchableWithoutFeedback } from "react-native";
 import { View } from "react-native";
 import axios from "axios";
-import UpcomingEventCard from "../Components/UpcomingEventCard";
-import Loader from "../Components/Loader";
+import UpcomingEventCard from "../../Components/UpcomingEventCard";
+import Loader from "../../Components/Loader";
 
-import { backend_link } from "../utils/constants";
+import { backend_link } from "../../utils/constants";
 
-function UpcomingScreen(props) {
+function PastScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [upcomingEvents, setUpcomingEvents] = useState([
-    // {
-    //     gameName: 'Basketball',
-    //     id: 'Basketball',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
-    // },
-    // {
-    //     gameName: 'Cricket',
-    //     id: 'Cricket',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
-    // },
-    // {
-    //     gameName: 'Football',
-    //     id: 'Football',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
-    // },
-    // {
-    //     gameName: 'Tennis',
-    //     id: 'Tennis',
-    //     teamA: 'ECE-META',
-    //     teamB: 'CSE',
-    //     scoreA: '4',
-    //     scoreB: '6'
-    // },
-  ]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          backend_link + "api/event/getUpcomingEvents"
+          backend_link + "api/event/getPastEvents"
         );
 
         // console.log(response.data);
@@ -74,7 +36,7 @@ function UpcomingScreen(props) {
               details: match_item.data.details,
               status: match_item.data.status,
               gameName: eventName,
-              id:matchId,
+              id: matchId,
               teamA: teamA?.name || match_item.subEventId.split(" vs ")[0],
               teamB: teamB?.name || match_item.subEventId.split(" vs ")[1],
               scoreA: teamA?.points,
@@ -118,7 +80,7 @@ function UpcomingScreen(props) {
         }}
         alwaysBounceVertical={false}
       />
-      <View style={{ height: 80 }}>
+      <View style={{ minheight: 60 }}>
         {/* <Loader
           visible={isLoading}
           top={250}
@@ -130,7 +92,7 @@ function UpcomingScreen(props) {
   );
 }
 
-export default UpcomingScreen;
+export default PastScreen;
 
 const styles = StyleSheet.create({
   eventsContainer: {
