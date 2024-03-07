@@ -9,42 +9,155 @@ import {
 import { FontAwesome5 } from "@expo/vector-icons";
 import LeaderBoardElement from "../Components/LeaderBoardElement";
 import logoPaths from "../utils/logoPaths";
+import axios from 'axios';
+import { backend_link } from "../utils/constants";
+import { useEffect, useState } from "react";
+
+const initialBranchesData = [
+  {
+    Name: "CSE",
+    Score: 0,
+  },
+  {
+    Name: "ECE+META",
+    Score: 0,
+  },
+  {
+    Name: "EE",
+    Score: 0,
+  },
+  {
+    Name: "MECH",
+    Score: 0,
+  },
+  {
+    Name: "CIVIL",
+    Score: 0,
+  },
+  {
+    Name: "M.Sc",
+    Score: 0,
+  },
+  {
+    Name: "M.Tech",
+    Score: 0,
+  },
+  {
+    Name: "PhD",
+    Score: 0,
+  },
+];
+
+const fetchDataAndUpdateScore = async (teamName, setBranchesData) => {
+  try {
+    const response = await axios.get(backend_link + 'api/points/getTotalPointsByTeam', {
+      params: { teamId: teamName }
+    });
+    console.log("data",response.data);
+    const points = response.data.points*1;
+
+    // Update the state with the new score for the specified team
+    setBranchesData(prevState => {
+      return prevState.map(branch => {
+        if (branch.Name === teamName) {
+          return { ...branch, Score: points };
+        }
+        return branch;
+      });
+    });
+
+    console.log('BranchesData updated with new score:', teamName, points);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
+
+// const teamId = ["CSE","EE","ECE","CIVIL","MECH","PHD","MTech","MSc"];
 
 export default function Leaderboard() {
-  const BranchesData = [
-    {
-      Name: "CSE",
-      Score: 0,
-    },
-    {
-      Name: "ECE+META",
-      Score: 0,
-    },
-    {
-      Name: "EE",
-      Score: 0,
-    },
-    {
-      Name: "MECH",
-      Score: 0,
-    },
-    {
-      Name: "CIVIL",
-      Score: 0,
-    },
-    {
-      Name: "M.Sc",
-      Score: 0,
-    },
-    {
-      Name: "M.Tech",
-      Score: 0,
-    },
-    {
-      Name: "PhD",
-      Score: 0,
-    },
-  ];
+  
+  const [BranchesData, setBranchesData] = useState(initialBranchesData);
+
+  useEffect(() => {
+    // Fetch and update the score for 'CSE' team initially
+    fetchDataAndUpdateScore('CSE', setBranchesData);
+  }, []);
+
+  // This useEffect will run whenever BranchesData changes
+  useEffect(() => {
+    //console.log('BranchesData updated:', BranchesData);
+  }, [BranchesData]);
+
+  useEffect(() => {
+    // Fetch and update the score for 'CSE' team initially
+    fetchDataAndUpdateScore('ECE', setBranchesData);
+  }, []);
+
+  // This useEffect will run whenever BranchesData changes
+  useEffect(() => {
+    //console.log('BranchesData updated:', BranchesData);
+  }, [BranchesData]);
+
+  useEffect(() => {
+    // Fetch and update the score for 'CSE' team initially
+    fetchDataAndUpdateScore('EE', setBranchesData);
+  }, []);
+
+  // This useEffect will run whenever BranchesData changes
+  useEffect(() => {
+    //console.log('BranchesData updated:', BranchesData);
+  }, [BranchesData]);
+
+  useEffect(() => {
+    // Fetch and update the score for 'CSE' team initially
+    fetchDataAndUpdateScore('MECH', setBranchesData);
+  }, []);
+
+  // This useEffect will run whenever BranchesData changes
+  useEffect(() => {
+    //console.log('BranchesData updated:', BranchesData);
+  }, [BranchesData]);
+
+  useEffect(() => {
+    // Fetch and update the score for 'CSE' team initially
+    fetchDataAndUpdateScore('MTech', setBranchesData);
+  }, []);
+
+  // This useEffect will run whenever BranchesData changes
+  useEffect(() => {
+    //console.log('BranchesData updated:', BranchesData);
+  }, [BranchesData]);
+
+  useEffect(() => {
+    // Fetch and update the score for 'CSE' team initially
+    fetchDataAndUpdateScore('MSc', setBranchesData);
+  }, []);
+
+  // This useEffect will run whenever BranchesData changes
+  useEffect(() => {
+    //console.log('BranchesData updated:', BranchesData);
+  }, [BranchesData]);
+
+  useEffect(() => {
+    // Fetch and update the score for 'CSE' team initially
+    fetchDataAndUpdateScore('CIVIL', setBranchesData);
+  }, []);
+
+  // This useEffect will run whenever BranchesData changes
+  useEffect(() => {
+    //console.log('BranchesData updated:', BranchesData);
+  }, [BranchesData]);
+
+  useEffect(() => {
+    // Fetch and update the score for 'CSE' team initially
+    fetchDataAndUpdateScore('Phd', setBranchesData);
+  }, []);
+
+  // This useEffect will run whenever BranchesData changes
+  useEffect(() => {
+    //console.log('BranchesData updated:', BranchesData);
+  }, [BranchesData]);
+
   BranchesData.sort((a, b) => b.Score - a.Score);
   const top3 = BranchesData.slice(0, 3);
   let restData = BranchesData.slice(3).map((item, index) => {
