@@ -16,7 +16,7 @@ const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
 
 function OngoingEventCard(props) {
-console.log(props);
+  // console.log(props);
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);
 

@@ -54,20 +54,20 @@ function OngoingScreen(props) {
     //     scoreB: '6'
     // },
   ]);
-  console.log("hi123");
+  // console.log("hi123");
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
           backend_link + "api/event/getCurrentlyLiveEvents"
         );
-        console.log("response.data   ", response.data);
+        // console.log("response.data   ", response.data);
         const data = response.data.events;
         const events = data.map((item) => {
-          console.log("item", item);
+          // console.log("item", item);
           const eventName = item.eventId; //ex. Football BOYS
           const subEvents = item.subEvents;
-          console.log("subEvents", subEvents);
+          // console.log("subEvents", subEvents);
           const gameName = eventName;
           const match = subEvents.map((match_item) => {
             const teamA = match_item.data.points.teamA;
@@ -79,7 +79,7 @@ function OngoingScreen(props) {
             //   ? match_item.data.points?.teamB
             // : match_item.data.pointsTable?.teamB;
             const details = match_item.data.details;
-            console.log("details", details);
+            // console.log("details", details);
             // const idx = match_item.data.details.title
             //   .split(" ")
             //   .findIndex((word) => word.toLowerCase() === "vs");
@@ -105,7 +105,7 @@ function OngoingScreen(props) {
 
           return match;
         });
-        console.log(events.flat());
+        // console.log(events.flat());
         setIsLoading(false);
         setOngoingEvents(events.flat());
       } catch (err) {
@@ -141,12 +141,12 @@ function OngoingScreen(props) {
         }}
         alwaysBounceVertical={false}
       />
-      <Loader
+      {/* <Loader
         visible={isLoading}
         top={250}
         bottom={0}
         setModalVisible={setIsLoading}
-      />
+      /> */}
     </View>
   );
 }

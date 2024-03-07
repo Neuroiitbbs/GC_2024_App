@@ -79,7 +79,7 @@ export default function TeamPoints({ route }) {
           style={styles.containertop}
         >
           <Image style={styles.branchLogoImage} source={logoPaths[team]} />
-          <Text style={styles.branchTotalPoints}>31050 PTS</Text>
+          <Text style={styles.branchTotalPoints}>0 PTS</Text>
         </LinearGradient>
       </View>
 

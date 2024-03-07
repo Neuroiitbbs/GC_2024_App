@@ -55,7 +55,7 @@ function UpcomingScreen(props) {
           backend_link + "api/event/getUpcomingEvents"
         );
 
-        console.log(response.data);
+        // console.log(response.data);
 
         const data = response.data.events;
         const events = data.map((item) => {
@@ -83,7 +83,7 @@ function UpcomingScreen(props) {
           });
           return match;
         });
-        console.log(events.flat());
+        // console.log(events.flat());
         setUpcomingEvents(events.flat());
         setIsLoading(false);
       } catch (err) {
@@ -119,12 +119,12 @@ function UpcomingScreen(props) {
         alwaysBounceVertical={false}
       />
       <View style={{ height: 80 }}>
-        <Loader
+        {/* <Loader
           visible={isLoading}
           top={250}
           bottom={0}
           setModalVisible={setIsLoading}
-        />
+        /> */}
       </View>
     </View>
   );

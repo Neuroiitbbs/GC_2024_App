@@ -13,8 +13,6 @@ import Events from "./screens/Events";
 import LoginScreen from "./screens/LoginPage";
 import AllTabs from "./screens/AllTabs";
 import axios from "axios";
-import AddLiveEvents from "./screens/AddLiveEvents";
-
 //update score Admin
 // import AdminOngoingScreen from './screens/AdminOngoingScreen';
 

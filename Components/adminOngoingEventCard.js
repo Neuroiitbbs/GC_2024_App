@@ -18,7 +18,7 @@ import logoPaths from "../utils/logoPaths";
 import setProperTeamName from "../utils/setProperTeamName";
 
 function OngoingEventCard(props) {
-  console.log(props);
+  // console.log(props);
 
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);

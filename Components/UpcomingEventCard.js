@@ -17,7 +17,7 @@ const deviceHeight = Dimensions.get("window").height;
 
 function UpcomingEventCard(props) {
 
-  console.log(props);
+  // console.log(props);
   const timestamp = props.details?.timestamp;
   const date = new Date(timestamp);
   const formattedDate = date.toLocaleDateString(); // Date component

@@ -20,7 +20,7 @@ function TechCultEventCard(props) {
   const navigation = props.navigation;
   props = props?.data?.item || props?.data || props;
   props = props?.data?.data || props?.data || props;
-  console.log("props", props);
+  // console.log("props", props);
   const formattedDate = new Date(props.details?.timestamp).toLocaleDateString();
   const formattedTime = new Date(props.details?.timestamp).toLocaleTimeString(
     [],

@@ -21,6 +21,7 @@ import SpecificEvents from "./SpecificEvents";
 import Homepage from "./Homepage";
 import TeamPoints from "./TeamPoints";
 import NewsPage from "./NewsPage";
+import AddCarouselImage from "./AddCarouselImage";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -157,6 +158,16 @@ function AdminDashboardStackNavigator() {
           headerShown: false,
         }}
       />
+      <AdminDashboardStack.Screen
+        name="AddCarouselImage"
+        component={AddCarouselImage}
+        options={{
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
+        }}
+      />
     </AdminDashboardStack.Navigator>
   );
 }
@@ -280,10 +291,10 @@ export default function AllTabs() {
       <Tab.Screen name=" " component={EventsStackNavigator} />
       <Tab.Screen name="  " component={LeaderboardStackNavigator} />
       <Tab.Screen name="    " component={HomepageStackNavigator} />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="AdminDashboard"
         component={AdminDashboardStackNavigator}
-      /> */}
+      />
       <Tab.Screen
         name="   "
         component={TeamPoints}
