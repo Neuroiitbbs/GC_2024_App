@@ -25,35 +25,35 @@ import { useNavigation } from "@react-navigation/native";
 const defaultPoint = {
   MTech: {
     points: 0,
-    position: "0",
+    position: 0,
   },
   ECE_META: {
     points: 0,
-    position: "0",
+    position: 0,
   },
   CSE: {
     points: 0,
-    position: "0",
+    position: 0,
   },
   CIVIL: {
     points: 0,
-    position: "0",
+    position: 0,
   },
   EE: {
     points: 0,
-    position: "0",
+    position: 0,
   },
   PHD: {
     points: 0,
-    position: "0",
+    position: 0,
   },
   MECH: {
     points: 0,
-    position: "0",
+    position: 0,
   },
   MSc_ITEP: {
     points: 0,
-    position: "0",
+    position: 0,
   },
 };
 const getCorrectTimeStamp = (date, time) => {
@@ -89,33 +89,22 @@ const UpdateEvent = ({ route, navigation }) => {
   const [time, setTime] = useState(
     new Date(data?.details?.timestamp) || new Date()
   );
+  console.log("pointsTable", data?.pointsTable);
   const [venue, setVenue] = useState(data?.details?.location || "");
   const [selectedType, setSelectedType] = useState(data?.category || "");
-
-  {
-    /* Team a - mtech
-              Team b - ece meta 
-              Team c - cse
-              Team d - civil
-              Team e - ee
-              Team f - phd
-              Team g - mech
-              Team h - msc + itep */
-  }
-
   const [teamPoint, setTeamPoint] = useState(data?.pointsTable || defaultPoint);
 
   const handlePointChange = (team, points) => {
     setTeamPoint({
       ...teamPoint,
-      [team]: { points: points, position: teamPoint[team].position },
+      [team]: { points: points * 1, position: teamPoint[team].position * 1 },
     });
   };
 
   const handlePosChange = (team, position) => {
     setTeamPoint({
       ...teamPoint,
-      [team]: { points: teamPoint[team].points, position: position },
+      [team]: { points: teamPoint[team].points * 1, position: position * 1 },
     });
   };
 
@@ -218,6 +207,12 @@ const UpdateEvent = ({ route, navigation }) => {
     );
   };
 
+  console.log("data", teamPoint["MTech"].points, teamPoint["MTech"].position);
+  console.log(
+    "data",
+    teamPoint.ECE_META.points,
+    teamPoint["ECE_META"].position
+  );
   console.log(teamPoint, description, name, date, time, venue, selectedType);
 
   return (
@@ -231,10 +226,10 @@ const UpdateEvent = ({ route, navigation }) => {
           <Text style={styles.subtitle}>Add Tech/Cult Event</Text>
           <View>
             <View>
-              <Text style={[styles.input, { color: "white" }]}>{name}</Text>
+              <Text style={[styles.input, { color: "grey" }]}>{name}</Text>
             </View>
             <View>
-              <Text style={[styles.input, { color: "white" }]}>
+              <Text style={[styles.input, { color: "grey" }]}>
                 {description}
               </Text>
             </View>
@@ -334,13 +329,33 @@ const UpdateEvent = ({ route, navigation }) => {
               }}
             >
               <View style={styles.box}>
+                <Text style={styles.text}>Team</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.input, { color: "white" }]}>Points</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.input, { color: "white" }]}>
+                  Position{" "}
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                flex: 1,
+                flexWrap: "wrap",
+              }}
+            >
+              <View style={styles.box}>
                 <Text style={styles.text}>Team A: Mtech</Text>
               </View>
               <View style={{ flex: 1 }}>
                 <TextInput
                   keyboardType="numeric"
                   style={[styles.input, { color: "white" }]}
-                  value={teamPoint.MTech.points}
+                  value={teamPoint["MTech"]?.points.toString()}
                   placeholder="Points"
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("MTech", text)}
@@ -351,7 +366,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   keyboardType="numeric"
                   style={[styles.input, { color: "white" }]}
                   placeholder="Position"
-                  value={teamPoint.MTech.position.toString()}
+                  value={teamPoint["MTech"]?.position.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePosChange("MTech", text)}
                 />
@@ -373,7 +388,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   style={[styles.input, { color: "white" }]}
                   keyboardType="numeric"
                   placeholder="Points"
-                  value={teamPoint.ECE_META.points}
+                  value={teamPoint["ECE_META"]?.points.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("ECE_META", text)}
                 />
@@ -383,7 +398,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   keyboardType="numeric"
                   style={[styles.input, { color: "white" }]}
                   placeholder="Position"
-                  value={teamPoint.ECE_META.position.toString()}
+                  value={teamPoint["ECE_META"]?.position.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePosChange("ECE_META", text)}
                 />
@@ -406,7 +421,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   style={[styles.input, { color: "white" }]}
                   keyboardType="numeric"
                   placeholder="Points"
-                  value={teamPoint.CSE.points}
+                  value={teamPoint["CSE"]?.points.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("CSE", text)}
                 />
@@ -416,7 +431,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   keyboardType="numeric"
                   style={[styles.input, { color: "white" }]}
                   placeholder="Position"
-                  value={teamPoint.CSE.position.toString()}
+                  value={teamPoint["CSE"]?.position.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePosChange("CSE", text)}
                 />
@@ -437,7 +452,7 @@ const UpdateEvent = ({ route, navigation }) => {
                 <TextInput
                   style={[styles.input, { color: "white" }]}
                   placeholder="Points"
-                  value={teamPoint.CIVIL.points}
+                  value={teamPoint["CIVIL"]?.points.toString()}
                   keyboardType="numeric"
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("CIVIL", text)}
@@ -448,7 +463,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   keyboardType="numeric"
                   style={[styles.input, { color: "white" }]}
                   placeholder="Position"
-                  value={teamPoint.CIVIL.position.toString()}
+                  value={teamPoint["CIVIL"]?.position.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePosChange("CIVIL", text)}
                 />
@@ -472,7 +487,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   keyboardType="numeric"
                   style={[styles.input, { color: "white" }]}
                   placeholder="Points"
-                  value={teamPoint.EE.points}
+                  value={teamPoint["EE"]?.points.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("EE", text)}
                 />
@@ -482,7 +497,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   keyboardType="numeric"
                   style={[styles.input, { color: "white" }]}
                   placeholder="Position"
-                  value={teamPoint.EE.position.toString()}
+                  value={teamPoint["EE"]?.position.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePosChange("EE", text)}
                 />
@@ -504,7 +519,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   style={[styles.input, { color: "white" }]}
                   keyboardType="numeric"
                   placeholder="Points"
-                  value={teamPoint.PhD.points}
+                  value={teamPoint["PHD"]?.points.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("PHD", text)}
                 />
@@ -514,7 +529,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   keyboardType="numeric"
                   style={[styles.input, { color: "white" }]}
                   placeholder="Position"
-                  value={teamPoint.PhD.position.toString()}
+                  value={teamPoint["PHD"]?.position.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePosChange("PHD", text)}
                 />
@@ -537,7 +552,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   style={[styles.input, { color: "white" }]}
                   keyboardType="numeric"
                   placeholder="Points"
-                  value={teamPoint.MECH.points}
+                  value={teamPoint["MECH"]?.points.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("MECH", text)}
                 />
@@ -547,7 +562,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   keyboardType="numeric"
                   style={[styles.input, { color: "white" }]}
                   placeholder="Position"
-                  value={teamPoint.MECH.position.toString()}
+                  value={teamPoint["MECH"]?.position.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePosChange("MECH", text)}
                 />
@@ -568,7 +583,7 @@ const UpdateEvent = ({ route, navigation }) => {
                 <TextInput
                   style={[styles.input, { color: "white" }]}
                   placeholder="Points"
-                  value={teamPoint.MSC_ITEP.points}
+                  value={teamPoint["MSc_ITEP"]?.points.toString()}
                   keyboardType="numeric"
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("MSc_ITEP", text)}
@@ -579,7 +594,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   keyboardType="numeric"
                   style={[styles.input, { color: "white" }]}
                   placeholder="Position"
-                  value={teamPoint.MSC_ITEP.position.toString()}
+                  value={teamPoint["MSc_ITEP"]?.position.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePosChange("MSc_ITEP", text)}
                 />
@@ -610,6 +625,7 @@ const UpdateEvent = ({ route, navigation }) => {
               </Text>
             </View>
           </Pressable>
+          <View style={{ minHeight: 80 }}></View>
         </ScrollView>
       </View>
     </KeyboardAvoidingView>

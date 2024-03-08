@@ -6,6 +6,14 @@ import axios from "axios";
 import Loader from "../../Components/Loader";
 import { backend_link } from "../../utils/constants";
 
+const sortData = (data) => {
+  data.sort((a, b) => {
+    return new Date(a.details.timestamp) - new Date(b.details.timestamp); //sort by date ascending
+  });
+
+  return data;
+};
+
 function OngoingScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [ongoingEvents, setOngoingEvents] = useState([
@@ -69,7 +77,7 @@ function OngoingScreen(props) {
         );
         // console.log("response.data   ", response.data);
         const data = response.data.events;
-        const events = data.map((item) => {
+        let events = data.map((item) => {
           // console.log("item", item);
           const eventName = item.eventId; //ex. Football BOYS
           const subEvents = item.subEvents;
@@ -113,6 +121,8 @@ function OngoingScreen(props) {
         });
         // console.log(events.flat());
         setIsLoading(false);
+
+        events = sortData(events.flat());
         setOngoingEvents(events.flat());
       } catch (err) {
         console.log(err);

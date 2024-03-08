@@ -45,7 +45,7 @@ const CheckUpdateEvent = ({ navigation }) => {
       }
     } catch (error) {
       console.log(error);
-      alert("Event Id /Title doenn't exist Check for spaces");
+      alert("Event Id /Title doesn't exist Check for spaces");
     }
   };
   const onClose = () => {
