@@ -48,8 +48,8 @@ const AddLiveEvents = () => {
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [teamA, setTeamA] = useState("");
-  const [teamApoints, setTeamApoints] = useState(0);
-  const [teamBpoints, setTeamBpoints] = useState(0);
+  const [teamApoints, setTeamApoints] = useState("0");
+  const [teamBpoints, setTeamBpoints] = useState("0");
   const [teamB, setTeamB] = useState("");
 
   const [showDatepicker, setShowDatepicker] = useState(false);

@@ -286,7 +286,7 @@ export default function AllTabs() {
             iconName = focused ? "calendar" : "calendar-outline";
           } else if (route.name === "  ") {
             iconName = focused ? "trophy" : "trophy-outline";
-          } else if (route.name === "AdminDashboard") {
+          } else if (route.name === "     ") {
             iconName = focused ? "cog" : "cog-outline";
             // Using React Native Elements for Icons
           } else if (route.name === "   ") {
@@ -319,10 +319,7 @@ export default function AllTabs() {
         })}
       />
       {LoginCtx.isAdmin && (
-        <Tab.Screen
-          name="AdminDashboard"
-          component={AdminDashboardStackNavigator}
-        />
+        <Tab.Screen name="     " component={AdminDashboardStackNavigator} />
       )}
     </Tab.Navigator>
   );

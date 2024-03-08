@@ -49,7 +49,7 @@ const CheckUpdateEvent = ({ navigation }) => {
     }
   };
   const onClose = () => {
-    navigate.navigate("LiveEvents");
+    navigation.navigate("LiveEvents");
     setModalVisible(false);
   };
   return (
