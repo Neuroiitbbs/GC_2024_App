@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 import { StatusBar } from "expo-status-bar";
 import {
@@ -10,15 +10,18 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Pressable,
-  ScrollView,
 } from "react-native";
 
+
 import Carousel, { Pagination } from "react-native-snap-carousel-new";
+import { ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 import CarouselCard from "../Components/CarouselCard";
+import axios from "axios";
+import { backend_link } from "../utils/constants";
 
 var { width, height } = Dimensions.get("window");
 
@@ -31,6 +34,51 @@ export default function HomePage() {
   };
 
   const [activeIndex, setActiveIndex] = useState(0);
+
+   const [Ids, setIds] = useState([]);
+  const [cardata, setcardata] = useState([]);
+
+   const [newsIds, setnewsIds] = useState([]);
+  const [newscardata, setnewscardata] = useState([]);
+
+
+  useEffect(() => {
+    const getAllCarousels = async () => {
+      try {
+        const response = await axios.get(
+          backend_link + "api/assets/getCarouselImages"
+        );
+        console.log("response", response.data);
+        const ids = Object.keys(response.data);
+        console.log(ids);
+        console.log(response.data)
+        setIds(ids);
+        setcardata(response.data);
+     
+      } catch (err) {
+        console.log("Failed to get Carousel Images", err);
+      }
+    };
+
+    const getNewsCarousels = async () => {
+      try {
+        const response = await axios.get(
+          backend_link + "api/assets/getNewsImages"
+        );
+        console.log("response", response.data);
+        const ids = Object.keys(response.data);
+        console.log(ids);
+        console.log(response.data)
+        setnewsIds(ids);
+        setnewscardata(response.data);
+     
+      } catch (err) {
+        console.log("Failed to get Carousel Images", err);
+      }
+    }
+    getAllCarousels();
+    getNewsCarousels();
+  }, []);
 
   data = {
     banners: [
@@ -72,7 +120,7 @@ export default function HomePage() {
     ],
   };
 
-  const teams = ["CSE", "ECE_META", "EE", "CIVIL", "MECH"];
+  const teams = ["CSE", "ECE", "EE", "CIVIL", "MECH"];
 
   const renderPagination = () => {
     return (
@@ -106,9 +154,10 @@ export default function HomePage() {
         <ScrollView style={styles.content}>
           <View style={styles.newsSection}>
             <Carousel
-              data={data.banners}
+              data={Ids}
               renderItem={({ item }) => (
-                <CarouselCard item={item} height={"100%"} width={width * 0.9} />
+              <CarouselCard item={{uri:cardata[item]?.imageUrl}} height={"100%"} width={width * 0.9} /> 
+              // : <Text>Loading...</Text>
               )}
               firstItem={1}
               sliderWidth={width}
@@ -141,9 +190,9 @@ export default function HomePage() {
 
             <Carousel
               layout="default"
-              data={data.news}
+              data={newsIds}
               renderItem={({ item }) => (
-                <CarouselCard item={item} height={"100%"} width={width * 0.9} />
+                <CarouselCard item={{uri:newscardata[item]?.imageUrl}} height={"100%"} width={width * 0.9} />
               )}
               firstItem={1}
               sliderWidth={width}
@@ -273,5 +322,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 200,
     resizeMode: "cover",
+    borderRadius: 10,
   },
 });

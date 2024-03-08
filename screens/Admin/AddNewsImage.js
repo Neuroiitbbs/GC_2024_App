@@ -51,7 +51,7 @@ export default function App() {
     try {
       const response = await axios.post(
         backend_link +
-          "api/assets/addNewsImage?imageUrl=" +
+          "api/assets/addNewslImage?imageUrl=" +
           imageUrl +
           "&title=" +
           imageTitle
@@ -100,8 +100,8 @@ export default function App() {
     return(
     <View style={{  width:'100%', flexDirection:'column' , alignContent:'center', justifyContent:'center',alignItems:'center'}}>
         <Text style={{color:'white', fontSize:20,padding:10}}>{item.title}</Text>
-        {/* <Image source={{ uri: item.imageUrl }} style={{ width: 100, height: 100}} alt="Carousel-Image" /> */}
-        <Text style={{color:'white',fontSize:20,padding:20}}>{item.imageUrl}</Text>
+        <Image source={{ uri: item.imageUrl }} style={{ width: 300, height: 200}} alt="Carousel-Image" />
+        {/* <Text style={{color:'white',fontSize:20,padding:20}}>{item.imageUrl}</Text> */}
         <Button
           title="Delete"
           onPress={()=>{deleteImageHandler(item)}}
@@ -153,7 +153,7 @@ export default function App() {
         alwaysBounceVertical={false}
         style={
           {
-            flex: 0.4,
+            flex: 0.9,
             height: '60%'
           }
         }
