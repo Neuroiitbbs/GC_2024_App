@@ -7,7 +7,7 @@ const teamColors = {
     topColor: "#4ea9fc",
     bottomColor: "#a8d1f7",
   },
-  ECEMETA: {
+  ECE_META: {
     topColor: "#CC9000",
     bottomColor: "#8c6404",
   },
@@ -19,7 +19,7 @@ const teamColors = {
     topColor: "#595758",
     bottomColor: "#787777",
   },
-  MSc: {
+  MSc_ITEP: {
     topColor: "#595758",
     bottomColor: "#787777",
   },
@@ -27,7 +27,7 @@ const teamColors = {
     topColor: "#fa050d",
     bottomColor: "#fa464c",
   },
-  PhD: {
+  PHD: {
     topColor: "#b846fa",
     bottomColor: "#d692fc",
   },

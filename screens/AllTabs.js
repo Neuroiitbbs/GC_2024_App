@@ -304,7 +304,7 @@ export default function AllTabs() {
         name="   "
         component={TeamPoints}
         options={({ route }) => ({
-          branch: route.params?.branch || "ECE",
+          branch: route.params?.branch || "ECE_META",
         })}
       />
       {LoginCtx.isAdmin && (

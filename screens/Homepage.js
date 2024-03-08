@@ -60,11 +60,11 @@ export default function HomePage() {
     //   },
     // ],
     teams: [
-      require("../assets/Team Banners/CSE.jpg"),
-      require("../assets/Team Banners/ECE.jpg"),
-      require("../assets/Team Banners/EE.jpg"),
-      require("../assets/Team Banners/CE.jpg"),
-      require("../assets/Team Banners/ME.jpg"),
+      require("../assets/TeamBanners/CSE.jpg"),
+      require("../assets/TeamBanners/ECE.jpg"),
+      require("../assets/TeamBanners/EE.jpg"),
+      require("../assets/TeamBanners/CE.jpg"),
+      require("../assets/TeamBanners/ME.jpg"),
     ],
     news: [
       require("../assets/news/news1.jpg"),
@@ -72,7 +72,7 @@ export default function HomePage() {
     ],
   };
 
-  const teams = ["CSE", "ECE", "EE", "CIVIL", "MECH"];
+  const teams = ["CSE", "ECE_META", "EE", "CIVIL", "MECH"];
 
   const renderPagination = () => {
     return (
