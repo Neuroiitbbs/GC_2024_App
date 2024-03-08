@@ -3,8 +3,15 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import UpcomingEventCard from "../../Components/UpcomingEventCard";
 import Loader from "../../Components/Loader";
-
 import { backend_link } from "../../utils/constants";
+
+const sortData = (data) => {
+  data.sort((a, b) => {
+    return new Date(a.details.timestamp) - new Date(b.details.timestamp); //sort by date ascending
+  });
+
+  return data;
+};
 
 function UpcomingScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +26,7 @@ function UpcomingScreen(props) {
         console.log(response.data);
 
         const data = response.data.events;
-        const events = data.map((item) => {
+        let events = data.map((item) => {
           const eventName = item.eventId;
           const matches = item.subEvents;
           const match = matches.map((match_item) => {
@@ -44,7 +51,7 @@ function UpcomingScreen(props) {
           });
           return match;
         });
-        console.log(events.flat());
+        events = sortData(events.flat());
         setUpcomingEvents(events.flat());
         setIsLoading(false);
       } catch (err) {

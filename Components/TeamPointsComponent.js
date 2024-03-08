@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Image } from "react-native";
 
 const TeamPointsComponent = (props) => {
-  console.log("props in component",props);
   return (
     <>
       <View style={styles.LeaderBoardElement}>
@@ -15,9 +14,15 @@ const TeamPointsComponent = (props) => {
         </View>
         {/* </View> */}
         <View style={styles.points}>
-            {
-                props.branchData[1]*1>0 ? <Text style={styles.LeaderBoardPoints}>{props.branchData[1]*1+" PTS"}</Text> : <Text style={styles.LeaderBoardPointsNeg}>{props.branchData[1]*1+" PTS"}</Text>
-            }
+          {props.branchData[1] * 1 > 0 ? (
+            <Text style={styles.LeaderBoardPoints}>
+              {props.branchData[1] * 1 + " PTS"}
+            </Text>
+          ) : (
+            <Text style={styles.LeaderBoardPointsNeg}>
+              {props.branchData[1] * 1 + " PTS"}
+            </Text>
+          )}
         </View>
       </View>
     </>
@@ -66,7 +71,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  LeaderBoardPointsNeg:{
+  LeaderBoardPointsNeg: {
     color: "#e3091b",
     fontSize: 16,
     fontWeight: "bold",
@@ -75,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 0.75,
     padding: 20,
-    fontSize: 16
+    fontSize: 16,
   },
   branchname: {
     flex: 2,

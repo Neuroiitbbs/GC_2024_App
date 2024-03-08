@@ -6,6 +6,35 @@ import axios from "axios";
 import { backend_link } from "../../utils/constants";
 import Loader from "../../Components/Loader";
 
+const sortData = (data) => {
+  console.log("data", data);
+
+  let prevdata = [];
+  let nextdata = [];
+  data.map((item) => {
+    if (
+      new Date(item.data.details?.timestamp) >
+      new Date() - 24 * 60 * 60 * 1000
+    ) {
+      nextdata.push(item);
+    } else {
+      prevdata.push(item);
+    }
+  });
+  nextdata.sort((a, b) => {
+    return (
+      new Date(a.data.details?.timestamp) - new Date(b.data.details?.timestamp) //sort by date ascending
+    );
+  });
+  prevdata.sort((a, b) => {
+    return (
+      new Date(b.data.details?.timestamp) - new Date(a.data.details?.timestamp) //sort by date descending
+    );
+  });
+
+  return nextdata.concat(prevdata);
+};
+
 const TechEventScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [techEvents, setTechEvents] = useState([]);
@@ -17,10 +46,11 @@ const TechEventScreen = ({ navigation }) => {
           backend_link + "api/event/getEventByCategory?category=tech"
         );
         const data = response.data.events;
-        const techdata = [];
+        let techdata = [];
         data.map((item) => {
           item !== null && techdata.push(item);
         });
+        techdata = sortData(techdata);
         setTechEvents(techdata);
         console.log(techdata);
       } catch (error) {
@@ -39,7 +69,7 @@ const TechEventScreen = ({ navigation }) => {
       {loading && (
         <Loader
           visible={loading}
-          top={"10%"}
+          top={200}
           bottom={0}
           setModalVisible={setLoading}
         />

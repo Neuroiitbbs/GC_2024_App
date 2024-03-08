@@ -15,7 +15,7 @@ export default function TeamPoints({ route }) {
   const [Ids, setIds] = useState([]);
   const [data, setdata] = useState([]);
   const branch = route.params?.branch || "ECE_META";
-  // console.log("branch", branch);
+  console.log("branch", branch);
   const team = setProperTeamName(branch);
 
   useEffect(() => {

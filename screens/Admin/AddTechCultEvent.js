@@ -496,6 +496,7 @@ const AddEvent = () => {
               </Text>
             </View>
           </Pressable>
+          <View style={{ minHeight: 80 }}></View>
         </ScrollView>
       </View>
     </KeyboardAvoidingView>

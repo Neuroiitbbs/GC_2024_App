@@ -28,10 +28,11 @@ export default function HomePage() {
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
 
   const handleSnapToItem = (index) => {
+    console.log("snapped to", index);
     setCurrentItemIndex(index);
   };
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(1);
 
   const [Ids, setIds] = useState([]);
   const [cardata, setcardata] = useState([]);
@@ -115,7 +116,7 @@ export default function HomePage() {
     ],
   };
 
-  const teams = ["CSE", "ECE", "EE", "CIVIL", "MECH"];
+  const teams = ["CSE", "ECE_META", "EE", "CIVIL", "MECH"];
 
   const renderPagination = () => {
     return (
@@ -130,6 +131,7 @@ export default function HomePage() {
     );
   };
   const handlePress = () => {
+    console.log("Pressed", currentItemIndex);
     console.log(teams[currentItemIndex]);
     navigation.navigate("   ", {
       branch: teams[currentItemIndex],

@@ -4,9 +4,15 @@ import { View } from "react-native";
 import axios from "axios";
 import UpcomingEventCard from "../../Components/UpcomingEventCard";
 import Loader from "../../Components/Loader";
-
 import { backend_link } from "../../utils/constants";
 
+const sortData = (data) => {
+  data.sort((a, b) => {
+    return new Date(b.details.timestamp) - new Date(a.details.timestamp); //sort by date ascending
+  });
+
+  return data;
+};
 function PastScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
@@ -20,7 +26,7 @@ function PastScreen(props) {
         // console.log(response.data);
 
         const data = response.data.events;
-        const events = data.map((item) => {
+        let events = data.map((item) => {
           const eventName = item.eventId;
           const matches = item.subEvents;
           const match = matches.map((match_item) => {
@@ -46,6 +52,7 @@ function PastScreen(props) {
           return match;
         });
         // console.log(events.flat());
+        events = sortData(events.flat());
         setUpcomingEvents(events.flat());
         setIsLoading(false);
       } catch (err) {
@@ -81,12 +88,12 @@ function PastScreen(props) {
         alwaysBounceVertical={false}
       />
       <View style={{ minheight: 60 }}>
-        {/* <Loader
+        <Loader
           visible={isLoading}
           top={250}
           bottom={0}
           setModalVisible={setIsLoading}
-        /> */}
+        />
       </View>
     </View>
   );

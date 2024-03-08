@@ -6,6 +6,35 @@ import axios from "axios";
 import { backend_link } from "../../utils/constants";
 import Loader from "../../Components/Loader";
 
+const sortData = (data) => {
+  console.log("data", data);
+
+  let prevdata = [];
+  let nextdata = [];
+  data.map((item) => {
+    if (
+      new Date(item.data.details?.timestamp) >
+      new Date() - 24 * 60 * 60 * 1000
+    ) {
+      nextdata.push(item);
+    } else {
+      prevdata.push(item);
+    }
+  });
+  nextdata.sort((a, b) => {
+    return (
+      new Date(a.data.details?.timestamp) - new Date(b.data.details?.timestamp) //sort by date ascending
+    );
+  });
+  prevdata.sort((a, b) => {
+    return (
+      new Date(b.data.details?.timestamp) - new Date(a.data.details?.timestamp) //sort by date descending
+    );
+  });
+
+  return nextdata.concat(prevdata);
+};
+
 const CultEventScreen = ({ navigation }) => {
   const [cultEvents, setCultEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,12 +46,14 @@ const CultEventScreen = ({ navigation }) => {
           backend_link + "api/event/getEventByCategory?category=cult"
         );
         const data = response.data.events;
-        const cultdata = [];
+        let cultdata = [];
         data.map((item) => {
           item !== null && cultdata.push(item);
         });
+
+        cultdata = sortData(cultdata);
         setCultEvents(cultdata);
-        console.log(cultdata);
+        // console.log(cultdata);
       } catch (error) {
         console.log(error);
       } finally {
@@ -37,7 +68,7 @@ const CultEventScreen = ({ navigation }) => {
       {loading && (
         <Loader
           visible={loading}
-          top={"10%"}
+          top={200}
           bottom={0}
           setModalVisible={setLoading}
         />
