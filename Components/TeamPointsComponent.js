@@ -3,19 +3,20 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Image } from "react-native";
 
 const TeamPointsComponent = (props) => {
+  console.log("props in component",props);
   return (
     <>
       <View style={styles.LeaderBoardElement}>
         {/* <View style={styles.LeaderBoardElementLeft}> */}
         <View style={styles.branchname}>
           <Text style={styles.LeaderBoardNameHolder}>
-            {props.branchData.Name}
+            {props.branchData[0]}
           </Text>
         </View>
         {/* </View> */}
         <View style={styles.points}>
             {
-                props.branchData.Score>0 ? <Text style={styles.LeaderBoardPoints}>{props.branchData.Score+" PTS"}</Text> : <Text style={styles.LeaderBoardPointsNeg}>{props.branchData.Score+" PTS"}</Text>
+                props.branchData[1]*1>0 ? <Text style={styles.LeaderBoardPoints}>{props.branchData[1]*1+" PTS"}</Text> : <Text style={styles.LeaderBoardPointsNeg}>{props.branchData[1]*1+" PTS"}</Text>
             }
         </View>
       </View>
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#252728",
     alignItems: "center",
     justifyContent: "center",
-    width: screenWidth * 0.85,
+    width: screenWidth * 0.9,
     height: 72,
     borderRadius: 12,
   },
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   LeaderBoardNameHolder: {
     color: "white",
     marginLeft: 10,
-    fontSize: 20,
+    fontSize: 18,
   },
   LeaderBoardLogo: {
     width: 32,
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 0.75,
     padding: 20,
+    fontSize: 16
   },
   branchname: {
     flex: 2,

@@ -5,66 +5,103 @@ import { LinearGradient } from "expo-linear-gradient";
 import logoPaths from "../utils/logoPaths";
 import setProperTeamName from "../utils/setProperTeamName";
 import teamColors from "../utils/teamColors";
+import { useState, useEffect } from "react";
+import { Alert } from "react-native";
+import axios from "axios";
+import { backend_link } from "../utils/constants";
+
 export default function TeamPoints({ route }) {
-  const branch = route.params?.branch || "ECE+META";
-  console.log("branch", branch);
+  
+  const [eventPoints, setEventPoints] = useState([]);
+  const [Ids,setIds] = useState([]);
+  const [data,setdata] = useState([]);
+  const branch = route.params?.branch || "CSE";
+  // console.log("branch", branch);
   const team = setProperTeamName(branch);
-  const BranchesData = [
-    {
-      Name: "BasketBall",
-      Score: 0,
-    },
-    {
-      Name: "Cricket",
-      Score: 0,
-    },
-    {
-      Name: "Football",
-      Score: 0,
-    },
-    {
-      Name: "CSS Battle",
-      Score: 0,
-    },
-    {
-      Name: "Solo Dance",
-      Score: 0,
-    },
-    {
-      Name: "Chess",
-      Score: 0,
-    },
-    {
-      Name: "Tennis",
-      Score: 0,
-    },
-    {
-      Name: "Monoact",
-      Score: 0,
-    },
-    {
-      Name: "BasketBall",
-      Score: 0,
-    },
-    {
-      Name: "Cricket",
-      Score: 0,
-    },
-    {
-      Name: "Football",
-      Score: 0,
-    },
-  ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          backend_link + "api/points/getPointsTableByTeam?teamId="+branch
+        );
+
+        console.log(response.data);
+
+        const eventData = response.data.pointsTable;
+        const ids = Object.keys(response.data.pointsTable);
+        console.log(ids)
+        setIds(ids);
+        const pointsArray = ids.map(id => [id, eventData[id].points]);
+
+        console.log("pointsArray",pointsArray);
+        // return pointsArray;
+        setEventPoints(pointsArray);
+        return pointsArray;
+      } catch (err) {
+        console.log(err);
+        Alert.alert("Error", err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // const BranchesData = [
+  //   {
+  //     Name: "BasketBall",
+  //     Score: 0,
+  //   },
+  //   {
+  //     Name: "Cricket",
+  //     Score: 0,
+  //   },
+  //   {
+  //     Name: "Football",
+  //     Score: 0,
+  //   },
+  //   {
+  //     Name: "CSS Battle",
+  //     Score: 0,
+  //   },
+  //   {
+  //     Name: "Solo Dance",
+  //     Score: 0,
+  //   },
+  //   {
+  //     Name: "Chess",
+  //     Score: 0,
+  //   },
+  //   {
+  //     Name: "Tennis",
+  //     Score: 0,
+  //   },
+  //   {
+  //     Name: "Monoact",
+  //     Score: 0,
+  //   },
+  //   {
+  //     Name: "BasketBall",
+  //     Score: 0,
+  //   },
+  //   {
+  //     Name: "Cricket",
+  //     Score: 0,
+  //   },
+  //   {
+  //     Name: "Football",
+  //     Score: 0,
+  //   },
+  // ];
   //BranchesData.sort((a, b) => b.Score - a.Score);
   // const top3 = BranchesData.slice(0, 3);
-  let restData = BranchesData.map((item, index) => {
-    return { ...item, rank: index + 1 };
-  });
-  const renderItem = ({ item }) => {
-    console.log(item);
+  // let restData = BranchesData.slice(0).map((item, index) => {
+  //   return { ...item, rank: index + 4 };
+  // });
+  const renderItem = (props) => {
+    console.log(props);
     return (
       <View style={{ padding: 5 }}>
-        <TeamPointsComponent branchData={item} logoPaths={logoPaths} />
+        <TeamPointsComponent branchData={props.item} logoPaths={logoPaths} />
       </View>
     );
   };
@@ -85,14 +122,17 @@ export default function TeamPoints({ route }) {
 
       <View style={styles.container2}>
         <FlatList
-          data={restData}
+          data={eventPoints}
           renderItem={renderItem}
-          // style={styles.LeaderBoardList}
+          keyExtractor={(item, index) => {
+          return index;
+          }}
+          alwaysBounceVertical={false}
         />
       </View>
       <View style={styles.bottomcont}>
         <Text style={styles.text01}>Last Updated on: </Text>
-        <Text style={styles.text02}>05/03/2024</Text>
+        <Text style={styles.text02}>15/3/2024</Text>
       </View>
       <View style={styles.bottomnav}></View>
     </View>
