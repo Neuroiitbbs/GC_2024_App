@@ -48,7 +48,12 @@ function TechCultEventCard(props) {
         >
           <View>
             <Text
-              style={{ fontSize: 20, fontWeight: "700", paddingBottom: 12 , color:'#d41d77'}}
+              style={{
+                fontSize: 20,
+                fontWeight: "700",
+                paddingBottom: 12,
+                color: "#d41d77",
+              }}
             >
               {props.details?.title}
             </Text>
@@ -112,17 +117,17 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   cardBottom: {
-    marginBottom: 0.04 * deviceHeight,
+    marginBottom: 0.01 * deviceHeight,
     height: 0.09 * deviceHeight,
     marginHorizontal: "4%",
     padding: 10,
-    backgroundColor: "black",
+    backgroundColor: "#1A1A2E",
     borderBottomRightRadius: 16,
     borderBottomLeftRadius: 16,
-    elevation: 20,
-    shadowColor: "rgb(192, 9, 99)",
+    elevation: 6,
+    shadowColor: "white",
     shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 1,
+    shadowRadius: 0.5,
     shadowOpacity: 1,
     display: "flex",
     flexDirection: "row",

@@ -82,15 +82,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#000000",
   },
   ButtonContainer: {
-    marginLeft: 30,
     flexDirection: "row",
     marginBottom: 24,
-    padding:0,
+    padding: 0,
     flex: 1,
-    width: '100%',
-    alignContent:'center',
-    //justifyContent:'center',
-    alignItems:'center'
+    width: "100%",
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
   bottomnav: {
     flex: 0.15,

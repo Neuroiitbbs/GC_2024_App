@@ -30,23 +30,58 @@ const SpecificEvents = ({ route }) => {
   if (pointsTable) {
     const pointsTableArray = Object.entries(pointsTable);
     pointsTableArray.sort((a, b) => {
-      return parseInt(a[1].position) - parseInt(b[1].position);
+      return parseInt(b[1].position) - parseInt(a[1].position);
     });
     sortedPointsTable = Object.fromEntries(pointsTableArray);
   }
   console.log(sortedPointsTable);
   console.log("pointsTable", pointsTable);
   return (
-    <ScrollView>
-      <View
-        style={{
-          backgroundColor: "black",
-          flexDirection: "column",
-          flex: 1,
-          justifyContent: "center",
-        }}
-      >
-        <View style={{ marginLeft: 10 }}>
+    <View
+      style={{
+        backgroundColor: "black",
+        flexDirection: "column",
+        flex: 1,
+        justifyContent: "center",
+      }}
+    >
+      <ScrollView style={{ flex: 1, padding: 10 }}>
+        {pointsTable && (
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <Text style={[styles.cell, styles.headerText]}>Branch</Text>
+              <Text style={[styles.cell, styles.headerText]}>Points</Text>
+              <Text style={[styles.cell, styles.headerText]}>Position</Text>
+            </View>
+          </View>
+        )}
+        {/* <FlatList
+            data={Object.keys(pointsTable)}
+            renderItem={renderItem}
+            keyExtractor={(item) => item}
+          /> */}
+        {Object.keys(sortedPointsTable).map((item, index) => {
+          return (
+            <View style={styles.row} key={index}>
+              <Text style={styles.cell}>{item}</Text>
+              <Text style={styles.cell}>{sortedPointsTable[item].points}</Text>
+              <Text style={styles.cell}>
+                {sortedPointsTable[item].position == 0
+                  ? "-"
+                  : sortedPointsTable[item].position}
+              </Text>
+            </View>
+          );
+        })}
+
+        <View
+          style={{
+            flex: 1,
+            marginLeft: 10,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Text style={{ color: "white", fontWeight: "bold" }}>
             {data.details.title}
           </Text>
@@ -59,23 +94,9 @@ const SpecificEvents = ({ route }) => {
             {data.details.description}
           </Text>
         </View>
-
-        {pointsTable && (
-          <View style={styles.container}>
-            <View style={styles.header}>
-              <Text style={[styles.cell, styles.headerText]}>Branch</Text>
-              <Text style={[styles.cell, styles.headerText]}>Points</Text>
-              <Text style={[styles.cell, styles.headerText]}>Position</Text>
-            </View>
-            <FlatList
-              data={Object.keys(pointsTable)}
-              renderItem={renderItem}
-              keyExtractor={(item) => item}
-            />
-          </View>
-        )}
-      </View>
-    </ScrollView>
+        <View style={{ minHeight: 100 }}></View>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -83,7 +104,7 @@ export default SpecificEvents;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     padding: 12,
   },
   header: {
