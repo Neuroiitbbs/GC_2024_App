@@ -178,11 +178,12 @@ export default function HomePage() {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
+                marginTop: -60
               }}
             >
               <Text style={styles.newsTitle}>NEWS</Text>
               <TouchableOpacity onPress={() => navigation.navigate("NewsPage")}>
-                <Text style={{ color: "#BA1D55", marginRight: "5%" }}>
+                <Text style={{ color: "#BA1D55", marginRight: "0%" }}>
                   View all {">"}{" "}
                 </Text>
               </TouchableOpacity>
@@ -192,7 +193,12 @@ export default function HomePage() {
               layout="default"
               data={newsIds}
               renderItem={({ item }) => (
-                <CarouselCard item={{uri:newscardata[item]?.imageUrl}} height={"100%"} width={width * 0.9} />
+                <View>
+                  <Text style={{color:'white', fontSize: 18, paddingBottom:8}}>
+                    {newscardata[item]?.title}
+                  </Text>
+                  <CarouselCard item={{uri:newscardata[item]?.imageUrl}} height={"100%"} width={width * 0.9} />
+                </View>
               )}
               firstItem={1}
               sliderWidth={width}
