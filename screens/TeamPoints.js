@@ -22,7 +22,7 @@ export default function TeamPoints({ route }) {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          backend_link + "api/points/getPointsTableByTeam?teamId=" + branch
+          backend_link + "api/points/getPointsTableByTeam?teamId=" + team
         );
 
         console.log(response.data);
@@ -100,12 +100,11 @@ export default function TeamPoints({ route }) {
 
   const totalPoints = () => {
     var sum = 0;
-    for(var points of eventPoints)
-    {
-      sum+=points[1];
+    for (var points of eventPoints) {
+      sum += points[1];
     }
     return sum;
-  }
+  };
 
   const renderItem = (props) => {
     console.log(props);

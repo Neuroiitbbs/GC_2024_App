@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { StatusBar } from "expo-status-bar";
 import {
@@ -12,11 +12,9 @@ import {
   Pressable,
 } from "react-native";
 
-
 import Carousel, { Pagination } from "react-native-snap-carousel-new";
 import { ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import MaskedView from "@react-native-masked-view/masked-view";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 import CarouselCard from "../Components/CarouselCard";
@@ -35,12 +33,11 @@ export default function HomePage() {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
-   const [Ids, setIds] = useState([]);
+  const [Ids, setIds] = useState([]);
   const [cardata, setcardata] = useState([]);
 
-   const [newsIds, setnewsIds] = useState([]);
+  const [newsIds, setnewsIds] = useState([]);
   const [newscardata, setnewscardata] = useState([]);
-
 
   useEffect(() => {
     const getAllCarousels = async () => {
@@ -51,10 +48,9 @@ export default function HomePage() {
         console.log("response", response.data);
         const ids = Object.keys(response.data);
         console.log(ids);
-        console.log(response.data)
+        console.log(response.data);
         setIds(ids);
         setcardata(response.data);
-     
       } catch (err) {
         console.log("Failed to get Carousel Images", err);
       }
@@ -68,14 +64,13 @@ export default function HomePage() {
         console.log("response", response.data);
         const ids = Object.keys(response.data);
         console.log(ids);
-        console.log(response.data)
+        console.log(response.data);
         setnewsIds(ids);
         setnewscardata(response.data);
-     
       } catch (err) {
         console.log("Failed to get Carousel Images", err);
       }
-    }
+    };
     getAllCarousels();
     getNewsCarousels();
   }, []);
@@ -156,8 +151,12 @@ export default function HomePage() {
             <Carousel
               data={Ids}
               renderItem={({ item }) => (
-              <CarouselCard item={{uri:cardata[item]?.imageUrl}} height={"100%"} width={width * 0.9} /> 
-              // : <Text>Loading...</Text>
+                <CarouselCard
+                  item={{ uri: cardata[item]?.imageUrl }}
+                  height={"100%"}
+                  width={width * 0.9}
+                />
+                // : <Text>Loading...</Text>
               )}
               firstItem={1}
               sliderWidth={width}
@@ -178,7 +177,7 @@ export default function HomePage() {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                marginTop: -60
+                marginTop: -60,
               }}
             >
               <Text style={styles.newsTitle}>NEWS</Text>
@@ -194,10 +193,16 @@ export default function HomePage() {
               data={newsIds}
               renderItem={({ item }) => (
                 <View>
-                  <Text style={{color:'white', fontSize: 18, paddingBottom:8}}>
+                  <Text
+                    style={{ color: "white", fontSize: 18, paddingBottom: 8 }}
+                  >
                     {newscardata[item]?.title}
                   </Text>
-                  <CarouselCard item={{uri:newscardata[item]?.imageUrl}} height={"100%"} width={width * 0.9} />
+                  <CarouselCard
+                    item={{ uri: newscardata[item]?.imageUrl }}
+                    height={"100%"}
+                    width={width * 0.9}
+                  />
                 </View>
               )}
               firstItem={1}
