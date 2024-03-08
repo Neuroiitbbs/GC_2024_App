@@ -15,17 +15,31 @@ import { LinearGradient } from "expo-linear-gradient";
 import { backend_link } from "../utils/constants";
 
 import logoPaths from "../utils/logoPaths";
+import { Picker } from "@react-native-picker/picker";
 import setProperTeamName from "../utils/setProperTeamName";
+import { LoginContext } from "../store/LoginContext";
+import { useContext } from "react";
 
 function OngoingEventCard(props) {
   // console.log(props);
+  const [status, setStatus] = useState(props.status);
+  const loginCtx = useContext(LoginContext);
 
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);
 
   const [update, setUpdate] = useState(false);
-  const [scoreTeamA, setScoreTeamA] = useState();
-  const [scoreTeamB, setScoreTeamB] = useState();
+  const [scoreTeamA, setScoreTeamA] = useState(props.scoreA);
+  const [scoreTeamB, setScoreTeamB] = useState(props.scoreB);
+
+  const date = new Date(props?.details?.timestamp);
+  const formattedDate = date.toLocaleDateString(); // Date component
+  let hour = date.getHours();
+  const minute = date.getMinutes();
+  const ampm = hour >= 12 ? "PM" : "AM";
+  hour = hour % 12;
+  hour = hour ? hour : 12;
+  const formattedTime = `${hour}:${minute < 10 ? "0" : ""}${minute} ${ampm}`;
 
   const submitHandler = async () => {
     if (
@@ -35,40 +49,44 @@ function OngoingEventCard(props) {
       scoreTeamB === null
     )
       return;
-    const idx = props.gameName
-      .split(" ")
-      .findIndex((word) => word.toLowerCase() === "vs");
+
+    if (status === "") {
+      Alert.alert("Error", "Please select status");
+      return;
+    }
+    if (scoreTeamA === "" || scoreTeamB === "") {
+      Alert.alert("Error", "Please enter valid scores");
+      return;
+    }
+
     const eventId = props.gameName
       .split(" ")
-      .slice(0, idx - 1)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
-    const subEventId = props.gameName
-      .split(" ")
-      .slice(idx - 1, idx + 2)
-      .join(" ");
+    const teamAscore = parseInt(scoreTeamA);
+    const teamBscore = parseInt(scoreTeamB);
+    if (isNaN(teamAscore) || isNaN(teamBscore)) {
+      Alert.alert("Error", "Please enter valid scores");
+      return;
+    }
     const points = {
       teamA: {
         name: props.teamA,
-        points: scoreTeamA,
+        points: teamAscore,
       },
       teamB: {
         name: props.teamB,
-        points: scoreTeamB,
+        points: teamBscore,
       },
     };
-    const email = "21cs01026@iitbbs.ac.in";
+    const email = loginCtx?.user?.email || "22EC01099@iitbbs.ac.in";
     console.log("hii");
     const body = {
       eventId,
-      subEventId,
+      subEventId: props.subEventId,
       email,
       points,
-      // title: props.details?.title,
-      // description: "Description",
-      // location: props.details?.location,
-      // timestamp: props.details?.timestamp || Date.now().toString(),
-      // type: "Final",
-      status: props.status,
+      status: status,
     };
     console.log(body);
     try {
@@ -78,8 +96,13 @@ function OngoingEventCard(props) {
       );
       console.log(resp);
       props.setIsEventUpdated((prev) => !prev);
+      setUpdate(false);
       Alert.alert("Score Updated");
     } catch (err) {
+      if (err.response.status === 401) {
+        Alert.alert("Error", "You are not authorized to update the score");
+        return;
+      }
       console.log("points update failed", err);
       Alert.alert("Error", "Something went wrong");
     }
@@ -87,12 +110,28 @@ function OngoingEventCard(props) {
   return (
     <View>
       <LinearGradient
-        start={{ x: 0.2, y: 0.1 }}
-        end={{ x: 0.65, y: 0.5 }}
-        locations={[0.6, 1]}
-        colors={["white", "#e3e3e3"]}
+        start={{ x: -0.4, y: 0.0 }}
+        end={{ x: 0.7, y: 1 }}
+        locations={[0.5, 1]}
+        colors={["white", "white"]}
         style={styles.cardTop}
       >
+        <View>
+          <Text style={{ fontWeight: "700", paddingBottom: 20 }}>
+            {props.teamA} v/s {props.teamB}
+          </Text>
+          <Text
+            style={{
+              fontWeight: "700",
+              paddingBottom: 20,
+              position: "relative",
+              left: deviceWidth * 0.04,
+            }}
+          >
+            {props.subEventId}
+          </Text>
+          {/* <Text style={{ fontWeight: "700" }}>{props.data.details.location}</Text> */}
+        </View>
         <Image style={styles.LeftImageContainer} source={logoPaths[teamA]} />
         <Image />
         <Text style={styles.LEFTscoreText}>{props.scoreA}</Text>
@@ -103,11 +142,14 @@ function OngoingEventCard(props) {
 
       <View style={styles.cardBottom}>
         <View>
-          <Text style={styles.BottomTextGame}>{props.details?.location}</Text>
-          <Text style={styles.BottomTextTeams}>
-            {props.teamA} v/s {props.teamB}
-          </Text>
+          <Text style={styles.BottomTextGame}>{props.gameName}</Text>
+          <Text style={styles.BottomTextTeams}>{props?.details?.location}</Text>
         </View>
+        <View>
+          <Text style={styles.BottomTextGame}>{formattedDate}</Text>
+          <Text style={styles.BottomTextTime}>{formattedTime}</Text>
+        </View>
+
         <TouchableOpacity
           style={styles.UpdateScoreButton}
           onPress={() => {
@@ -121,22 +163,48 @@ function OngoingEventCard(props) {
         <>
           <View style={styles.container}>
             <View style={styles.innerContainer}>
-              <View style={styles.textView}>
-                <TextInput
-                  style={{ height: 40 }}
-                  placeholder="   Score Team Left"
-                  onChangeText={(newText) => setScoreTeamA(newText)}
-                  defaultValue={scoreTeamA}
-                />
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View style={styles.textView}>
+                  <TextInput
+                    keyboardType="numeric"
+                    style={{ height: 40 }}
+                    placeholder={" Score of " + teamA}
+                    onChangeText={(newText) => setScoreTeamA(newText)}
+                    value={scoreTeamA}
+                  />
+                </View>
+                <View style={{ width: 10 }}></View>
+                <View style={styles.textView}>
+                  <TextInput
+                    keyboardType="numeric"
+                    style={{ height: 40 }}
+                    placeholder={" Score of " + teamB}
+                    onChangeText={(newText) => setScoreTeamB(newText)}
+                    value={scoreTeamB}
+                  />
+                </View>
               </View>
-              <View style={{ width: 10 }}></View>
-              <View style={styles.textView}>
-                <TextInput
-                  style={{ height: 40 }}
-                  placeholder="   Score Team Right"
-                  onChangeText={(newText) => setScoreTeamB(newText)}
-                  defaultValue={scoreTeamB}
-                />
+              <View style={{ flex: 1 }}>
+                <TouchableOpacity style={styles.dropdown}>
+                  <Picker
+                    selectedValue={status}
+                    style={{ height: 50, width: 300, color: "white" }}
+                    onValueChange={(itemValue, itemIndex) =>
+                      setStatus(itemValue)
+                    }
+                  >
+                    <Picker.Item label="select" value="" />
+                    <Picker.Item label="Live" value="live" />
+                    <Picker.Item label="UpComing" value="upcoming" />
+                    <Picker.Item label="Past" value="past" />
+                  </Picker>
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -149,91 +217,12 @@ function OngoingEventCard(props) {
     </View>
   );
 }
-
 export default OngoingEventCard;
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
-  cardTop: {
-    flexDirection: "row",
-    height: 0.15 * deviceHeight,
-    marginTop: 12,
-    marginHorizontal: 0.04 * deviceWidth,
-    padding: 16,
-    backgroundColor: "white",
-    borderTopRightRadius: 16,
-    borderTopLeftRadius: 16,
-    elevation: 4,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 0.75,
-  },
-  cardBottom: {
-    marginBottom: 0.04 * deviceHeight,
-    // height: 0.09 * deviceHeight,
-    marginHorizontal: "4%",
-    padding: 10,
-    backgroundColor: "black",
-    borderBottomRightRadius: 16,
-    borderBottomLeftRadius: 16,
-    elevation: 20,
-    shadowColor: "rgb(192, 9, 99)",
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 1,
-    shadowOpacity: 1,
-
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  BottomTextGame: {
-    color: "white",
-    fontSize: 16,
-  },
-  BottomTextTeams: {
-    color: "gray",
-  },
-  LeftImageContainer: {
-    width: deviceWidth < 380 ? 26 : 46,
-    height: deviceWidth < 380 ? 26 : 46,
-    borderRadius: deviceWidth < 380 ? 13 : 23,
-    borderWidth: 3,
-    overflow: "hidden",
-    margin: 9,
-    marginTop: 36,
-    position: "absolute",
-    left: 9,
-  },
-  RightImageContainer: {
-    width: deviceWidth < 380 ? 26 : 46,
-    height: deviceWidth < 380 ? 26 : 46,
-    borderRadius: deviceWidth < 380 ? 13 : 23,
-    borderWidth: 3,
-    overflow: "hidden",
-    margin: 9,
-    marginTop: 36,
-    position: "absolute",
-    right: 9,
-  },
-  LEFTscoreText: {
-    fontSize: 26,
-    color: "#322d2d",
-    position: "absolute",
-    left: 70,
-    margin: 9,
-    marginTop: 38,
-  },
-  RIGHTscoreText: {
-    color: "#322d2d",
-    fontSize: 26,
-    position: "absolute",
-    right: 70,
-    margin: 9,
-    marginTop: 38,
-  },
   UpdateScoreButton: {
     backgroundColor: "rgb(212,36,119	)",
     borderRadius: 100,
@@ -249,13 +238,25 @@ const styles = StyleSheet.create({
     flex: 1,
     position: "relative",
     top: -35,
+    minHeight: 100,
     padding: 20,
     paddingBottom: 0,
   },
-  innerContainer: {
-    // backgroundColor:"white",
+  dropdown: {
     flexDirection: "row",
-    height: 40,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    // paddingVertical: ,
+    borderWidth: 2,
+    margin: 3,
+    borderColor: "#5C6168",
+    borderRadius: 5,
+  },
+  innerContainer: {
+    flexDirection: "column",
+    minHeight: 80,
+    gap: 6,
     alignItems: "stretch",
     flex: 1,
     paddingTop: 10,
@@ -274,5 +275,90 @@ const styles = StyleSheet.create({
     border: 10,
     borderColor: "black",
     borderRadius: 10,
+  },
+  cardTop: {
+    flexDirection: "row",
+    height: 0.15 * deviceHeight,
+    marginTop: 12,
+    marginHorizontal: 0.04 * deviceWidth,
+    padding: 16,
+    backgroundColor: "black",
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
+    elevation: 4,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+    shadowOpacity: 0.75,
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+  },
+  cardBottom: {
+    marginBottom: 0.01 * deviceHeight,
+    height: 0.09 * deviceHeight,
+    marginHorizontal: "4%",
+    padding: 10,
+    backgroundColor: "#1A1A2E",
+    borderBottomRightRadius: 16,
+    borderBottomLeftRadius: 16,
+    elevation: 6,
+    shadowColor: "white",
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 0.5,
+    shadowOpacity: 1,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  BottomTextGame: {
+    color: "white",
+    fontSize: 16,
+  },
+  BottomTextTeams: {
+    color: "gray",
+  },
+  BottomTextTime: {
+    color: "gray",
+    position: "relative",
+    right: -18,
+  },
+  LeftImageContainer: {
+    width: deviceWidth < 380 ? 30 : 52,
+    height: deviceWidth < 380 ? 30 : 52,
+    borderRadius: deviceWidth < 380 ? 15 : 26,
+    borderWidth: 3,
+    overflow: "hidden",
+    margin: 9,
+    marginTop: 36,
+    position: "absolute",
+    left: 9,
+  },
+  RightImageContainer: {
+    width: deviceWidth < 380 ? 26 : 52,
+    height: deviceWidth < 380 ? 26 : 52,
+    borderRadius: deviceWidth < 380 ? 15 : 26,
+    borderWidth: 3,
+    overflow: "hidden",
+    margin: 9,
+    marginTop: 36,
+    position: "absolute",
+    right: 9,
+  },
+  LEFTscoreText: {
+    fontSize: 20,
+    color: "#322d2d",
+    position: "absolute",
+    left: 70,
+    margin: 9,
+    marginTop: 38,
+  },
+  RIGHTscoreText: {
+    color: "#322d2d",
+    fontSize: 20,
+    position: "absolute",
+    right: 70,
+    margin: 9,
+    marginTop: 38,
   },
 });

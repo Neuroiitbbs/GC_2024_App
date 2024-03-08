@@ -10,12 +10,10 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Pressable,
+  ScrollView,
 } from "react-native";
 
-import AddEvent from "./Admin/AddEvent";
-import AddLiveEvents from "./AddLiveEvents";
 import Carousel, { Pagination } from "react-native-snap-carousel-new";
-import { ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -275,6 +273,5 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 200,
     resizeMode: "cover",
-    borderRadius: 10,
   },
 });

@@ -86,8 +86,6 @@ const ModalComponent = ({ modalVisible, setModalVisible }) => {
                     style={{
                       width: 50,
                       height: 50,
-                      border: 1,
-                      borderRadius: 25,
                     }}
                   />
                 </View>

@@ -40,7 +40,7 @@ const defaultPoint = {
     points: 0,
     position: 0,
   },
-  PhD: {
+  PHD: {
     points: 0,
     position: 0,
   },
@@ -48,12 +48,17 @@ const defaultPoint = {
     points: 0,
     position: 0,
   },
-  MSC_ITEP: {
+  MSc_ITEP: {
     points: 0,
     position: 0,
   },
 };
+const getCorrectTimeStamp = (date, time) => {
+  date = date.split("T")[0];
+  time = time.split("T")[1];
 
+  return new Date(date + "T" + time).getTime();
+};
 const AddEvent = () => {
   const LoginCtx = useContext(LoginContext);
   const [name, setName] = useState("");
@@ -112,7 +117,7 @@ const AddEvent = () => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
 
-    let timestamp = date.getTime() + time.getTime();
+    let timestamp = getCorrectTimeStamp(date.toISOString(), time.toISOString());
     if (
       !title ||
       !description ||
@@ -419,7 +424,7 @@ const AddEvent = () => {
                   keyboardType="numeric"
                   placeholder="Team F Points"
                   placeholderTextColor="#5C6168"
-                  onChangeText={(text) => handlePointChange("PhD", text)}
+                  onChangeText={(text) => handlePointChange("PHD", text)}
                 />
               </View>
             </View>
@@ -462,7 +467,7 @@ const AddEvent = () => {
                   placeholder="Team H Points"
                   keyboardType="numeric"
                   placeholderTextColor="#5C6168"
-                  onChangeText={(text) => handlePointChange("MSC_ITEP", text)}
+                  onChangeText={(text) => handlePointChange("MSc_ITEP", text)}
                 />
               </View>
             </View>
