@@ -14,52 +14,52 @@ function OngoingScreen(props) {
   const [isEventUpdated, setIsEventUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [ongoingEvents, setOngoingEvents] = useState([
-    {
-      gameName: "Basketball",
-      id: "Basketball",
-      teamA: "ECE-META",
-      teamB: "CSE",
-      scoreA: "4",
-      scoreB: "6",
-      location: "BHR",
-      timestamp: 1709644800000,
-    },
-    {
-      gameName: "Cricket",
-      id: "Cricket",
-      teamA: "ECE-META",
-      teamB: "CSE",
-      scoreA: "4",
-      scoreB: "6",
-      location: "BHR",
-      timestamp: 1709644800000,
-    },
-    {
-      gameName: "Football",
-      id: "Football",
-      teamA: "ECE-META",
-      teamB: "CSE",
-      scoreA: "4",
-      scoreB: "6",
-      location: "BHR",
-      timestamp: 1709644800000,
-    },
-    {
-      gameName: "Tennis",
-      id: "Tennis",
-      teamA: "ECE-META",
-      teamB: "CSE",
-      scoreA: "4",
-      scoreB: "6",
-      location: "BHR",
-      timestamp: 1709644800000,
-    },
+    // {
+    //   gameName: "Basketball",
+    //   id: "Basketball",
+    //   teamA: "ECE-META",
+    //   teamB: "CSE",
+    //   scoreA: "4",
+    //   scoreB: "6",
+    //   location: "BHR",
+    //   timestamp: 1709644800000,
+    // },
+    // {
+    //   gameName: "Cricket",
+    //   id: "Cricket",
+    //   teamA: "ECE-META",
+    //   teamB: "CSE",
+    //   scoreA: "4",
+    //   scoreB: "6",
+    //   location: "BHR",
+    //   timestamp: 1709644800000,
+    // },
+    // {
+    //   gameName: "Football",
+    //   id: "Football",
+    //   teamA: "ECE-META",
+    //   teamB: "CSE",
+    //   scoreA: "4",
+    //   scoreB: "6",
+    //   location: "BHR",
+    //   timestamp: 1709644800000,
+    // },
+    // {
+    //   gameName: "Tennis",
+    //   id: "Tennis",
+    //   teamA: "ECE-META",
+    //   teamB: "CSE",
+    //   scoreA: "4",
+    //   scoreB: "6",
+    //   location: "BHR",
+    //   timestamp: 1709644800000,
+    // },
   ]);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          backend_link + "api/event/getCurrentlyLiveEvents"
+          backend_link + "api/event/getAllLiveEvents"
         );
         console.log("hi");
         console.log(response.data.events[0]);
@@ -70,28 +70,22 @@ function OngoingScreen(props) {
           console.log("teams", item);
           const newSubEvents = teams.map((item1) => {
             console.log("item11", item1);
+            const subEventId = item1.subEventId;
             const teamA = item1.data.points
               ? item1.data.points?.teamA
               : item1.data.pointsTable?.teamA;
             const teamB = item1.data.points
               ? item1.data.points?.teamB
               : item1.data.pointsTable?.teamB;
-            //const gameName = event;
-            //console.log("item1", item1);
-            // const idx = item1.data.details.title
-            //   .split(" ")
-            //   .findIndex((word) => word.toLowerCase() === "vs");
-            // const gameName = item1.data.details.title
-            //   .split(" ")
-            //   .slice(0, idx - 1)
-            //   .join(" ");
-            //console.log("teamA", teamA);
+
             return {
+              subEventId: subEventId,
               details: item1.data.details,
               status: item1.data.status,
               gameName: gameName,
               id:
                 item1.data.details.title.split(" ").join("") +
+                "++" +
                 item1.subEventId.split(" ").join(""),
               // teamA: item1.subEventId.split(" vs ")[0],
               // teamB: item1.subEventId.split(" vs ")[1],
@@ -124,6 +118,7 @@ function OngoingScreen(props) {
           renderItem={(itemData, index) => {
             return (
               <AdminOngoingEventCard
+                subEventId={itemData.item.subEventId}
                 gameName={itemData.item.gameName}
                 id={itemData.item.id}
                 teamA={itemData.item.teamA}

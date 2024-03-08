@@ -10,12 +10,10 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Pressable,
+  ScrollView,
 } from "react-native";
 
-import AddEvent from "./Admin/AddEvent";
-import AddLiveEvents from "./AddLiveEvents";
 import Carousel, { Pagination } from "react-native-snap-carousel-new";
-import { ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -62,11 +60,11 @@ export default function HomePage() {
     //   },
     // ],
     teams: [
-      require("../assets/Team Banners/CSE.jpg"),
-      require("../assets/Team Banners/ECE.jpg"),
-      require("../assets/Team Banners/EE.jpg"),
-      require("../assets/Team Banners/CE.jpg"),
-      require("../assets/Team Banners/ME.jpg"),
+      require("../assets/TeamBanners/CSE.jpg"),
+      require("../assets/TeamBanners/ECE.jpg"),
+      require("../assets/TeamBanners/EE.jpg"),
+      require("../assets/TeamBanners/CE.jpg"),
+      require("../assets/TeamBanners/ME.jpg"),
     ],
     news: [
       require("../assets/news/news1.jpg"),
@@ -74,7 +72,7 @@ export default function HomePage() {
     ],
   };
 
-  const teams = ["CSE", "ECE", "EE", "CIVIL", "MECH"];
+  const teams = ["CSE", "ECE_META", "EE", "CIVIL", "MECH"];
 
   const renderPagination = () => {
     return (
@@ -275,6 +273,5 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 200,
     resizeMode: "cover",
-    borderRadius: 10,
   },
 });
