@@ -18,6 +18,7 @@ import { LoginContext } from "../store/LoginContext";
 import AddTechCultEvent from "./Admin/AddTechCultEvent";
 import UpdateTechCultEvents from "./Admin/UpdateTechCultEvent";
 import CheckUpdateTechCultEvents from "../Components/CheckUpdateEvent";
+import AddNewsImage from "./Admin/AddNewsImage";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -127,6 +128,16 @@ function AdminDashboardStackNavigator() {
       <AdminDashboardStack.Screen
         name="AddSportEvent"
         component={LiveEvents}
+        options={{
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
+        }}
+      />
+      <AdminDashboardStack.Screen
+        name="AddNewsImage"
+        component={AddNewsImage}
         options={{
           // headerTitle: () => <Header />,
           // headerTintColor: "white", // YAY! Proper format!

@@ -63,7 +63,7 @@ const AdminDashboard = ({ navigation }) => {
                   styles.cardView,
                   pressed ? styles.cardPressed : {},
                 ]}
-                onPress={() => {}}
+                onPress={() => {navigation.navigate("AddNewsImage")}}
               >
                 <View style={{ paddingVertical: 15 }}>
                   <Image
@@ -78,7 +78,7 @@ const AdminDashboard = ({ navigation }) => {
                 <AntDesign name="arrowright" size={20} color="white" />
               </Pressable>
 
-              <Pressable
+              {/* <Pressable
                 style={({ pressed }) => [
                   styles.cardView,
                   pressed ? styles.cardPressed : {},
@@ -95,7 +95,7 @@ const AdminDashboard = ({ navigation }) => {
                 />
                 <Text style={styles.cardTitle}>Add Score</Text>
                 <AntDesign name="arrowright" size={20} color="white" />
-              </Pressable>
+              </Pressable> */}
             </View>
             {/* Right Column */}
             <View style={styles.column}>

@@ -24,7 +24,7 @@ export default function App() {
     const getAllCarousels = async () => {
       try {
         const response = await axios.get(
-          backend_link + "api/assets/getCarouselImages"
+          backend_link + "api/assets/getNewsImages"
         );
         console.log("response", response.data);
         const ids = Object.keys(response.data);
@@ -51,7 +51,7 @@ export default function App() {
     try {
       const response = await axios.post(
         backend_link +
-          "api/assets/addCarouselImage?imageUrl=" +
+          "api/assets/addNewsImage?imageUrl=" +
           imageUrl +
           "&title=" +
           imageTitle
@@ -84,7 +84,7 @@ export default function App() {
   }
 
     try{
-      const resp = await axios.post(backend_link+'api/assets/deleteCarouselImage?id='+imageId);
+      const resp = await axios.post(backend_link+'api/assets/deleteNewsImage?id='+imageId);
       console.log("SUCCESS", resp);
       console.log("SUCCESS", data);
       setDataValues(Object.values(data));
@@ -115,7 +115,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Add Carousel Image URL:</Text>
+      <Text style={styles.header}>Add Oracle News Image URL:</Text>
       <TextInput
         placeholder="Enter image URL"
         style={{
