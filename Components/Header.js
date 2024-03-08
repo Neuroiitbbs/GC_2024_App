@@ -13,7 +13,6 @@ import {
 
 import { ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import MaskedView from "@react-native-masked-view/masked-view";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Modal from "./Modal";
 import EventDropDown from "./eventsDropdown";

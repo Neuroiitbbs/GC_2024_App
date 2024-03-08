@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.iitbbs.GC_App_2024"
+      "package": "com.iitbbs.GCApp2024"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,6 +33,6 @@
         "projectId": "4c058831-328a-46c7-afeb-200a24a86a98"
       }
     },
-    "scheme": "GC_App_2024"
+    "scheme": "GC-App2024"
   }
 }
