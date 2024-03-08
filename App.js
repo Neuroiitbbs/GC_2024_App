@@ -11,6 +11,8 @@ import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
 import { LoginProvider, LoginContext } from "./store/LoginContext";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { backend_link } from "./utils/constants";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -22,8 +24,7 @@ import {
   androidClientId,
   webClientId,
 } from "./firebaseConfig";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { backend_link } from "./utils/constants";
+
 WebBrowser.maybeCompleteAuthSession();
 
 const Stack = createStackNavigator();
@@ -113,6 +114,7 @@ const App = () => {
       <View style={styles.container}>
         <NavigationContainer>
           <StatusBar style="light" />
+
           {LoginCtx.isLogin ? (
             <AllTabs />
           ) : (
