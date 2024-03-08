@@ -22,33 +22,44 @@ const LiveEvents = ({ navigation }) => {
           />
           <View style={styles.buttonContainer}>
             <View
-              style={[styles.buttonWrapper, { backgroundColor: "#0B0D11" }]}
+              style={[styles.buttonWrapper, { backgroundColor: "#240A34" }]}
             >
               <Button
                 title="Add Tech./Cultural Event"
                 onPress={() => navigation.navigate("AddTechCultEvent")}
                 style={styles.button}
-                color="#0B0D11"
+                color="#240A34"
               />
             </View>
             <View
-              style={[styles.buttonWrapper, { backgroundColor: "#0B0D11" }]}
+              style={[styles.buttonWrapper, { backgroundColor: "#240A34" }]}
             >
               <Button
                 title="Update Tech./Cultural Event"
                 onPress={() => navigation.navigate("CheckUpdateTechCultEvent")}
                 style={styles.button}
-                color="#0B0D11"
+                color="#240A34"
               />
             </View>
             <View
-              style={[styles.buttonWrapper, { backgroundColor: "#0B0D11" }]}
+              style={[styles.buttonWrapper, { backgroundColor: "#240A34" }]}
             >
               <Button
                 title="Add Sports Event"
                 onPress={() => navigation.navigate("AddSportEvent")}
                 style={styles.button}
-                color="#0B0D11"
+                color="#240A34"
+              />
+            </View>
+
+            <View
+              style={[styles.buttonWrapper, { backgroundColor: "#240A34" }]}
+            >
+              <Button
+                title="Update Sport Event"
+                onPress={() => navigation.navigate("AdminAddScoreStack")}
+                style={styles.button}
+                color="#240A34"
               />
             </View>
           </View>
@@ -112,6 +123,7 @@ const styles = StyleSheet.create({
     borderRadius: 15, // Set the border radius to make the button rounded
     overflow: "hidden", // Ensure that the button content is clipped to the rounded border
     padding: 10,
+    elevation: 10, // Set the elevation to make the button shadow appear
     //  paddingVertical: 20, // Increased the height here
   },
   button: {

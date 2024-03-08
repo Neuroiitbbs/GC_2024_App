@@ -25,38 +25,43 @@ import { useNavigation } from "@react-navigation/native";
 const defaultPoint = {
   MTech: {
     points: 0,
-    position: 0,
+    position: "0",
   },
   ECE_META: {
     points: 0,
-    position: 0,
+    position: "0",
   },
   CSE: {
     points: 0,
-    position: 0,
+    position: "0",
   },
   CIVIL: {
     points: 0,
-    position: 0,
+    position: "0",
   },
   EE: {
     points: 0,
-    position: 0,
+    position: "0",
   },
-  PhD: {
+  PHD: {
     points: 0,
-    position: 0,
+    position: "0",
   },
   MECH: {
     points: 0,
-    position: 0,
+    position: "0",
   },
-  MSC_ITEP: {
+  MSc_ITEP: {
     points: 0,
-    position: 0,
+    position: "0",
   },
 };
+const getCorrectTimeStamp = (date, time) => {
+  date = date.split("T")[0];
+  time = time.split("T")[1];
 
+  return new Date(date + "T" + time).getTime();
+};
 const UpdateEvent = ({ route, navigation }) => {
   let data = route.params?.data;
   data = data?.data;
@@ -146,7 +151,7 @@ const UpdateEvent = ({ route, navigation }) => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
 
-    let timestamp = date.getTime() + time.getTime();
+    let timestamp = getCorrectTimeStamp(date.toISOString(), time.toISOString());
     if (
       !title ||
       !description ||
@@ -501,7 +506,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   placeholder="Points"
                   value={teamPoint.PhD.points}
                   placeholderTextColor="#5C6168"
-                  onChangeText={(text) => handlePointChange("PhD", text)}
+                  onChangeText={(text) => handlePointChange("PHD", text)}
                 />
               </View>
               <View style={{ flex: 1 }}>
@@ -511,7 +516,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   placeholder="Position"
                   value={teamPoint.PhD.position.toString()}
                   placeholderTextColor="#5C6168"
-                  onChangeText={(text) => handlePosChange("PhD", text)}
+                  onChangeText={(text) => handlePosChange("PHD", text)}
                 />
               </View>
             </View>
@@ -566,7 +571,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   value={teamPoint.MSC_ITEP.points}
                   keyboardType="numeric"
                   placeholderTextColor="#5C6168"
-                  onChangeText={(text) => handlePointChange("MSC_ITEP", text)}
+                  onChangeText={(text) => handlePointChange("MSc_ITEP", text)}
                 />
               </View>
               <View style={{ flex: 1 }}>
@@ -576,7 +581,7 @@ const UpdateEvent = ({ route, navigation }) => {
                   placeholder="Position"
                   value={teamPoint.MSC_ITEP.position.toString()}
                   placeholderTextColor="#5C6168"
-                  onChangeText={(text) => handlePosChange("MSC_ITEP", text)}
+                  onChangeText={(text) => handlePosChange("MSc_ITEP", text)}
                 />
               </View>
             </View>

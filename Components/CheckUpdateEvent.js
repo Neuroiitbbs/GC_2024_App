@@ -20,7 +20,7 @@ const CheckUpdateEvent = ({ navigation }) => {
 
   const handleProceed = async () => {
     if (title.trim().length === "") {
-      alert("Please enter a valid ID (5 characters)");
+      alert("Please enter a valid title/eventid");
       return;
     }
     console.log(title);
@@ -45,11 +45,11 @@ const CheckUpdateEvent = ({ navigation }) => {
       }
     } catch (error) {
       console.log(error);
-      alert("Something went wrong");
+      alert("Event Id /Title doenn't exist Check for spaces");
     }
   };
   const onClose = () => {
-    navigate.navigate("LiveEvents");
+    navigation.navigate("LiveEvents");
     setModalVisible(false);
   };
   return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 import { StatusBar } from "expo-status-bar";
 import {
@@ -12,8 +12,7 @@ import {
   Pressable,
 } from "react-native";
 
-import AddEvent from "./Admin/AddEvent";
-import AddLiveEvents from "./AddLiveEvents";
+
 import Carousel, { Pagination } from "react-native-snap-carousel-new";
 import { ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -21,6 +20,8 @@ import MaskedView from "@react-native-masked-view/masked-view";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 import CarouselCard from "../Components/CarouselCard";
+import axios from "axios";
+import { backend_link } from "../utils/constants";
 
 var { width, height } = Dimensions.get("window");
 
@@ -33,6 +34,51 @@ export default function HomePage() {
   };
 
   const [activeIndex, setActiveIndex] = useState(0);
+
+   const [Ids, setIds] = useState([]);
+  const [cardata, setcardata] = useState([]);
+
+   const [newsIds, setnewsIds] = useState([]);
+  const [newscardata, setnewscardata] = useState([]);
+
+
+  useEffect(() => {
+    const getAllCarousels = async () => {
+      try {
+        const response = await axios.get(
+          backend_link + "api/assets/getCarouselImages"
+        );
+        console.log("response", response.data);
+        const ids = Object.keys(response.data);
+        console.log(ids);
+        console.log(response.data)
+        setIds(ids);
+        setcardata(response.data);
+     
+      } catch (err) {
+        console.log("Failed to get Carousel Images", err);
+      }
+    };
+
+    const getNewsCarousels = async () => {
+      try {
+        const response = await axios.get(
+          backend_link + "api/assets/getNewsImages"
+        );
+        console.log("response", response.data);
+        const ids = Object.keys(response.data);
+        console.log(ids);
+        console.log(response.data)
+        setnewsIds(ids);
+        setnewscardata(response.data);
+     
+      } catch (err) {
+        console.log("Failed to get Carousel Images", err);
+      }
+    }
+    getAllCarousels();
+    getNewsCarousels();
+  }, []);
 
   data = {
     banners: [
@@ -62,11 +108,11 @@ export default function HomePage() {
     //   },
     // ],
     teams: [
-      require("../assets/Team Banners/CSE.jpg"),
-      require("../assets/Team Banners/ECE.jpg"),
-      require("../assets/Team Banners/EE.jpg"),
-      require("../assets/Team Banners/CE.jpg"),
-      require("../assets/Team Banners/ME.jpg"),
+      require("../assets/TeamBanners/CSE.jpg"),
+      require("../assets/TeamBanners/ECE.jpg"),
+      require("../assets/TeamBanners/EE.jpg"),
+      require("../assets/TeamBanners/CE.jpg"),
+      require("../assets/TeamBanners/ME.jpg"),
     ],
     news: [
       require("../assets/news/news1.jpg"),
@@ -108,9 +154,10 @@ export default function HomePage() {
         <ScrollView style={styles.content}>
           <View style={styles.newsSection}>
             <Carousel
-              data={data.banners}
+              data={Ids}
               renderItem={({ item }) => (
-                <CarouselCard item={item} height={"100%"} width={width * 0.9} />
+              <CarouselCard item={{uri:cardata[item]?.imageUrl}} height={"100%"} width={width * 0.9} /> 
+              // : <Text>Loading...</Text>
               )}
               firstItem={1}
               sliderWidth={width}
@@ -131,11 +178,12 @@ export default function HomePage() {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
+                marginTop: -60
               }}
             >
               <Text style={styles.newsTitle}>NEWS</Text>
               <TouchableOpacity onPress={() => navigation.navigate("NewsPage")}>
-                <Text style={{ color: "#BA1D55", marginRight: "5%" }}>
+                <Text style={{ color: "#BA1D55", marginRight: "0%" }}>
                   View all {">"}{" "}
                 </Text>
               </TouchableOpacity>
@@ -143,9 +191,14 @@ export default function HomePage() {
 
             <Carousel
               layout="default"
-              data={data.news}
+              data={newsIds}
               renderItem={({ item }) => (
-                <CarouselCard item={item} height={"100%"} width={width * 0.9} />
+                <View>
+                  <Text style={{color:'white', fontSize: 18, paddingBottom:8}}>
+                    {newscardata[item]?.title}
+                  </Text>
+                  <CarouselCard item={{uri:newscardata[item]?.imageUrl}} height={"100%"} width={width * 0.9} />
+                </View>
               )}
               firstItem={1}
               sliderWidth={width}

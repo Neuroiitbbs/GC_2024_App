@@ -11,11 +11,10 @@ import axios from "axios";
 import { backend_link } from "../utils/constants";
 
 export default function TeamPoints({ route }) {
-  
   const [eventPoints, setEventPoints] = useState([]);
-  const [Ids,setIds] = useState([]);
-  const [data,setdata] = useState([]);
-  const branch = route.params?.branch || "CSE";
+  const [Ids, setIds] = useState([]);
+  const [data, setdata] = useState([]);
+  const branch = route.params?.branch || "ECE_META";
   // console.log("branch", branch);
   const team = setProperTeamName(branch);
 
@@ -23,20 +22,21 @@ export default function TeamPoints({ route }) {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          backend_link + "api/points/getPointsTableByTeam?teamId="+branch
+          backend_link + "api/points/getPointsTableByTeam?teamId=" + branch
         );
 
         console.log(response.data);
 
         const eventData = response.data.pointsTable;
         const ids = Object.keys(response.data.pointsTable);
-        console.log(ids)
+        console.log(ids);
         setIds(ids);
-        const pointsArray = ids.map(id => [id, eventData[id].points]);
+        const pointsArray = ids.map((id) => [id, eventData[id].points]);
 
-        console.log("pointsArray",pointsArray);
+        console.log("pointsArray", pointsArray);
         // return pointsArray;
         setEventPoints(pointsArray);
+        console.log(pointsArray);
         return pointsArray;
       } catch (err) {
         console.log(err);
@@ -97,6 +97,16 @@ export default function TeamPoints({ route }) {
   // let restData = BranchesData.slice(0).map((item, index) => {
   //   return { ...item, rank: index + 4 };
   // });
+
+  const totalPoints = () => {
+    var sum = 0;
+    for(var points of eventPoints)
+    {
+      sum+=points[1];
+    }
+    return sum;
+  }
+
   const renderItem = (props) => {
     console.log(props);
     return (
@@ -116,7 +126,7 @@ export default function TeamPoints({ route }) {
           style={styles.containertop}
         >
           <Image style={styles.branchLogoImage} source={logoPaths[team]} />
-          <Text style={styles.branchTotalPoints}>0 PTS</Text>
+          <Text style={styles.branchTotalPoints}>{totalPoints()} PTS</Text>
         </LinearGradient>
       </View>
 
@@ -125,7 +135,7 @@ export default function TeamPoints({ route }) {
           data={eventPoints}
           renderItem={renderItem}
           keyExtractor={(item, index) => {
-          return index;
+            return index;
           }}
           alwaysBounceVertical={false}
         />

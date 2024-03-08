@@ -91,7 +91,7 @@ const App = () => {
         const user = LoginCtx.user;
         const Testemail = {
           admin: "22EC01057@iitbbs.ac.in",
-          user: "22EC01047@iitbbs.ac.in",
+          user: "22EC01099@iitbbs.ac.in",
         };
         if (user?.email !== null) {
           try {

@@ -9,10 +9,11 @@ const setProperTeamName = (team) => {
     team === "ECE" ||
     team === "EC"
   )
-    team = "ECEMETA";
+    team = "ECE_META";
   else if (team === "ME" || team === "MECH" || team === "Mech") team = "MECH";
   else if (team === "CE") team = "CIVIL";
-  else if (team === "Phd" || team === "phd") team = "PhD";
+  //else if (team === "Phd" || team === "phd" || team==="PHD") team = "PhD";
+  else if (team === "Phd" || team === "phd" || team === "PhD") team = "PHD";
   else if (
     team === "Msc" ||
     team === "msc" ||
@@ -22,7 +23,7 @@ const setProperTeamName = (team) => {
     team === "MSC+ITEP" ||
     team === "MSC_ITEP"
   )
-    team = "MSCITEP";
+    team = "MSc_ITEP";
   return team;
 };
 

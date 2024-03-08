@@ -6,7 +6,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Leaderboard from "./LeaderBoard";
 import Events from "./Events/Events";
 import Header from "../Components/Header";
-import AdminOngoingScreen from "./Admin/AdminOngoingScreen";
 import LiveEvents from "./Admin/LiveEvents";
 import SpecificEvents from "./Events/SpecificEvents";
 import Homepage from "./Homepage";
@@ -15,9 +14,12 @@ import NewsPage from "./NewsPage";
 import AddCarouselImage from "./Admin/AddCarouselImage";
 import { LoginContext } from "../store/LoginContext";
 
+import UpdateSportEvents from "./Admin/UpdateSportEvents";
 import AddTechCultEvent from "./Admin/AddTechCultEvent";
 import UpdateTechCultEvents from "./Admin/UpdateTechCultEvent";
 import CheckUpdateTechCultEvents from "../Components/CheckUpdateEvent";
+import AddNewsImage from "./Admin/AddNewsImage";
+import AddSportEvents from "./Admin/AddSportEvents";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -105,7 +107,7 @@ function AdminDashboardStackNavigator() {
       />
       <AdminDashboardStack.Screen
         name="AdminAddScoreStack"
-        component={AdminOngoingScreen}
+        component={UpdateSportEvents}
         options={{
           headerTitle: () => <Header />,
           headerTintColor: "white",
@@ -126,7 +128,17 @@ function AdminDashboardStackNavigator() {
       />
       <AdminDashboardStack.Screen
         name="AddSportEvent"
-        component={LiveEvents}
+        component={AddSportEvents}
+        options={{
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
+        }}
+      />
+      <AdminDashboardStack.Screen
+        name="AddNewsImage"
+        component={AddNewsImage}
         options={{
           // headerTitle: () => <Header />,
           // headerTintColor: "white", // YAY! Proper format!
@@ -274,7 +286,7 @@ export default function AllTabs() {
             iconName = focused ? "calendar" : "calendar-outline";
           } else if (route.name === "  ") {
             iconName = focused ? "trophy" : "trophy-outline";
-          } else if (route.name === "AdminDashboard") {
+          } else if (route.name === "     ") {
             iconName = focused ? "cog" : "cog-outline";
             // Using React Native Elements for Icons
           } else if (route.name === "   ") {
@@ -303,14 +315,11 @@ export default function AllTabs() {
         name="   "
         component={TeamPoints}
         options={({ route }) => ({
-          branch: route.params?.branch || "ECE",
+          branch: route.params?.branch || "ECE_META",
         })}
       />
       {LoginCtx.isAdmin && (
-        <Tab.Screen
-          name="AdminDashboard"
-          component={AdminDashboardStackNavigator}
-        />
+        <Tab.Screen name="     " component={AdminDashboardStackNavigator} />
       )}
     </Tab.Navigator>
   );

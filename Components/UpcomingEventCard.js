@@ -16,17 +16,16 @@ const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
 
 function UpcomingEventCard(props) {
-
   // console.log(props);
   const timestamp = props.details?.timestamp;
   const date = new Date(timestamp);
   const formattedDate = date.toLocaleDateString(); // Date component
   let hour = date.getHours();
   const minute = date.getMinutes();
-  const ampm = hour >= 12 ? 'PM' : 'AM';
+  const ampm = hour >= 12 ? "PM" : "AM";
   hour = hour % 12;
-  hour = hour ? hour : 12; 
-  const formattedTime = `${hour}:${minute < 10 ? '0' : ''}${minute} ${ampm}`;
+  hour = hour ? hour : 12;
+  const formattedTime = `${hour}:${minute < 10 ? "0" : ""}${minute} ${ampm}`;
 
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);
@@ -43,7 +42,15 @@ function UpcomingEventCard(props) {
           <Text style={{ fontWeight: "700", paddingBottom: 20 }}>
             {props.teamA} v/s {props.teamB}
           </Text>
-          <Text style={{ fontWeight: "700", position:"relative", left:deviceWidth*0.045 }}>{props.id}</Text>
+          <Text
+            style={{
+              fontWeight: "700",
+              position: "relative",
+              left: deviceWidth * 0.045,
+            }}
+          >
+            {props.id}
+          </Text>
         </View>
         <Image style={styles.LeftImageContainer} source={logoPaths[teamA]} />
         <Image />
@@ -54,15 +61,11 @@ function UpcomingEventCard(props) {
       <View style={styles.cardBottom}>
         <View>
           <Text style={styles.BottomTextGame}>{props.gameName}</Text>
-          <Text style={styles.BottomTextTeams}>
-            {props.details.location}
-          </Text>
+          <Text style={styles.BottomTextTeams}>{props.details.location}</Text>
         </View>
         <View>
           <Text style={styles.BottomTextGame}>{formattedDate}</Text>
-          <Text style={styles.BottomTextTime}>
-            {formattedTime}
-          </Text>
+          <Text style={styles.BottomTextTime}>{formattedTime}</Text>
         </View>
         {/* <VoteButton/> */}
       </View>
@@ -91,19 +94,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   cardBottom: {
-    marginBottom: 0.04 * deviceHeight,
+    marginBottom: 0.01 * deviceHeight,
     height: 0.09 * deviceHeight,
     marginHorizontal: "4%",
     padding: 10,
-    backgroundColor: "black",
+    backgroundColor: "#1A1A2E",
     borderBottomRightRadius: 16,
     borderBottomLeftRadius: 16,
-    elevation: 20,
-    shadowColor: "rgb(192, 9, 99)",
+    elevation: 6,
+    shadowColor: "white",
     shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 1,
-    shadowOpacity: 0.95,
-
+    shadowRadius: 0.5,
+    shadowOpacity: 1,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -115,16 +117,15 @@ const styles = StyleSheet.create({
   BottomTextTeams: {
     color: "gray",
   },
-  BottomTextTime:{
+  BottomTextTime: {
     color: "gray",
-    position: 'relative',
-    right: -18 
+    position: "relative",
+    right: -18,
   },
   LeftImageContainer: {
     width: deviceWidth < 380 ? 26 : 57,
     height: deviceWidth < 380 ? 26 : 57,
     borderRadius: deviceWidth < 380 ? 13 : 39,
-    borderWidth: 3,
     overflow: "hidden",
     margin: 9,
     marginTop: 36,
@@ -135,7 +136,6 @@ const styles = StyleSheet.create({
     width: deviceWidth < 380 ? 26 : 57,
     height: deviceWidth < 380 ? 26 : 57,
     borderRadius: deviceWidth < 380 ? 13 : 39,
-    borderWidth: 3,
     overflow: "hidden",
     margin: 9,
     marginTop: 36,
