@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "GC_App_2024",
+    "name": "GC App 2024",
     "slug": "GC_App_2024",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/GClogo.png",
     "userInterfaceStyle": "dark",
     "splash": {
       "image": "./assets/logo.png",
@@ -16,19 +16,19 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.iitbbs.GC-App-2024"
+      "bundleIdentifier": "com.iitbbs.gcapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.iitbbs.GCApp2024"
+      "package": "com.iitbbs.gcapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "gcapp2024",
+    "scheme": "gcapp",
     "extra": {
       "eas": {
         "projectId": "4c058831-328a-46c7-afeb-200a24a86a98"

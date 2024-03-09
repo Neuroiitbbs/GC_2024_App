@@ -130,7 +130,7 @@ const AddLiveEvents = () => {
     const data = {
       eventId: eventIdFormatted,
       subEventId: subEventID,
-      email: LoginContext?.user?.email || "22EC01057@iitbbs.ac.in",
+      email: LoginContext?.user?.email,
       title: teamA + " vs " + teamB,
       description,
       location: venue,

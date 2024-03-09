@@ -30,8 +30,8 @@ const ModalComponent = ({ modalVisible, setModalVisible }) => {
     console.log("logout");
     LoginCtx.logout();
   };
-  const email = LoginCtx?.user?.email || "22EC01057@iitbbsa.cin";
-  const name = LoginCtx?.user?.displayName || "Ayush";
+  const email = LoginCtx?.user?.email;
+  const name = LoginCtx?.user?.displayName;
   const image =
     LoginCtx?.user?.photoURL ||
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8p7GfNOdWUuoaLYF6Ous6cvnUShb3HEDpQg5vXxdgAs50fnyuOyzGmqikWsI4VMk6z24&usqp=CAU";

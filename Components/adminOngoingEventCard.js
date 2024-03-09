@@ -79,7 +79,7 @@ function OngoingEventCard(props) {
         points: teamBscore,
       },
     };
-    const email = loginCtx?.user?.email || "22EC01099@iitbbs.ac.in";
+    const email = loginCtx?.user?.email;
     console.log("hii");
     const body = {
       eventId,

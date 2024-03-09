@@ -163,7 +163,7 @@ const UpdateEvent = ({ route, navigation }) => {
     const body = {
       title: title,
       eventId: title,
-      email: LoginCtx?.user?.email || "22EC01057@iitbbs.ac.in",
+      email: LoginCtx?.user?.email,
       description: description,
       category: selectedType,
       location: venue,
