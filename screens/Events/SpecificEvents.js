@@ -1,8 +1,24 @@
 import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
 import React from "react";
 
+const sortPointsTable = (data) => {
+  const pointsTable = data?.pointsTable;
+  if (pointsTable) {
+    const pointsTableArray = Object.entries(pointsTable);
+    pointsTableArray.sort((a, b) => {
+      if (parseInt(b[1].points) - parseInt(a[1].points) === 0) {
+        return parseInt(a[1].position) - parseInt(b[1].position); // sorting the array in ascending order
+      }
+      return parseInt(b[1].points) - parseInt(a[1].points); // sorting the array in descending order
+    });
+    return Object.fromEntries(pointsTableArray); // Return the sorted points table
+  }
+  return {};
+};
 const SpecificEvents = ({ route }) => {
-  const data = route.params?.data;
+  let data = route.params?.data;
+
+  const sortedTable = sortPointsTable(data);
 
   const timestamp = data.details?.timestamp;
   const date = new Date(timestamp);
@@ -25,17 +41,7 @@ const SpecificEvents = ({ route }) => {
       </View>
     )
   );
-  let sortedPointsTable = {};
-  const pointsTable = data?.pointsTable;
-  if (pointsTable) {
-    const pointsTableArray = Object.entries(pointsTable);
-    pointsTableArray.sort((a, b) => {
-      return parseInt(b[1].position) - parseInt(a[1].position);
-    });
-    sortedPointsTable = Object.fromEntries(pointsTableArray);
-  }
-  console.log(sortedPointsTable);
-  console.log("pointsTable", pointsTable);
+
   return (
     <View
       style={{
@@ -46,7 +52,7 @@ const SpecificEvents = ({ route }) => {
       }}
     >
       <ScrollView style={{ flex: 1, padding: 10 }}>
-        {pointsTable && (
+        {sortedTable && (
           <View style={styles.container}>
             <View style={styles.header}>
               <Text style={[styles.cell, styles.headerText]}>Branch</Text>
@@ -60,15 +66,15 @@ const SpecificEvents = ({ route }) => {
             renderItem={renderItem}
             keyExtractor={(item) => item}
           /> */}
-        {Object.keys(sortedPointsTable).map((item, index) => {
+        {Object.keys(sortedTable).map((item, index) => {
           return (
             <View style={styles.row} key={index}>
               <Text style={styles.cell}>{item}</Text>
-              <Text style={styles.cell}>{sortedPointsTable[item].points}</Text>
+              <Text style={styles.cell}>{sortedTable[item].points}</Text>
               <Text style={styles.cell}>
-                {sortedPointsTable[item].position == 0
+                {sortedTable[item].position == 0
                   ? "-"
-                  : sortedPointsTable[item].position}
+                  : sortedTable[item].position}
               </Text>
             </View>
           );
@@ -122,7 +128,8 @@ const styles = StyleSheet.create({
     flex: 1,
     color: "white",
     minWidth: 40,
-    minHeight: 40,
+    // minHeight: 40,
+    padding: 10,
     textAlign: "center",
     borderWidth: 1,
     borderColor: "white",

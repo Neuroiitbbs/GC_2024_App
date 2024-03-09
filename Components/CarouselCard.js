@@ -1,6 +1,6 @@
 import { Image, View, Dimensions } from "react-native";
 
-const CarouselCard = ({ item, height, width }) => {
+const CarouselCard = ({ item, height, width, borderRadius }) => {
   return (
     <Image
       source={item}
@@ -8,6 +8,7 @@ const CarouselCard = ({ item, height, width }) => {
         width: width,
         height: height,
         resizeMode: "stretch",
+        borderRadius: borderRadius,
       }}
     />
   );

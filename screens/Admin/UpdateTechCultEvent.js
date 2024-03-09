@@ -8,12 +8,13 @@ import {
   View,
   Platform,
   ScrollView,
+  BackHandler,
   Pressable,
   Modal,
   Alert,
   Button,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
@@ -70,6 +71,18 @@ const UpdateEvent = ({ route, navigation }) => {
   const name = data?.details?.title || "";
   const description = data?.details?.description || "";
   const timestampMs = data?.details?.timestamp || data?.timestamp || Date.now();
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("LiveEvents");
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+    return () => backHandler.remove();
+  }, []);
 
   console.log(timestampMs);
   // const formattedDateTime = new Date(timestampMs).toLocaleString("en-US", {
@@ -216,11 +229,11 @@ const UpdateEvent = ({ route, navigation }) => {
   console.log(teamPoint, description, name, date, time, venue, selectedType);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
         <ScrollView>
           <Text style={styles.title}>Event</Text>
           <Text style={styles.subtitle}>Add Tech/Cult Event</Text>
@@ -627,8 +640,8 @@ const UpdateEvent = ({ route, navigation }) => {
           </Pressable>
           <View style={{ minHeight: 80 }}></View>
         </ScrollView>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </View>
   );
 };
 

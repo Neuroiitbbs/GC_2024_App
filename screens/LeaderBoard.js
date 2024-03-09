@@ -16,19 +16,15 @@ import { useEffect, useState } from "react";
 
 const initialBranchesData = [
   {
+    Name: "MTech",
+    Score: 0,
+  },
+  {
+    Name: "ECE_META",
+    Score: 0,
+  },
+  {
     Name: "CSE",
-    Score: 0,
-  },
-  {
-    Name: "ECE+META",
-    Score: 0,
-  },
-  {
-    Name: "EE",
-    Score: 0,
-  },
-  {
-    Name: "MECH",
     Score: 0,
   },
   {
@@ -36,15 +32,19 @@ const initialBranchesData = [
     Score: 0,
   },
   {
-    Name: "MSc",
+    Name: "EE",
     Score: 0,
   },
   {
-    Name: "MTech",
+    Name: "PHD",
     Score: 0,
   },
   {
-    Name: "PhD",
+    Name: "MECH",
+    Score: 0,
+  },
+  {
+    Name: "MSc_ITEP",
     Score: 0,
   },
 ];
@@ -54,7 +54,7 @@ const fetchDataAndUpdateScore = async (teamName, setBranchesData) => {
     const response = await axios.get(
       backend_link + "api/points/getTotalPointsByTeam",
       {
-        params: { teamId: teamName },
+        params: { teamId: setProperTeamName(teamName) },
       }
     );
     console.log("data", response.data);
@@ -83,34 +83,13 @@ export default function Leaderboard() {
 
   useEffect(() => {
     fetchDataAndUpdateScore("CSE", setBranchesData);
-  }, []);
-
-  useEffect(() => {
-    fetchDataAndUpdateScore("ECE", setBranchesData);
-  }, []);
-
-  useEffect(() => {
+    fetchDataAndUpdateScore("ECE_META", setBranchesData);
     fetchDataAndUpdateScore("EE", setBranchesData);
-  }, []);
-
-  useEffect(() => {
     fetchDataAndUpdateScore("MECH", setBranchesData);
-  }, []);
-
-  useEffect(() => {
     fetchDataAndUpdateScore("MTech", setBranchesData);
-  }, []);
-
-  useEffect(() => {
-    fetchDataAndUpdateScore("MSc", setBranchesData);
-  }, []);
-
-  useEffect(() => {
+    fetchDataAndUpdateScore("MSc_ITEP", setBranchesData);
     fetchDataAndUpdateScore("CIVIL", setBranchesData);
-  }, []);
-
-  useEffect(() => {
-    fetchDataAndUpdateScore("Phd", setBranchesData);
+    fetchDataAndUpdateScore("PHD", setBranchesData);
   }, []);
 
   BranchesData.sort((a, b) => b.Score - a.Score);

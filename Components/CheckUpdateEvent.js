@@ -50,7 +50,7 @@ const CheckUpdateEvent = ({ navigation }) => {
   };
   const onClose = () => {
     navigation.navigate("LiveEvents");
-    setModalVisible(false);
+    // setModalVisible(false);
   };
   return (
     <Modal

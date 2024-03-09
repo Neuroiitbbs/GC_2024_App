@@ -20,6 +20,7 @@ import UpdateTechCultEvents from "./Admin/UpdateTechCultEvent";
 import CheckUpdateTechCultEvents from "../Components/CheckUpdateEvent";
 import AddNewsImage from "./Admin/AddNewsImage";
 import AddSportEvents from "./Admin/AddSportEvents";
+import SpecificNewsPage from "./specificNewsPage";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -89,6 +90,17 @@ function HomepageStackNavigator() {
           headerTitle: (props) => <Header />,
           headerStyle: { backgroundColor: "#111319", height: 100 },
         }}
+      />
+      <HomepageStack.Screen
+        name="SpecificNewsPage"
+        component={SpecificNewsPage}
+        options={({ route }) => ({
+          data: route.params?.data,
+          // headerShown: false,
+          headerTitle: (props) => <Header />,
+          headerTintColor: "white",
+          headerStyle: { backgroundColor: "#111319", height: 100 },
+        })}
       />
     </HomepageStack.Navigator>
   );
