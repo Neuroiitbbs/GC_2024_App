@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -12,42 +13,7 @@ import logoPaths from "../utils/logoPaths";
 import axios from "axios";
 import { backend_link } from "../utils/constants";
 import setProperTeamName from "../utils/setProperTeamName";
-import { useEffect, useState } from "react";
-
-const initialBranchesData = [
-  {
-    Name: "MTech",
-    Score: 0,
-  },
-  {
-    Name: "ECE_META",
-    Score: 0,
-  },
-  {
-    Name: "CSE",
-    Score: 0,
-  },
-  {
-    Name: "CIVIL",
-    Score: 0,
-  },
-  {
-    Name: "EE",
-    Score: 0,
-  },
-  {
-    Name: "PHD",
-    Score: 0,
-  },
-  {
-    Name: "MECH",
-    Score: 0,
-  },
-  {
-    Name: "MSc_ITEP",
-    Score: 0,
-  },
-];
+import { initialBranchesData } from "../utils/initialScoreData";
 
 const fetchDataAndUpdateScore = async (teamName, setBranchesData) => {
   try {
@@ -60,7 +26,6 @@ const fetchDataAndUpdateScore = async (teamName, setBranchesData) => {
     console.log("data", response.data);
     const points = response.data.points * 1;
 
-    // Update the state with the new score for the specified team
     setBranchesData((prevState) => {
       return prevState.map((branch) => {
         if (setProperTeamName(branch.Name) === setProperTeamName(teamName)) {
@@ -76,20 +41,20 @@ const fetchDataAndUpdateScore = async (teamName, setBranchesData) => {
   }
 };
 
-// const teamId = ["CSE","EE","ECE","CIVIL","MECH","PHD","MTech","MSc"];
+// const teamId = ["CSE","EE","ECE_META","CIVIL","MECH","PHD","MTech","MSc_ITEP"];
 
 export default function Leaderboard() {
   const [BranchesData, setBranchesData] = useState(initialBranchesData);
 
   useEffect(() => {
-    fetchDataAndUpdateScore("CSE", setBranchesData);
-    fetchDataAndUpdateScore("ECE_META", setBranchesData);
-    fetchDataAndUpdateScore("EE", setBranchesData);
-    fetchDataAndUpdateScore("MECH", setBranchesData);
     fetchDataAndUpdateScore("MTech", setBranchesData);
-    fetchDataAndUpdateScore("MSc_ITEP", setBranchesData);
+    fetchDataAndUpdateScore("ECE_META", setBranchesData);
+    fetchDataAndUpdateScore("CSE", setBranchesData);
+    fetchDataAndUpdateScore("EE", setBranchesData);
     fetchDataAndUpdateScore("CIVIL", setBranchesData);
     fetchDataAndUpdateScore("PHD", setBranchesData);
+    fetchDataAndUpdateScore("MECH", setBranchesData);
+    fetchDataAndUpdateScore("MSc_ITEP", setBranchesData);
   }, []);
 
   BranchesData.sort((a, b) => b.Score - a.Score);

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import CarouselCard from "../Components/CarouselCard";
 import {
   View,
@@ -14,6 +13,7 @@ import {
   SafeAreaView,
   Pressable,
 } from "react-native";
+
 import axios from "axios";
 import { backend_link } from "../utils/constants";
 const { width, height } = Dimensions.get("window");
@@ -39,32 +39,6 @@ const sortNewsbyDate = (data) => {
 const NewsPage = ({ navigation }) => {
   const [Ids, setIds] = useState([]);
   const [dataValues, setDataValues] = useState([]);
-
-  // const data = {
-  //   news: [
-  //     {
-  //       content: require("../assets/news/news1.jpg"),
-  //       id: 1,
-  //     },
-  //     {
-  //       content: require("../assets/news/news1.jpg"),
-  //       id: 2,
-  //     },
-  //     {
-  //       content: require("../assets/news/news1.jpg"),
-  //       id: 5,
-  //     },
-  //     {
-  //       content: require("../assets/news/news1.jpg"),
-  //       id: 6,
-  //     },
-
-  //     {
-  //       content: require("../assets/news/news1.jpg"),
-  //       id: 3,
-  //     },
-  //   ],
-  // };
 
   useEffect(() => {
     const getAllCarousels = async () => {
@@ -118,7 +92,6 @@ const NewsPage = ({ navigation }) => {
                 ? item?.description?.slice(0, 100) + "..."
                 : ""}
             </Text>
-            {/* <Text style={{color:'white',fontSize:20,padding:20}}>{item.imageUrl}</Text> */}
           </View>
         </View>
       </Pressable>
@@ -138,19 +111,6 @@ const NewsPage = ({ navigation }) => {
           }}
         />
 
-        {/* <FlatList
-          data={data.news} // Corrected data structure
-          renderItem={({ item }) => (
-            <View style={styles.card}>
-              <CarouselCard
-                item={item.content}
-                height={"100%"}
-                width={"100%"}
-              />
-            </View>
-          )}
-          keyExtractor={(item) => item.id.toString()} // Converted id to string
-        /> */}
         <FlatList
           data={dataValues}
           renderItem={renderItem}

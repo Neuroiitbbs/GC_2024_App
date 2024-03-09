@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react";
-
 import { StatusBar } from "expo-status-bar";
 import {
+  Pressable,
   Image,
   StyleSheet,
   Text,
   View,
   Dimensions,
   SafeAreaView,
+  ScrollView,
   TouchableOpacity,
-  Pressable,
 } from "react-native";
 
 import Carousel, { Pagination } from "react-native-snap-carousel-new";
-import { ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
@@ -30,6 +29,17 @@ const banners = {
   CE: require("../assets/TeamBanners/CE.jpg"),
   ME: require("../assets/TeamBanners/ME.jpg"),
 };
+
+// {
+//    Team a - mtech
+//     Team b - ece meta
+//     Team c - cse
+//     Team d - civil
+//     Team e - ee
+//     Team f - phd
+//     Team g - mech
+//     Team h - msc + itep
+// }
 export default function HomePage() {
   const navigation = useNavigation();
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
@@ -88,28 +98,6 @@ export default function HomePage() {
       require("../assets/CarouselBanners/Banner1.jpg"),
       require("../assets/CarouselBanners/Banner1.jpg"),
     ],
-    // teams: [
-    //   {
-    //     team: "CSE",
-    //     image: require("../assets/Team Banners/CSE.jpg"),
-    //   },
-    //   {
-    //     team: "ECE",
-    //     image: require("../assets/Team Banners/ECE.jpg"),
-    //   },
-    //   {
-    //     team: "EE",
-    //     image: require("../assets/Team Banners/EE.jpg"),
-    //   },
-    //   {
-    //     team: "CIVIL",
-    //     image: require("../assets/Team Banners/CE.jpg"),
-    //   },
-    //   {
-    //     team: "MECH",
-    //     image: require("../assets/Team Banners/ME.jpg"),
-    //   },
-    // ],
     teams: [
       // require("../assets/TeamBanners/CSE.jpg"),
       // require("../assets/TeamBanners/ECE.jpg"),
@@ -276,8 +264,6 @@ export default function HomePage() {
               height: 100,
             }}
           ></View>
-          {/* <AddEvent />
-          <AddLiveEvents /> */}
         </ScrollView>
       </View>
     </SafeAreaView>

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -6,7 +7,6 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import React from "react";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 

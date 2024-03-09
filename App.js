@@ -1,18 +1,14 @@
-import * as React from "react";
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Modal, ActivityIndicator } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import LoginScreen from "./screens/LoginPage";
-import AllTabs from "./screens/AllTabs";
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
 import { LoginProvider, LoginContext } from "./store/LoginContext";
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { backend_link } from "./utils/constants";
+import axios from "axios";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -24,6 +20,10 @@ import {
   androidClientId,
   webClientId,
 } from "./firebaseConfig";
+
+import LoginScreen from "./screens/LoginPage";
+import AllTabs from "./screens/AllTabs";
+import { backend_link } from "./utils/constants";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -44,7 +44,6 @@ const App = () => {
     webClientId: webClientId,
   });
   const [loading, setLoading] = useState(true);
-  // Simulate an authentication function
   const authenticateUser = (status) => {
     LoginCtx.setIsLogin(status);
   };

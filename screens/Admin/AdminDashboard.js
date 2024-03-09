@@ -17,10 +17,6 @@ import {
   Octicons,
 } from "@expo/vector-icons";
 
-import LiveEvents from "./LiveEvents";
-import UpdateEvent from "../UpdateEvent";
-import AddEvent from "./AddEvent";
-
 const AdminDashboard = ({ navigation }) => {
   const AddPoints = () => {
     return navigation.navigate("AdminAddScoreStack");
@@ -63,7 +59,9 @@ const AdminDashboard = ({ navigation }) => {
                   styles.cardView,
                   pressed ? styles.cardPressed : {},
                 ]}
-                onPress={() => {navigation.navigate("AddNewsImage")}}
+                onPress={() => {
+                  navigation.navigate("AddNewsImage");
+                }}
               >
                 <View style={{ paddingVertical: 15 }}>
                   <Image
@@ -159,7 +157,9 @@ const AdminDashboard = ({ navigation }) => {
                   styles.cardView,
                   pressed ? styles.cardPressed : {},
                 ]}
-                onPress={() => {navigation.navigate("AddCarouselImage")}}
+                onPress={() => {
+                  navigation.navigate("AddCarouselImage");
+                }}
               >
                 <Image
                   source={require("../../assets/carousel.png")}

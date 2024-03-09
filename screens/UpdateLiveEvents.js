@@ -7,8 +7,8 @@ import {
   StyleSheet,
   Image,
   Button,
+  TextInput,
 } from "react-native";
-import { TextInput } from "react-native";
 
 const UpdateLiveEvents = () => {
   const {
@@ -112,19 +112,12 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
     padding: 20,
-    // maxHeight: "80%",
     backgroundColor: "#000000", // Black background color
   },
   liveEventsContainer: {
-    // textAlign:"center",
-    // justifyContent:"center",
-    // alignItems:"center",
     marginTop: 20,
     fontWeight: "bold",
     marginLeft: -7,
-
-    // color: "#D41D77",
-    // fontSize: 40,
   },
   liveEventsText: {
     color: "#D41D77",
@@ -134,8 +127,6 @@ const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 10,
     fontWeight: "bold",
-    // color: "#D41D77",
-    // fontSize: 40,
   },
   addLiveEventText: {
     color: "#0066FF",
@@ -143,25 +134,19 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     color: "white",
-    // borderColor: "black",
     borderColor: "#323B48",
     fontWeight: "bold",
     borderWidth: 1,
     padding: 10,
     fontSize: 20,
-    // backgroundColor: "#F2F3F4",
     borderRadius: 7,
-    // placeholder: "#323B48"
-    // marginBottom: 10
   },
   formContainer1: {
     color: "#323B48",
     borderColor: "black",
     padding: 7,
     fontSize: 20,
-    // backgroundColor: "#F2F3F4",
     borderRadius: 7,
-    // marginBottom: 5,
     marginTop: 2,
   },
   submitButton: {

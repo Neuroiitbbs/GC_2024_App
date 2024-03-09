@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -5,6 +6,7 @@ import {
   Image,
   FlatList,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import TeamPointsComponent from "../Components/TeamPointsComponent";
@@ -12,10 +14,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import logoPaths from "../utils/logoPaths";
 import setProperTeamName from "../utils/setProperTeamName";
 import teamColors from "../utils/teamColors";
-import { useState, useEffect } from "react";
-import { Alert } from "react-native";
-import axios from "axios";
 import { backend_link } from "../utils/constants";
+import axios from "axios";
 
 export default function TeamPoints({ route }) {
   const [loading, setLoading] = useState(true);
@@ -43,14 +43,10 @@ export default function TeamPoints({ route }) {
 
         const eventData = response.data.pointsTable;
         const ids = Object.keys(response.data.pointsTable);
-        // console.log(ids);
         setIds(ids);
         const pointsArray = ids.map((id) => [id, eventData[id].points]);
         pointsArray.sort((a, b) => b[1] - a[1]); // sorting the array in descending order
-        // console.log("pointsArray", pointsArray);
-        // return pointsArray;
         setEventPoints(pointsArray);
-        // console.log(pointsArray);
         return pointsArray;
       } catch (err) {
         console.log(err);
@@ -60,63 +56,7 @@ export default function TeamPoints({ route }) {
     fetchData();
   }, [branch]);
 
-  // const BranchesData = [
-  //   {
-  //     Name: "BasketBall",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Cricket",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Football",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "CSS Battle",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Solo Dance",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Chess",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Tennis",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Monoact",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "BasketBall",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Cricket",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Football",
-  //     Score: 0,
-  //   },
-  // ];
-  //BranchesData.sort((a, b) => b.Score - a.Score);
-  // const top3 = BranchesData.slice(0, 3);
-  // let restData = BranchesData.slice(0).map((item, index) => {
-  //   return { ...item, rank: index + 4 };
-  // });
-
   const totalPoints = () => {
-    // var sum = 0;
-    // for (var points of eventPoints) {
-    //   sum += points[1];
-    // }
     let sum = eventPoints.reduce((acc, curr) => acc + curr[1], 0);
     return sum;
   };

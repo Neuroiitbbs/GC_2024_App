@@ -1,18 +1,14 @@
-import { View, Text, StyleSheet, Dimensions } from "react-native";
-// import CSELogo from "../assets/CSELogo.png";
-import { Image } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 
 const TeamPointsComponent = (props) => {
   return (
     <>
       <View style={styles.LeaderBoardElement}>
-        {/* <View style={styles.LeaderBoardElementLeft}> */}
         <View style={styles.branchname}>
           <Text style={styles.LeaderBoardNameHolder}>
             {props.branchData[0]}
           </Text>
         </View>
-        {/* </View> */}
         <View style={styles.points}>
           {props.branchData[1] * 1 > 0 ? (
             <Text style={styles.LeaderBoardPoints}>

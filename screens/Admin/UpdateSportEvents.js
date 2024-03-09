@@ -1,60 +1,23 @@
-import TopMostCard from "../../Components/TopMostCard";
-import OngoingEventCard from "../../Components/OngoingEventCard";
-import AdminOngoingEventCard from "../../Components/adminOngoingEventCard";
 import { useState, useEffect } from "react";
-import { Alert, FlatList, StyleSheet } from "react-native";
-import { ScrollView } from "react-native";
-import { TouchableWithoutFeedback } from "react-native";
-import { View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  ScrollView,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+
 import axios from "axios";
 import Loader from "../../Components/Loader";
 import { backend_link } from "../../utils/constants";
-function OngoingScreen(props) {
+import AdminSportEventCard from "../../Components/AdminSportEventCard";
+
+function UpdateSportScreen(props) {
   console.log(props);
   const [isEventUpdated, setIsEventUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [ongoingEvents, setOngoingEvents] = useState([
-    // {
-    //   gameName: "Basketball",
-    //   id: "Basketball",
-    //   teamA: "ECE-META",
-    //   teamB: "CSE",
-    //   scoreA: "4",
-    //   scoreB: "6",
-    //   location: "BHR",
-    //   timestamp: 1709644800000,
-    // },
-    // {
-    //   gameName: "Cricket",
-    //   id: "Cricket",
-    //   teamA: "ECE-META",
-    //   teamB: "CSE",
-    //   scoreA: "4",
-    //   scoreB: "6",
-    //   location: "BHR",
-    //   timestamp: 1709644800000,
-    // },
-    // {
-    //   gameName: "Football",
-    //   id: "Football",
-    //   teamA: "ECE-META",
-    //   teamB: "CSE",
-    //   scoreA: "4",
-    //   scoreB: "6",
-    //   location: "BHR",
-    //   timestamp: 1709644800000,
-    // },
-    // {
-    //   gameName: "Tennis",
-    //   id: "Tennis",
-    //   teamA: "ECE-META",
-    //   teamB: "CSE",
-    //   scoreA: "4",
-    //   scoreB: "6",
-    //   location: "BHR",
-    //   timestamp: 1709644800000,
-    // },
-  ]);
+  const [ongoingEvents, setOngoingEvents] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -117,7 +80,7 @@ function OngoingScreen(props) {
           data={ongoingEvents}
           renderItem={(itemData, index) => {
             return (
-              <AdminOngoingEventCard
+              <AdminSportEventCard
                 subEventId={itemData.item.subEventId}
                 gameName={itemData.item.gameName}
                 id={itemData.item.id}
@@ -147,7 +110,7 @@ function OngoingScreen(props) {
   );
 }
 
-export default OngoingScreen;
+export default UpdateSportScreen;
 
 const styles = StyleSheet.create({
   eventsContainer: {

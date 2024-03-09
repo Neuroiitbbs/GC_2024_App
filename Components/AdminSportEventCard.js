@@ -1,3 +1,4 @@
+import { useState, useContext } from "react";
 import {
   Text,
   View,
@@ -10,19 +11,17 @@ import {
   Alert,
   Pressable,
 } from "react-native";
-import { useState } from "react";
-import axios from "axios";
+import logoPaths from "../utils/logoPaths";
 import { LinearGradient } from "expo-linear-gradient";
 import { backend_link } from "../utils/constants";
-
-import logoPaths from "../utils/logoPaths";
-import { Picker } from "@react-native-picker/picker";
 import setProperTeamName from "../utils/setProperTeamName";
 import { LoginContext } from "../store/LoginContext";
-import { useContext } from "react";
+import { Picker } from "@react-native-picker/picker";
 import { AntDesign } from "@expo/vector-icons";
 
-function OngoingEventCard(props) {
+import axios from "axios";
+
+function AdminSportEventCard(props) {
   // console.log(props);
   const [status, setStatus] = useState(props.status);
   const loginCtx = useContext(LoginContext);
@@ -270,7 +269,7 @@ function OngoingEventCard(props) {
     </View>
   );
 }
-export default OngoingEventCard;
+export default AdminSportEventCard;
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;

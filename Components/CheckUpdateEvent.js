@@ -1,3 +1,4 @@
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,7 +8,6 @@ import {
   Alert,
   Button,
 } from "react-native";
-import React, { useState, useContext } from "react";
 
 import axios from "axios";
 import { LoginContext } from "../store/LoginContext";

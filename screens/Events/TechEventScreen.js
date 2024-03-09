@@ -1,10 +1,9 @@
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import React from "react";
 import TechCultEventCard from "../../Components/TechCultEventCard";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { backend_link } from "../../utils/constants";
 import Loader from "../../Components/Loader";
+import axios from "axios";
 
 const sortData = (data) => {
   console.log("data", data);

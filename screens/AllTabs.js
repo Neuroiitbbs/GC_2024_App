@@ -1,26 +1,30 @@
 import { useState, useEffect, useContext } from "react";
 import { Icon } from "react-native-elements";
-import AdminDashboard from "./Admin/AdminDashboard";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+
 import Leaderboard from "./LeaderBoard";
+
 import Events from "./Events/Events";
-import Header from "../Components/Header";
-import LiveEvents from "./Admin/LiveEvents";
 import SpecificEvents from "./Events/SpecificEvents";
+
 import Homepage from "./Homepage";
-import TeamPoints from "./TeamPoints";
 import NewsPage from "./NewsPage";
-import AddCarouselImage from "./Admin/AddCarouselImage";
+import SpecificNewsPage from "./specificNewsPage";
+
+import Header from "../Components/Header";
+import TeamPoints from "./TeamPoints";
 import { LoginContext } from "../store/LoginContext";
 
+import LiveEvents from "./Admin/LiveEvents";
+import AddNewsImage from "./Admin/AddNewsImage";
+import AddSportEvents from "./Admin/AddSportEvents";
+import AdminDashboard from "./Admin/AdminDashboard";
+import AddCarouselImage from "./Admin/AddCarouselImage";
 import UpdateSportEvents from "./Admin/UpdateSportEvents";
 import AddTechCultEvent from "./Admin/AddTechCultEvent";
 import UpdateTechCultEvents from "./Admin/UpdateTechCultEvent";
 import CheckUpdateTechCultEvents from "../Components/CheckUpdateEvent";
-import AddNewsImage from "./Admin/AddNewsImage";
-import AddSportEvents from "./Admin/AddSportEvents";
-import SpecificNewsPage from "./specificNewsPage";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -202,63 +206,6 @@ function AdminDashboardStackNavigator() {
   );
 }
 
-function MyTabs() {
-  return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarStyle: {
-          backgroundColor: "#fff",
-          justifyContent: "space-between",
-          alignItems: "center",
-          height: 49, // Adjust height as needed
-          paddingBottom: 10, // Adjust padding to ensure icons and text are aligned and not touching the screen's bottom edge
-          paddingTop: 10,
-          paddingHorizontal: 20, // Adds horizontal padding
-          position: "absolute", // This along with the following lines create the hovering effect
-          bottom: 40, // Distance from the bottom of the screen
-          left: 20,
-          right: 20,
-          borderRadius: 25, // Rounds the corners of the tabBar
-          shadowColor: "#000", // Shadow color for iOS
-          shadowOffset: { width: 0, height: 10 }, // Shadow position for iOS
-          shadowOpacity: 0.3, // Shadow opacity for iOS
-          shadowRadius: 5, // Shadow blur radius for iOS
-        },
-        tabBarItemStyle: {
-          alignContent: "center",
-          justifyContent: "center",
-          width: "100%",
-          height: "100%",
-        },
-
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === "Events") {
-            iconName = focused ? "calendar" : "calendar-outline";
-          } else if (route.name === "Leaderboard") {
-            iconName = focused ? "trophy" : "trophy-outline";
-          }
-          return (
-            <Icon
-              name={iconName}
-              type="material-community"
-              size={18}
-              color={color}
-            />
-          );
-        },
-
-        tabBarActiveTintColor: "#D41D77",
-        tabBarInactiveTintColor: "black",
-      })}
-    >
-      <Tab.Screen name="Events" component={Events} />
-      <Tab.Screen name="Leaderboard" component={Leaderboard} />
-    </Tab.Navigator>
-  );
-}
 export default function AllTabs() {
   const LoginCtx = useContext(LoginContext);
   const [events, setEvents] = useState([]);
