@@ -42,14 +42,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 0.005 * deviceHeight,
     overflow: "hidden",
-    //alignContent: "center",
-    //justifyContent: "center",
-    //alignItems: "center",
     backgroundColor: "black",
     paddingTop: "0%",
     paddingHorizontal: "3%",
     elevation: 2,
-    marginLeft: 14
+    marginLeft: 14,
   },
   inactiveButton: {
     color: "white",

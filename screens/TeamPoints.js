@@ -1,16 +1,24 @@
-import { View, Text, StyleSheet, Image, FlatList } from "react-native";
+import { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import TeamPointsComponent from "../Components/TeamPointsComponent";
 import { LinearGradient } from "expo-linear-gradient";
 import logoPaths from "../utils/logoPaths";
 import setProperTeamName from "../utils/setProperTeamName";
 import teamColors from "../utils/teamColors";
-import { useState, useEffect } from "react";
-import { Alert } from "react-native";
-import axios from "axios";
 import { backend_link } from "../utils/constants";
+import axios from "axios";
 
 export default function TeamPoints({ route }) {
+  const [loading, setLoading] = useState(true);
   const [eventPoints, setEventPoints] = useState([]);
   const [Ids, setIds] = useState([]);
   const [data, setdata] = useState([]);
@@ -19,24 +27,26 @@ export default function TeamPoints({ route }) {
   const team = setProperTeamName(branch);
 
   useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [branch]);
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
           backend_link + "api/points/getPointsTableByTeam?teamId=" + team
         );
 
-        console.log(response.data);
+        console.log("respomnse", response.data);
 
         const eventData = response.data.pointsTable;
         const ids = Object.keys(response.data.pointsTable);
-        console.log(ids);
         setIds(ids);
         const pointsArray = ids.map((id) => [id, eventData[id].points]);
-
-        console.log("pointsArray", pointsArray);
-        // return pointsArray;
+        pointsArray.sort((a, b) => b[1] - a[1]); // sorting the array in descending order
         setEventPoints(pointsArray);
-        console.log(pointsArray);
         return pointsArray;
       } catch (err) {
         console.log(err);
@@ -44,70 +54,14 @@ export default function TeamPoints({ route }) {
       }
     };
     fetchData();
-  }, []);
-
-  // const BranchesData = [
-  //   {
-  //     Name: "BasketBall",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Cricket",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Football",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "CSS Battle",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Solo Dance",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Chess",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Tennis",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Monoact",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "BasketBall",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Cricket",
-  //     Score: 0,
-  //   },
-  //   {
-  //     Name: "Football",
-  //     Score: 0,
-  //   },
-  // ];
-  //BranchesData.sort((a, b) => b.Score - a.Score);
-  // const top3 = BranchesData.slice(0, 3);
-  // let restData = BranchesData.slice(0).map((item, index) => {
-  //   return { ...item, rank: index + 4 };
-  // });
+  }, [branch]);
 
   const totalPoints = () => {
-    var sum = 0;
-    for (var points of eventPoints) {
-      sum += points[1];
-    }
+    let sum = eventPoints.reduce((acc, curr) => acc + curr[1], 0);
     return sum;
   };
 
   const renderItem = (props) => {
-    console.log(props);
     return (
       <View style={{ padding: 5 }}>
         <TeamPointsComponent branchData={props.item} logoPaths={logoPaths} />
@@ -116,34 +70,39 @@ export default function TeamPoints({ route }) {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.containertop}>
-        <LinearGradient
-          start={{ x: 0.0, y: 1.0 }}
-          end={{ x: 0.0, y: 0.0 }}
-          locations={[0.6, 1]}
-          colors={[teamColors[team].topColor, teamColors[team].bottomColor]}
-          style={styles.containertop}
-        >
-          <Image style={styles.branchLogoImage} source={logoPaths[team]} />
-          <Text style={styles.branchTotalPoints}>{totalPoints()} PTS</Text>
-        </LinearGradient>
-      </View>
+      {loading && <ActivityIndicator size="large" color="#fff" />}
+      {!loading && (
+        <>
+          <View style={styles.containertop}>
+            <LinearGradient
+              start={{ x: 0.0, y: 1.0 }}
+              end={{ x: 0.0, y: 0.0 }}
+              locations={[0.6, 1]}
+              colors={[teamColors[team].topColor, teamColors[team].bottomColor]}
+              style={styles.containertop}
+            >
+              <Image style={styles.branchLogoImage} source={logoPaths[team]} />
+              <Text style={styles.branchTotalPoints}>{totalPoints()} PTS</Text>
+            </LinearGradient>
+          </View>
 
-      <View style={styles.container2}>
-        <FlatList
-          data={eventPoints}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => {
-            return index;
-          }}
-          alwaysBounceVertical={false}
-        />
-      </View>
-      <View style={styles.bottomcont}>
-        <Text style={styles.text01}>Last Updated on: </Text>
-        <Text style={styles.text02}>15/3/2024</Text>
-      </View>
-      <View style={styles.bottomnav}></View>
+          <View style={styles.container2}>
+            <FlatList
+              data={eventPoints}
+              renderItem={renderItem}
+              keyExtractor={(item, index) => {
+                return index;
+              }}
+              alwaysBounceVertical={false}
+            />
+          </View>
+          <View style={styles.bottomcont}>
+            <Text style={styles.text01}>Last Updated on: </Text>
+            <Text style={styles.text02}>15/3/2024</Text>
+          </View>
+          <View style={styles.bottomnav}></View>
+        </>
+      )}
     </View>
   );
 }

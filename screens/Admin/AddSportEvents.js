@@ -16,6 +16,7 @@ import { LoginContext } from "../../store/LoginContext";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { backend_link } from "../../utils/constants";
 import axios from "axios";
+
 // const teamPicker = (
 //   <>
 //     <Picker.Item label="Select Team" value="" />
@@ -130,7 +131,7 @@ const AddLiveEvents = () => {
     const data = {
       eventId: eventIdFormatted,
       subEventId: subEventID,
-      email: LoginContext?.user?.email || "22EC01057@iitbbs.ac.in",
+      email: LoginContext?.user?.email,
       title: teamA + " vs " + teamB,
       description,
       location: venue,

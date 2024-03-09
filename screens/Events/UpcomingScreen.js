@@ -1,9 +1,9 @@
-import { View, Alert, FlatList, StyleSheet } from "react-native";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { View, Alert, FlatList, StyleSheet } from "react-native";
 import UpcomingEventCard from "../../Components/UpcomingEventCard";
 import Loader from "../../Components/Loader";
 import { backend_link } from "../../utils/constants";
+import axios from "axios";
 
 const sortData = (data) => {
   data.sort((a, b) => {

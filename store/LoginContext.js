@@ -20,7 +20,7 @@ const LoginProvider = ({ children }) => {
 
   const logout = async () => {
     await AsyncStorage.removeItem("userInfo");
-    // await signOut(auth);
+    user?.email && (await signOut(auth));
     setIsLogin(false);
     setIsAdmin(false);
     setUser(null);

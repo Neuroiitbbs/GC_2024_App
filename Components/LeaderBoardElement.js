@@ -1,12 +1,9 @@
-import { View, Text, StyleSheet, Dimensions } from "react-native";
-// import CSELogo from "../assets/CSELogo.png";
-import { Image } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 
 const LeaderBoardElement = (props) => {
   return (
     <>
       <View style={styles.LeaderBoardElement}>
-        {/* <View style={styles.LeaderBoardElementLeft}> */}
         <View style={styles.LeaderBoardElementText}>
           <Text style={styles.LeaderBoardSNo}>{props.branchData.rank}</Text>
           <Image
@@ -23,7 +20,6 @@ const LeaderBoardElement = (props) => {
             {props.branchData.Name}
           </Text>
         </View>
-        {/* </View> */}
         <View style={styles.points}>
           <Text style={styles.LeaderBoardPoints}>{props.branchData.Score}</Text>
         </View>

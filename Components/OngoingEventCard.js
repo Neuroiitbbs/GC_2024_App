@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import VoteButton from "./VoteButton";
 
 import logoPaths from "../utils/logoPaths";
 import setProperTeamName from "../utils/setProperTeamName";
@@ -16,7 +15,6 @@ const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
 
 function OngoingEventCard(props) {
-  // console.log(props);
   console.log(props);
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);
@@ -54,7 +52,6 @@ function OngoingEventCard(props) {
           >
             {props.id}
           </Text>
-          {/* <Text style={{ fontWeight: "700" }}>{props.data.details.location}</Text> */}
         </View>
         <Image style={styles.LeftImageContainer} source={logoPaths[teamA]} />
         <Image />
@@ -73,7 +70,6 @@ function OngoingEventCard(props) {
           <Text style={styles.BottomTextGame}>{formattedDate}</Text>
           <Text style={styles.BottomTextTime}>{formattedTime}</Text>
         </View>
-        {/* <VoteButton /> */}
       </View>
     </View>
   );
@@ -130,9 +126,12 @@ const styles = StyleSheet.create({
     right: -18,
   },
   LeftImageContainer: {
-    width: deviceWidth < 380 ? 30 : 52,
-    height: deviceWidth < 380 ? 30 : 52,
-    borderRadius: deviceWidth < 380 ? 15 : 26,
+    // width: deviceWidth < 380 ? 30 : 52,
+    // height: deviceWidth < 380 ? 30 : 52,
+    // borderRadius: deviceWidth < 380 ? 15 : 26,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     borderWidth: 3,
     overflow: "hidden",
     margin: 9,
@@ -141,9 +140,12 @@ const styles = StyleSheet.create({
     left: 9,
   },
   RightImageContainer: {
-    width: deviceWidth < 380 ? 26 : 52,
-    height: deviceWidth < 380 ? 26 : 52,
-    borderRadius: deviceWidth < 380 ? 15 : 26,
+    // width: deviceWidth < 380 ? 26 : 52,
+    // height: deviceWidth < 380 ? 26 : 52,
+    // borderRadius: deviceWidth < 380 ? 15 : 26,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     borderWidth: 3,
     overflow: "hidden",
     margin: 9,

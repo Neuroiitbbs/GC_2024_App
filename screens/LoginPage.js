@@ -9,15 +9,17 @@ import {
 } from "react-native";
 
 const Login = ({ authenticateUser, promptAsync }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-
   const AdminLogin = () => {
     promptAsync();
   };
   const userLogin = () => {
-    authenticateUser(true);
+    if (__DEV__) {
+      console.log("Running in development mode");
+      authenticateUser(true);
+    } else {
+      console.log("Running in production mode");
+      promptAsync();
+    }
   };
 
   return (
@@ -31,11 +33,9 @@ const Login = ({ authenticateUser, promptAsync }) => {
       </View>
 
       <View style={styles.logoContainer}>
-        {/* Made the image bigger */}
         <Image source={require("../assets/logo.png")} style={styles.logoBig} />
       </View>
       <View style={styles.poweredBy}>
-        {/* Increased the size of "Powered By" */}
         <Text style={styles.poweredByTextBig}>Powered By</Text>
         <Image
           source={require("../assets/Neuro.png")}
@@ -43,7 +43,6 @@ const Login = ({ authenticateUser, promptAsync }) => {
         />
       </View>
       <View style={styles.bottombar}>
-        {/* Moved the login button to the bottom and made it bigger */}
         <TouchableOpacity onPress={userLogin} style={styles.loginButton}>
           <Image
             source={require("../assets/Neuro.png")}
@@ -54,10 +53,10 @@ const Login = ({ authenticateUser, promptAsync }) => {
           </Text>
         </TouchableOpacity>
         {/* <Text style={styles.forgotPassword}>Forgot Password?</Text> */}
-      </View>
-      {errorMessage ? (
+        {/* {errorMessage ? (
         <Text style={styles.errorMessage}>{errorMessage}</Text>
-      ) : null}
+      ) : null} */}
+      </View>
     </SafeAreaView>
   );
 };

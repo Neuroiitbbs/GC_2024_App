@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
   StatusBar,
@@ -7,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
@@ -198,10 +198,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     marginBottom: 10,
-    // position: "absolute",
-    // top: 0,
-    // left: 0,
-    // backgroundColor: '#FF0000',
     paddingVertical: 10,
     color: "#D41D77",
   },
@@ -211,10 +207,6 @@ const styles = StyleSheet.create({
     color: "#257CFF",
     marginBottom: 6,
     marginTop: 5,
-    // position: "absolute",
-    // top: 30,
-    // left: 0,
-    // backgroundColor: '#FF0000',
     paddingVertical: 8,
   },
 
@@ -245,7 +237,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    // paddingVertical: ,
     borderWidth: 2,
     margin: 3,
     borderColor: "#5C6168",

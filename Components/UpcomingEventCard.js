@@ -1,3 +1,4 @@
+import { LinearGradient } from "expo-linear-gradient";
 import {
   Text,
   View,
@@ -6,8 +7,6 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import VoteButton from "./VoteButton";
 
 import logoPaths from "../utils/logoPaths";
 import setProperTeamName from "../utils/setProperTeamName";
@@ -16,7 +15,6 @@ const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
 
 function UpcomingEventCard(props) {
-  // console.log(props);
   const timestamp = props.details?.timestamp;
   const date = new Date(timestamp);
   const formattedDate = date.toLocaleDateString(); // Date component
@@ -67,7 +65,6 @@ function UpcomingEventCard(props) {
           <Text style={styles.BottomTextGame}>{formattedDate}</Text>
           <Text style={styles.BottomTextTime}>{formattedTime}</Text>
         </View>
-        {/* <VoteButton/> */}
       </View>
     </View>
   );
@@ -123,9 +120,9 @@ const styles = StyleSheet.create({
     right: -18,
   },
   LeftImageContainer: {
-    width: deviceWidth < 380 ? 26 : 57,
-    height: deviceWidth < 380 ? 26 : 57,
-    borderRadius: deviceWidth < 380 ? 13 : 39,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     overflow: "hidden",
     margin: 9,
     marginTop: 36,
@@ -133,9 +130,9 @@ const styles = StyleSheet.create({
     left: 9,
   },
   RightImageContainer: {
-    width: deviceWidth < 380 ? 26 : 57,
-    height: deviceWidth < 380 ? 26 : 57,
-    borderRadius: deviceWidth < 380 ? 13 : 39,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     overflow: "hidden",
     margin: 9,
     marginTop: 36,

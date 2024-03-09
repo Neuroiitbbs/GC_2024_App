@@ -1,14 +1,11 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TechCultEventCard from "../../Components/TechCultEventCard";
-import { useState, useEffect } from "react";
 import axios from "axios";
 import { backend_link } from "../../utils/constants";
 import Loader from "../../Components/Loader";
 
 const sortData = (data) => {
-  console.log("data", data);
-
   let prevdata = [];
   let nextdata = [];
   data.map((item) => {

@@ -1,5 +1,4 @@
 import { Image, StyleSheet, Text, View, Dimensions } from "react-native";
-import OngoingUpcomingButton from "./OngoingUpcomingButtons";
 
 function TopMostCard(props) {
   return (

@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react";
-
 import { StatusBar } from "expo-status-bar";
 import {
+  Pressable,
   Image,
   StyleSheet,
   Text,
   View,
   Dimensions,
   SafeAreaView,
+  ScrollView,
   TouchableOpacity,
-  Pressable,
 } from "react-native";
 
 import Carousel, { Pagination } from "react-native-snap-carousel-new";
-import { ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
@@ -23,6 +22,24 @@ import { backend_link } from "../utils/constants";
 
 var { width, height } = Dimensions.get("window");
 
+const banners = {
+  CSE: require("../assets/TeamBanners/CSE.jpg"),
+  ECE_META: require("../assets/TeamBanners/ECE.jpg"),
+  EE: require("../assets/TeamBanners/EE.jpg"),
+  CE: require("../assets/TeamBanners/CE.jpg"),
+  ME: require("../assets/TeamBanners/ME.jpg"),
+};
+
+// {
+//    Team a - mtech
+//     Team b - ece meta
+//     Team c - cse
+//     Team d - civil
+//     Team e - ee
+//     Team f - phd
+//     Team g - mech
+//     Team h - msc + itep
+// }
 export default function HomePage() {
   const navigation = useNavigation();
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
@@ -81,34 +98,17 @@ export default function HomePage() {
       require("../assets/CarouselBanners/Banner1.jpg"),
       require("../assets/CarouselBanners/Banner1.jpg"),
     ],
-    // teams: [
-    //   {
-    //     team: "CSE",
-    //     image: require("../assets/Team Banners/CSE.jpg"),
-    //   },
-    //   {
-    //     team: "ECE",
-    //     image: require("../assets/Team Banners/ECE.jpg"),
-    //   },
-    //   {
-    //     team: "EE",
-    //     image: require("../assets/Team Banners/EE.jpg"),
-    //   },
-    //   {
-    //     team: "CIVIL",
-    //     image: require("../assets/Team Banners/CE.jpg"),
-    //   },
-    //   {
-    //     team: "MECH",
-    //     image: require("../assets/Team Banners/ME.jpg"),
-    //   },
-    // ],
     teams: [
-      require("../assets/TeamBanners/CSE.jpg"),
-      require("../assets/TeamBanners/ECE.jpg"),
-      require("../assets/TeamBanners/EE.jpg"),
-      require("../assets/TeamBanners/CE.jpg"),
-      require("../assets/TeamBanners/ME.jpg"),
+      // require("../assets/TeamBanners/CSE.jpg"),
+      // require("../assets/TeamBanners/ECE.jpg"),
+      // require("../assets/TeamBanners/EE.jpg"),
+      // require("../assets/TeamBanners/CE.jpg"),
+      // require("../assets/TeamBanners/ME.jpg"),
+      banners.CSE,
+      banners.ECE_META,
+      banners.EE,
+      banners.CE,
+      banners.ME,
     ],
     news: [
       require("../assets/news/news1.jpg"),
@@ -121,7 +121,7 @@ export default function HomePage() {
   const renderPagination = () => {
     return (
       <Pagination
-        dotsLength={data?.length || 2}
+        dotsLength={cardata?.length || 2}
         activeDotIndex={activeIndex}
         containerStyle={styles.paginationContainer}
         dotStyle={styles.paginationDot}
@@ -179,7 +179,7 @@ export default function HomePage() {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
-                marginTop: -60,
+                marginTop: -70,
               }}
             >
               <Text style={styles.newsTitle}>NEWS</Text>
@@ -194,16 +194,28 @@ export default function HomePage() {
               layout="default"
               data={newsIds}
               renderItem={({ item }) => (
-                <View>
+                <View style={{ flex: 1 }}>
                   <Text
                     style={{ color: "white", fontSize: 18, paddingBottom: 8 }}
                   >
                     {newscardata[item]?.title}
                   </Text>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 14,
+                      paddingBottom: 2,
+                    }}
+                  >
+                    {newscardata[item]?.description
+                      ? newscardata[item]?.description?.slice(0, 40) + "..."
+                      : ""}
+                  </Text>
                   <CarouselCard
                     item={{ uri: newscardata[item]?.imageUrl }}
-                    height={"100%"}
+                    height={140}
                     width={width * 0.9}
+                    borderRadius={15}
                   />
                 </View>
               )}
@@ -252,8 +264,6 @@ export default function HomePage() {
               height: 100,
             }}
           ></View>
-          {/* <AddEvent />
-          <AddLiveEvents /> */}
         </ScrollView>
       </View>
     </SafeAreaView>

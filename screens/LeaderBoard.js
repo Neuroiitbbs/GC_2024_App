@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -12,55 +13,19 @@ import logoPaths from "../utils/logoPaths";
 import axios from "axios";
 import { backend_link } from "../utils/constants";
 import setProperTeamName from "../utils/setProperTeamName";
-import { useEffect, useState } from "react";
-
-const initialBranchesData = [
-  {
-    Name: "CSE",
-    Score: 0,
-  },
-  {
-    Name: "ECE+META",
-    Score: 0,
-  },
-  {
-    Name: "EE",
-    Score: 0,
-  },
-  {
-    Name: "MECH",
-    Score: 0,
-  },
-  {
-    Name: "CIVIL",
-    Score: 0,
-  },
-  {
-    Name: "MSc",
-    Score: 0,
-  },
-  {
-    Name: "MTech",
-    Score: 0,
-  },
-  {
-    Name: "PhD",
-    Score: 0,
-  },
-];
+import { initialBranchesData } from "../utils/initialScoreData";
 
 const fetchDataAndUpdateScore = async (teamName, setBranchesData) => {
   try {
     const response = await axios.get(
       backend_link + "api/points/getTotalPointsByTeam",
       {
-        params: { teamId: teamName },
+        params: { teamId: setProperTeamName(teamName) },
       }
     );
     console.log("data", response.data);
     const points = response.data.points * 1;
 
-    // Update the state with the new score for the specified team
     setBranchesData((prevState) => {
       return prevState.map((branch) => {
         if (setProperTeamName(branch.Name) === setProperTeamName(teamName)) {
@@ -76,41 +41,20 @@ const fetchDataAndUpdateScore = async (teamName, setBranchesData) => {
   }
 };
 
-// const teamId = ["CSE","EE","ECE","CIVIL","MECH","PHD","MTech","MSc"];
+// const teamId = ["CSE","EE","ECE_META","CIVIL","MECH","PHD","MTech","MSc_ITEP"];
 
 export default function Leaderboard() {
   const [BranchesData, setBranchesData] = useState(initialBranchesData);
 
   useEffect(() => {
-    fetchDataAndUpdateScore("CSE", setBranchesData);
-  }, []);
-
-  useEffect(() => {
-    fetchDataAndUpdateScore("ECE", setBranchesData);
-  }, []);
-
-  useEffect(() => {
-    fetchDataAndUpdateScore("EE", setBranchesData);
-  }, []);
-
-  useEffect(() => {
-    fetchDataAndUpdateScore("MECH", setBranchesData);
-  }, []);
-
-  useEffect(() => {
     fetchDataAndUpdateScore("MTech", setBranchesData);
-  }, []);
-
-  useEffect(() => {
-    fetchDataAndUpdateScore("MSc", setBranchesData);
-  }, []);
-
-  useEffect(() => {
+    fetchDataAndUpdateScore("ECE_META", setBranchesData);
+    fetchDataAndUpdateScore("CSE", setBranchesData);
+    fetchDataAndUpdateScore("EE", setBranchesData);
     fetchDataAndUpdateScore("CIVIL", setBranchesData);
-  }, []);
-
-  useEffect(() => {
-    fetchDataAndUpdateScore("Phd", setBranchesData);
+    fetchDataAndUpdateScore("PHD", setBranchesData);
+    fetchDataAndUpdateScore("MECH", setBranchesData);
+    fetchDataAndUpdateScore("MSc_ITEP", setBranchesData);
   }, []);
 
   BranchesData.sort((a, b) => b.Score - a.Score);

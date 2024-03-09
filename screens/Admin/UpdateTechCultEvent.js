@@ -8,12 +8,13 @@ import {
   View,
   Platform,
   ScrollView,
+  BackHandler,
   Pressable,
   Modal,
   Alert,
   Button,
 } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
@@ -70,6 +71,18 @@ const UpdateEvent = ({ route, navigation }) => {
   const name = data?.details?.title || "";
   const description = data?.details?.description || "";
   const timestampMs = data?.details?.timestamp || data?.timestamp || Date.now();
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("LiveEvents");
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+    return () => backHandler.remove();
+  }, []);
 
   console.log(timestampMs);
   // const formattedDateTime = new Date(timestampMs).toLocaleString("en-US", {
@@ -163,7 +176,7 @@ const UpdateEvent = ({ route, navigation }) => {
     const body = {
       title: title,
       eventId: title,
-      email: LoginCtx?.user?.email || "22EC01057@iitbbs.ac.in",
+      email: LoginCtx?.user?.email,
       description: description,
       category: selectedType,
       location: venue,
@@ -216,11 +229,11 @@ const UpdateEvent = ({ route, navigation }) => {
   console.log(teamPoint, description, name, date, time, venue, selectedType);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
         <ScrollView>
           <Text style={styles.title}>Event</Text>
           <Text style={styles.subtitle}>Add Tech/Cult Event</Text>
@@ -627,8 +640,8 @@ const UpdateEvent = ({ route, navigation }) => {
           </Pressable>
           <View style={{ minHeight: 80 }}></View>
         </ScrollView>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -645,10 +658,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     marginBottom: 10,
-    // position: "absolute",
-    // top: 0,
-    // left: 0,
-    // backgroundColor: '#FF0000',
     paddingVertical: 10,
     color: "#D41D77",
   },
@@ -658,10 +667,6 @@ const styles = StyleSheet.create({
     color: "#257CFF",
     marginBottom: 6,
     marginTop: 5,
-    // position: "absolute",
-    // top: 30,
-    // left: 0,
-    // backgroundColor: '#FF0000',
     paddingVertical: 8,
   },
 
@@ -682,7 +687,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 10,
-    // paddingVertical: ,
     borderWidth: 2,
     margin: 3,
     borderColor: "#5C6168",
@@ -693,7 +697,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    // paddingVertical: ,
     borderWidth: 2,
     margin: 3,
     borderColor: "#5C6168",

@@ -1,3 +1,4 @@
+import React, { useState, useContext } from "react";
 import {
   KeyboardAvoidingView,
   StatusBar,
@@ -11,7 +12,6 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-import React, { useState, useContext } from "react";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
@@ -59,7 +59,7 @@ const getCorrectTimeStamp = (date, time) => {
 
   return new Date(date + "T" + time).getTime();
 };
-const AddEvent = () => {
+const AddTechCultEvent = () => {
   const LoginCtx = useContext(LoginContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -67,17 +67,6 @@ const AddEvent = () => {
   const [time, setTime] = useState(new Date());
   const [venue, setVenue] = useState("");
   const [selectedType, setSelectedType] = useState("");
-
-  {
-    /* Team a - mtech
-              Team b - ece meta 
-              Team c - cse
-              Team d - civil
-              Team e - ee
-              Team f - phd
-              Team g - mech
-              Team h - msc + itep */
-  }
 
   const [teamPoint, setTeamPoint] = useState(defaultPoint);
 
@@ -140,7 +129,7 @@ const AddEvent = () => {
     const body = {
       title: title,
       eventId: title,
-      email: LoginCtx?.user?.email || "22EC01057@iitbbs.ac.in",
+      email: LoginCtx?.user?.email,
       description: description,
       category: selectedType,
       location: venue,
@@ -588,4 +577,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddEvent;
+export default AddTechCultEvent;

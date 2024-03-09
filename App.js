@@ -1,18 +1,14 @@
-import * as React from "react";
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Modal, ActivityIndicator } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import LoginScreen from "./screens/LoginPage";
-import AllTabs from "./screens/AllTabs";
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
 import { LoginProvider, LoginContext } from "./store/LoginContext";
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { backend_link } from "./utils/constants";
+import axios from "axios";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -24,6 +20,10 @@ import {
   androidClientId,
   webClientId,
 } from "./firebaseConfig";
+
+import LoginScreen from "./screens/LoginPage";
+import AllTabs from "./screens/AllTabs";
+import { backend_link } from "./utils/constants";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -43,8 +43,7 @@ const App = () => {
     androidClientId: androidClientId,
     webClientId: webClientId,
   });
-
-  // Simulate an authentication function
+  const [loading, setLoading] = useState(true);
   const authenticateUser = (status) => {
     LoginCtx.setIsLogin(status);
   };
@@ -54,8 +53,10 @@ const App = () => {
     if (userInfo) {
       LoginCtx.setUser(JSON.parse(userInfo));
       LoginCtx.setIsLogin(true);
+      setLoading(false);
     } else {
       LoginCtx.setIsLogin(false);
+      setLoading(false);
     }
   };
 
@@ -64,6 +65,7 @@ const App = () => {
       const { id_token } = response.params;
       const credential = GoogleAuthProvider.credential(id_token);
       signInWithCredential(auth, credential);
+      setLoading(false);
     }
   }, [response]);
 
@@ -71,12 +73,14 @@ const App = () => {
     isUserLoggedIn();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log(user, "User");
         AsyncStorage.setItem("userInfo", JSON.stringify(user));
         LoginCtx.setUser(user);
         LoginCtx.setIsLogin(true);
       } else {
         LoginCtx.setUser(null);
         LoginCtx.setIsLogin(false);
+        setLoading(false);
       }
     });
     return () => {
@@ -89,19 +93,21 @@ const App = () => {
       //check if user is admin
       const isAdminorNot = async () => {
         const user = LoginCtx.user;
-        const Testemail = {
-          admin: "22EC01057@iitbbs.ac.in",
-          user: "22EC01099@iitbbs.ac.in",
-        };
+        // const Testemail = {
+        //   admin: "22EC01057@iitbbs.ac.in",
+        //   user: "22EC01099@iitbbs.ac.in",
+        // };
         if (user?.email !== null) {
           try {
             const response = await axios.get(
-              backend_link + "api/admin/isAdmin/" + Testemail.admin
+              backend_link + "api/admin/isAdmin/" + user?.email
             );
             console.log(response.data, "Admin or not");
             LoginCtx.setIsAdmin(response.data.isAdmin);
           } catch (e) {
             console.log(e, "Error in checking admin or not");
+          } finally {
+            setLoading(false);
           }
         }
       };
@@ -115,7 +121,21 @@ const App = () => {
         <NavigationContainer>
           <StatusBar style="light" />
 
-          {LoginCtx.isLogin ? (
+          {loading && (
+            <Modal transparent={true} animationType="none" visible={loading}>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "rgba(0,0,0,0.5)",
+                }}
+              >
+                <ActivityIndicator size="large" color="#fff" />
+              </View>
+            </Modal>
+          )}
+          {!loading && LoginCtx.isLogin ? (
             <AllTabs />
           ) : (
             <Stack.Navigator screenOptions={{ headerShown: false }}>

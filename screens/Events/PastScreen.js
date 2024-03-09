@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { Alert, FlatList, StyleSheet } from "react-native";
-import { View } from "react-native";
-import axios from "axios";
+import { Alert, FlatList, StyleSheet, View } from "react-native";
 import UpcomingEventCard from "../../Components/UpcomingEventCard";
 import Loader from "../../Components/Loader";
 import { backend_link } from "../../utils/constants";
+import axios from "axios";
 
 const sortData = (data) => {
   data.sort((a, b) => {
@@ -22,8 +21,6 @@ function PastScreen(props) {
         const response = await axios.get(
           backend_link + "api/event/getPastEvents"
         );
-
-        // console.log(response.data);
 
         const data = response.data.events;
         let events = data.map((item) => {
@@ -51,7 +48,6 @@ function PastScreen(props) {
           });
           return match;
         });
-        // console.log(events.flat());
         events = sortData(events.flat());
         setUpcomingEvents(events.flat());
         setIsLoading(false);

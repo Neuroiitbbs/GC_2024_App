@@ -1,3 +1,4 @@
+import { useState, useContext } from "react";
 import {
   Text,
   View,
@@ -8,19 +9,19 @@ import {
   TextInput,
   Button,
   Alert,
+  Pressable,
 } from "react-native";
-import { useState } from "react";
-import axios from "axios";
+import logoPaths from "../utils/logoPaths";
 import { LinearGradient } from "expo-linear-gradient";
 import { backend_link } from "../utils/constants";
-
-import logoPaths from "../utils/logoPaths";
-import { Picker } from "@react-native-picker/picker";
 import setProperTeamName from "../utils/setProperTeamName";
 import { LoginContext } from "../store/LoginContext";
-import { useContext } from "react";
+import { Picker } from "@react-native-picker/picker";
+import { AntDesign } from "@expo/vector-icons";
 
-function OngoingEventCard(props) {
+import axios from "axios";
+
+function AdminSportEventCard(props) {
   // console.log(props);
   const [status, setStatus] = useState(props.status);
   const loginCtx = useContext(LoginContext);
@@ -40,6 +41,48 @@ function OngoingEventCard(props) {
   hour = hour % 12;
   hour = hour ? hour : 12;
   const formattedTime = `${hour}:${minute < 10 ? "0" : ""}${minute} ${ampm}`;
+
+  const deleteConfirmHandler = () => {
+    Alert.alert("Delete", "Are you sure you want to delete this event?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+        onPress: () => console.log("Cancel Pressed"),
+      },
+      {
+        text: "Delete",
+        onPress: deleteHandler,
+      },
+    ]);
+  };
+
+  const deleteHandler = async () => {
+    const body = {
+      eventId: props.gameName
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" "),
+      subEventId: props.subEventId,
+      email: loginCtx?.user?.email,
+    };
+    console.log(body);
+    try {
+      const resp = await axios.post(
+        backend_link + "api/event/deleteLiveEvent",
+        body
+      );
+      console.log(resp);
+      props.setIsEventUpdated((prev) => !prev);
+      Alert.alert("Event Deleted");
+    } catch (err) {
+      if (err.response.status === 401) {
+        Alert.alert("Error", "You are not authorized to delete the event");
+        return;
+      }
+      console.log("Event delete failed", err);
+      Alert.alert("Error", "Something went wrong");
+    }
+  };
 
   const submitHandler = async () => {
     if (
@@ -79,7 +122,7 @@ function OngoingEventCard(props) {
         points: teamBscore,
       },
     };
-    const email = loginCtx?.user?.email || "22EC01099@iitbbs.ac.in";
+    const email = loginCtx?.user?.email;
     console.log("hii");
     const body = {
       eventId,
@@ -130,14 +173,23 @@ function OngoingEventCard(props) {
           >
             {props.subEventId}
           </Text>
-          {/* <Text style={{ fontWeight: "700" }}>{props.data.details.location}</Text> */}
         </View>
         <Image style={styles.LeftImageContainer} source={logoPaths[teamA]} />
-        <Image />
         <Text style={styles.LEFTscoreText}>{props.scoreA}</Text>
         <Text style={styles.RIGHTscoreText}>{props.scoreB}</Text>
         <Image style={styles.RightImageContainer} source={logoPaths[teamB]} />
-        <Image />
+
+        <View
+          style={{
+            position: "absolute",
+            right: 10,
+            top: 10,
+          }}
+        >
+          <Pressable onPress={deleteConfirmHandler}>
+            <AntDesign name="delete" size={24} color="black" />
+          </Pressable>
+        </View>
       </LinearGradient>
 
       <View style={styles.cardBottom}>
@@ -217,7 +269,7 @@ function OngoingEventCard(props) {
     </View>
   );
 }
-export default OngoingEventCard;
+export default AdminSportEventCard;
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;

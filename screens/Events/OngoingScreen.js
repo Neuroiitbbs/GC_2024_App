@@ -1,7 +1,6 @@
 import OngoingEventCard from "../../Components/OngoingEventCard";
 import { useState, useEffect } from "react";
-import { Alert, FlatList, StyleSheet } from "react-native";
-import { View } from "react-native";
+import { Alert, FlatList, StyleSheet, View } from "react-native";
 import axios from "axios";
 import Loader from "../../Components/Loader";
 import { backend_link } from "../../utils/constants";
@@ -16,59 +15,8 @@ const sortData = (data) => {
 
 function OngoingScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [ongoingEvents, setOngoingEvents] = useState([
-    // {
-    //   gameName: "Basketball",
-    //   id: "Basketball",
-    //   teamA: "ECE-META",
-    //   teamB: "CSE",
-    //   scoreA: "4",
-    //   scoreB: "6",
-    //   location: "BHR",
-    //   timestamp: 1709644800000,
-    // },
-    // {
-    //   gameName: "Basketball",
-    //   id: "Basketball",
-    //   teamA: "ECE-META",
-    //   teamB: "CSE",
-    //   scoreA: "4",
-    //   scoreB: "6",
-    //   location: "BHR",
-    //   timestamp: 1709644800000,
-    // },
-    // {
-    //   gameName: "Cricket",
-    //   id: "Cricket",
-    //   teamA: "ECE-META",
-    //   teamB: "CSE",
-    //   scoreA: "4",
-    //   scoreB: "6",
-    //   location: "BHR",
-    //   timestamp: 1709644800000,
-    // },
-    // {
-    //   gameName: "Football",
-    //   id: "Football",
-    //   teamA: "ECE-META",
-    //   teamB: "CSE",
-    //   scoreA: "4",
-    //   scoreB: "6",
-    //   location: "BHR",
-    //   timestamp: 1709644800000,
-    // },
-    // {
-    //   gameName: "Tennis",
-    //   id: "Tennis",
-    //   teamA: "ECE-META",
-    //   teamB: "CSE",
-    //   scoreA: "4",
-    //   scoreB: "6",
-    //   location: "BHR",
-    //   timestamp: 1709644800000,
-    // },
-  ]);
-  // console.log("hi123");
+  const [ongoingEvents, setOngoingEvents] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -78,38 +26,19 @@ function OngoingScreen(props) {
         // console.log("response.data   ", response.data);
         const data = response.data.events;
         let events = data.map((item) => {
-          // console.log("item", item);
           const eventName = item.eventId; //ex. Football BOYS
           const subEvents = item.subEvents;
-          // console.log("subEvents", subEvents);
           const gameName = eventName;
           const match = subEvents.map((match_item) => {
             const teamA = match_item.data.points.teamA;
             const teamB = match_item.data.points.teamB;
-            // const teamA = match_item.data.points
-            //   ? match_item.data.points?.teamA;
-            //   : match_item.data.pointsTable?.teamA;
-            // const teamB = match_item.data.points
-            //   ? match_item.data.points?.teamB
-            // : match_item.data.pointsTable?.teamB;
             const details = match_item.data.details;
-            // console.log("details", details);
-            // const idx = match_item.data.details.title
-            //   .split(" ")
-            //   .findIndex((word) => word.toLowerCase() === "vs");
-            // const gameName = match_item.data.details.title
-            //   .split(" ")
-            //   .slice(0, idx - 1)
-            //   .join(" ");
+
             return {
               details: details,
               status: match_item.data.status,
               gameName: gameName,
               id: match_item.subEventId,
-              // match_item.data.details.title.split(" ").join("") +
-              // match_item.subEventId.split(" ").join(""),
-              // teamA: item1.subEventId.split(" vs ")[0],
-              // teamB: item1.subEventId.split(" vs ")[1],
               teamA: teamA?.name || match_item.subEventId.split(" vs ")[0],
               teamB: teamB?.name || match_item.subEventId.split(" vs ")[1],
               scoreA: teamA?.points,
@@ -119,7 +48,6 @@ function OngoingScreen(props) {
 
           return match;
         });
-        // console.log(events.flat());
         setIsLoading(false);
 
         events = sortData(events.flat());

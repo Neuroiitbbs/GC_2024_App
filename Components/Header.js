@@ -1,6 +1,5 @@
 import { useState } from "react";
-
-import { StatusBar } from "expo-status-bar";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   Image,
   StyleSheet,
@@ -9,10 +8,9 @@ import {
   Dimensions,
   SafeAreaView,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 
-import { ScrollView } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Modal from "./Modal";
 import EventDropDown from "./eventsDropdown";
