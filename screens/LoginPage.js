@@ -8,11 +8,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const Login = ({ authenticateUser, promptAsync }) => {
+const Login = ({ authenticateUser, promptAsync, setAdminLogging }) => {
   const AdminLogin = () => {
+    setAdminLogging(true);
     promptAsync();
   };
   const userLogin = () => {
+    setAdminLogging(false);
     if (__DEV__) {
       console.log("Running in development mode");
       authenticateUser(true);
@@ -46,7 +48,7 @@ const Login = ({ authenticateUser, promptAsync }) => {
         <TouchableOpacity onPress={userLogin} style={styles.loginButton}>
           <Image
             source={require("../assets/Neuro.png")}
-            style={{ width: 40, height: 40,marginRight:"30%"}}
+            style={{ width: 40, height: 40, marginRight: "30%" }}
           />
           <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
             Login

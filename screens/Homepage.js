@@ -19,6 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 import CarouselCard from "../Components/CarouselCard";
 import axios from "axios";
 import { backend_link } from "../utils/constants";
+import { ActivityIndicator } from "react-native-paper";
 
 var { width, height } = Dimensions.get("window");
 
@@ -41,6 +42,7 @@ const banners = {
 //     Team h - msc + itep
 // }
 export default function HomePage() {
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
 
@@ -48,6 +50,12 @@ export default function HomePage() {
     console.log("snapped to", index);
     setCurrentItemIndex(index);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   const [activeIndex, setActiveIndex] = useState(1);
 
@@ -141,111 +149,103 @@ export default function HomePage() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
-
-      <View
-        style={{
-          flex: 1,
-          maxHeight: "85%",
-        }}
-      >
-        <ScrollView style={styles.content}>
-          <View style={styles.newsSection}>
-            <Carousel
-              data={Ids}
-              renderItem={({ item }) => (
-                <CarouselCard
-                  item={{ uri: cardata[item]?.imageUrl }}
-                  height={"100%"}
-                  width={width * 0.9}
-                />
-                // : <Text>Loading...</Text>
-              )}
-              firstItem={1}
-              sliderWidth={width}
-              itemWidth={width * 0.62}
-              inactiveSlideOpacity={0}
-              vertical={false}
-              slideStyle={{ display: "flex", alignItems: "center" }}
-              onSnapToItem={(index) => setActiveIndex(index)}
-              autoplay={true}
-              // enableSnap={true}
-              loop={true}
-            />
-            {renderPagination()}
-          </View>
-
-          <View style={styles.newsSection1}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginTop: -70,
-              }}
-            >
-              <Text style={styles.newsTitle}>NEWS</Text>
-              <TouchableOpacity onPress={() => navigation.navigate("NewsPage")}>
-                <Text style={{ color: "#BA1D55", marginRight: "0%" }}>
-                  View all {">"}{" "}
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <Carousel
-              layout="default"
-              data={newsIds}
-              renderItem={({ item }) => (
-                <View style={{ flex: 1 }}>
-                  <Text
-                    style={{ color: "#d41d77", fontSize: 18, paddingBottom: 1 }}
-                  >
-                    {newscardata[item]?.title}
-                  </Text>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontSize: 14,
-                      paddingBottom: 5,
-                    }}
-                  >
-                    {newscardata[item]?.description
-                      ? newscardata[item]?.description?.slice(0, 40) + "..."
-                      : ""}
-                  </Text>
-                  <CarouselCard
-                    item={{ uri: newscardata[item]?.imageUrl }}
-                    height={140}
-                    width={width * 0.9}
-                    borderRadius={15}
-                  />
-                </View>
-              )}
-              firstItem={1}
-              sliderWidth={width}
-              itemWidth={width * 0.62}
-              inactiveSlideOpacity={0}
-              vertical={false}
-              slideStyle={{ display: "flex", alignItems: "center" }}
-              loop={true}
-              autoplay={true}
-              // enableSnap={true}
-            />
-          </View>
-
-          <View style={styles.teamsSection}>
-            <Text style={styles.teamsTitle}>ALL TEAMS</Text>
-            <Pressable onPress={handlePress}>
+      {loading && (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#000",
+          }}
+        >
+          <ActivityIndicator size="large" color="#fff" />
+        </View>
+      )}
+      {!loading && (
+        <View
+          style={{
+            flex: 1,
+            maxHeight: "85%",
+          }}
+        >
+          <ScrollView style={styles.content}>
+            <View style={styles.newsSection}>
               <Carousel
-                layout="default"
-                data={data.teams}
+                data={Ids}
                 renderItem={({ item }) => (
                   <CarouselCard
-                    item={item}
+                    item={{ uri: cardata[item]?.imageUrl }}
                     height={"100%"}
                     width={width * 0.9}
                   />
+                  // : <Text>Loading...</Text>
                 )}
                 firstItem={1}
-                onSnapToItem={handleSnapToItem}
+                sliderWidth={width}
+                itemWidth={width * 0.62}
+                inactiveSlideOpacity={0}
+                vertical={false}
+                slideStyle={{ display: "flex", alignItems: "center" }}
+                onSnapToItem={(index) => setActiveIndex(index)}
+                autoplay={true}
+                // enableSnap={true}
+                loop={true}
+              />
+              {renderPagination()}
+            </View>
+
+            <View style={styles.newsSection1}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginTop: -70,
+                }}
+              >
+                <Text style={styles.newsTitle}>NEWS</Text>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("NewsPage")}
+                >
+                  <Text style={{ color: "#BA1D55", marginRight: "0%" }}>
+                    View all {">"}{" "}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <Carousel
+                layout="default"
+                data={newsIds}
+                renderItem={({ item }) => (
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        color: "#d41d77",
+                        fontSize: 18,
+                        paddingBottom: 1,
+                      }}
+                    >
+                      {newscardata[item]?.title}
+                    </Text>
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 14,
+                        paddingBottom: 5,
+                      }}
+                    >
+                      {newscardata[item]?.description
+                        ? newscardata[item]?.description?.slice(0, 40) + "..."
+                        : ""}
+                    </Text>
+                    <CarouselCard
+                      item={{ uri: newscardata[item]?.imageUrl }}
+                      height={140}
+                      width={width * 0.9}
+                      borderRadius={15}
+                    />
+                  </View>
+                )}
+                firstItem={1}
                 sliderWidth={width}
                 itemWidth={width * 0.62}
                 inactiveSlideOpacity={0}
@@ -253,19 +253,46 @@ export default function HomePage() {
                 slideStyle={{ display: "flex", alignItems: "center" }}
                 loop={true}
                 autoplay={true}
-
                 // enableSnap={true}
               />
-            </Pressable>
-          </View>
-          <View
-            style={{
-              width: "100%",
-              height: 50,
-            }}
-          ></View>
-        </ScrollView>
-      </View>
+            </View>
+
+            <View style={styles.teamsSection}>
+              <Text style={styles.teamsTitle}>ALL TEAMS</Text>
+              <Pressable onPress={handlePress}>
+                <Carousel
+                  layout="default"
+                  data={data.teams}
+                  renderItem={({ item }) => (
+                    <CarouselCard
+                      item={item}
+                      height={"100%"}
+                      width={width * 0.9}
+                    />
+                  )}
+                  firstItem={1}
+                  onSnapToItem={handleSnapToItem}
+                  sliderWidth={width}
+                  itemWidth={width * 0.62}
+                  inactiveSlideOpacity={0}
+                  vertical={false}
+                  slideStyle={{ display: "flex", alignItems: "center" }}
+                  loop={true}
+                  autoplay={true}
+
+                  // enableSnap={true}
+                />
+              </Pressable>
+            </View>
+            <View
+              style={{
+                width: "100%",
+                height: 50,
+              }}
+            ></View>
+          </ScrollView>
+        </View>
+      )}
     </SafeAreaView>
   );
 }

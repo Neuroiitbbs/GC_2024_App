@@ -38,6 +38,7 @@ export default function LoginContextWrapper() {
 }
 const App = () => {
   const LoginCtx = useContext(LoginContext);
+  const [adminLogging, setAdminLogging] = useState(false);
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     iosClientId: iosClientId,
     androidClientId: androidClientId,
@@ -90,8 +91,9 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (LoginCtx.isLogin) {
+    if (LoginCtx.isLogin && adminLogging) {
       //check if user is admin
+      console.log("Admin logging in");
       const isAdminorNot = async () => {
         const user = LoginCtx.user;
         // const Testemail = {
@@ -144,6 +146,7 @@ const App = () => {
                 {(props) => (
                   <LoginScreen
                     {...props}
+                    setAdminLogging={setAdminLogging}
                     authenticateUser={authenticateUser}
                     promptAsync={promptAsync}
                   />
