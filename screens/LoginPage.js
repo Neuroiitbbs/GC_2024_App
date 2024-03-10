@@ -8,13 +8,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const Login = ({ authenticateUser, promptAsync, setAdminLogging }) => {
+const Login = ({ authenticateUser, promptAsync }) => {
   const AdminLogin = () => {
-    setAdminLogging(true);
     promptAsync();
   };
   const userLogin = () => {
-    setAdminLogging(false);
     if (__DEV__) {
       console.log("Running in development mode");
       authenticateUser(true);
