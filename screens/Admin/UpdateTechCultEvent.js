@@ -110,14 +110,14 @@ const UpdateEvent = ({ route, navigation }) => {
   const handlePointChange = (team, points) => {
     setTeamPoint({
       ...teamPoint,
-      [team]: { points: points * 1, position: teamPoint[team].position * 1 },
+      [team]: { points: points, position: teamPoint[team].position },
     });
   };
 
   const handlePosChange = (team, position) => {
     setTeamPoint({
       ...teamPoint,
-      [team]: { points: teamPoint[team].points * 1, position: position * 1 },
+      [team]: { points: teamPoint[team].points, position: position },
     });
   };
 
@@ -153,6 +153,26 @@ const UpdateEvent = ({ route, navigation }) => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
 
+    let flag = true;
+    const keys = Object.keys(teamPoint);
+    Object.keys(teamPoint).forEach((key) => {
+      if (isNaN(teamPoint[key].points) || isNaN(teamPoint[key].position)) {
+        flag = false;
+      }
+    });
+    if (!flag) {
+      Alert.alert("Error", "Please enter valid points and position");
+      return;
+    }
+
+    const newTeamPoint = {};
+    keys.forEach((key) => {
+      newTeamPoint[key] = {
+        points: parseInt(teamPoint[key].points),
+        position: parseInt(teamPoint[key].position),
+      };
+    });
+    console.log(newTeamPoint);
     let timestamp = getCorrectTimeStamp(date.toISOString(), time.toISOString());
     if (
       !title ||
@@ -181,7 +201,7 @@ const UpdateEvent = ({ route, navigation }) => {
       category: selectedType,
       location: venue,
       timestamp: timestamp,
-      pointsTable: teamPoint,
+      pointsTable: newTeamPoint,
     };
     console.log(body);
 
