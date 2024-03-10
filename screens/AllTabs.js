@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { Icon } from "react-native-elements";
+import { Pressable, Text, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-
+import { useNavigation } from "@react-navigation/native";
 
 import Leaderboard from "./LeaderBoard";
 
@@ -210,11 +211,15 @@ function AdminDashboardStackNavigator() {
 
 export default function AllTabs() {
   const LoginCtx = useContext(LoginContext);
-  const [events, setEvents] = useState([]);
+  const navigation = useNavigation();
 
+  const handleTabPress = () => {
+    // Perform action when a tab is pressed
+    navigation.navigate("   ");
+  };
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={({ route, navigation }) => ({
         headerShown: false,
         tabBarStyle: {
           backgroundColor: "#fff",
@@ -275,9 +280,20 @@ export default function AllTabs() {
       <Tab.Screen
         name="   "
         component={TeamPoints}
-        // options={({ route }) => ({
-        //   branch: setProperTeamName(userBranch) || "CSE",
-        // })}
+        options={({ route }) => ({
+          branch: route.params?.branch,
+          key: Math.random().toString(),
+          tabBarIcon: ({ focused, color, size }) => (
+            <TouchableOpacity onPress={handleTabPress}>
+              <Icon
+                name="account-group"
+                type="material-community"
+                size={27}
+                color={color}
+              />
+            </TouchableOpacity>
+          ),
+        })}
       />
       {LoginCtx.isAdmin && (
         <Tab.Screen name="     " component={AdminDashboardStackNavigator} />

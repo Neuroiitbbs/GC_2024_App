@@ -205,7 +205,6 @@ export default function HomePage() {
                       color: "white",
                       fontSize: 14,
                       paddingBottom: 5,
-          
                     }}
                   >
                     {newscardata[item]?.description

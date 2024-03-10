@@ -1,4 +1,4 @@
-import { useState, useEffect ,useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -24,7 +24,9 @@ export default function TeamPoints({ route }) {
   const [eventPoints, setEventPoints] = useState([]);
   const [Ids, setIds] = useState([]);
   const [data, setdata] = useState([]);
-  const branch = setProperTeamName(loginctx.detail?.dept || 'MSc_ITEP');
+  const branch =
+    route.params?.branch ||
+    setProperTeamName(loginctx?.detail?.dept || "MSc_ITEP");
   console.log("branch", branch);
   const team = setProperTeamName(branch);
 
@@ -131,6 +133,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
+    paddingTop: 25,
   },
   containertop: {
     flex: 1.2,

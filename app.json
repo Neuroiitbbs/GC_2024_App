@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "GC App 2024",
+    "name": "GC '24",
     "slug": "GC_App_2024",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -28,7 +28,11 @@
     "web": {
       "favicon": "./assets/GClogo.png"
     },
-   
-    "scheme": "gcapp2024"
+    "scheme": "gcapp2024",
+    "extra": {
+      "eas": {
+        "projectId": "4c058831-328a-46c7-afeb-200a24a86a98"
+      }
+    }
   }
 }
