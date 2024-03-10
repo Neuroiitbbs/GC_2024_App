@@ -10,6 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 import logoPaths from "../utils/logoPaths";
 import setProperTeamName from "../utils/setProperTeamName";
+import teamColors from "../utils/teamColors";
 
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
@@ -32,22 +33,31 @@ function OngoingEventCard(props) {
   return (
     <View>
       <LinearGradient
-        start={{ x: -0.4, y: 0.0 }}
-        end={{ x: 0.7, y: 1 }}
-        locations={[0.5, 1]}
-        colors={["#E95793", "#C060A1"]}
-        style={styles.cardTop}
+         start={{ x: -0.4, y: 0.0 }}
+         end={{ x: 0.7, y: 1 }}
+         locations={[0.2, 0.8]}
+         colors={['#B0B0B0', '#E0E0E0']}
+         style={styles.cardTop}
       >
-        <View>
-          <Text style={{ fontWeight: "700", paddingBottom: 20 }}>
+        <View
+          style={{
+            height: 0.13 * deviceHeight,
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: 10,
+            // backgroundColor: "black",
+          }}
+        >
+          <Text style={{ fontWeight: "600", fontSize: 20 }}>
             {props.teamA} v/s {props.teamB}
           </Text>
           <Text
             style={{
               fontWeight: "700",
-              paddingBottom: 20,
-              position: "relative",
-              left: deviceWidth * 0.04,
+
+              // position: "relative",
+              // left: deviceWidth * 0.04,
             }}
           >
             {props.id}
@@ -62,11 +72,23 @@ function OngoingEventCard(props) {
       </LinearGradient>
 
       <View style={styles.cardBottom}>
-        <View>
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+          }}
+        >
           <Text style={styles.BottomTextGame}>{props.gameName}</Text>
           <Text style={styles.BottomTextTeams}>{props.details.location}</Text>
         </View>
-        <View>
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+          }}
+        >
           <Text style={styles.BottomTextGame}>{formattedDate}</Text>
           <Text style={styles.BottomTextTime}>{formattedTime}</Text>
         </View>
@@ -80,7 +102,7 @@ export default OngoingEventCard;
 const styles = StyleSheet.create({
   cardTop: {
     flexDirection: "row",
-    height: 0.15 * deviceHeight,
+    height: 0.13 * deviceHeight,
     marginTop: 12,
     marginHorizontal: 0.04 * deviceWidth,
     padding: 16,
@@ -98,14 +120,15 @@ const styles = StyleSheet.create({
   },
   cardBottom: {
     marginBottom: 0.01 * deviceHeight,
-    height: 0.09 * deviceHeight,
+    height: 0.07 * deviceHeight,
     marginHorizontal: "4%",
     padding: 10,
     backgroundColor: "#1A1A2E",
     borderBottomRightRadius: 16,
     borderBottomLeftRadius: 16,
     elevation: 6,
-    shadowColor: "white",
+    shadowColor: "#d41d77",
+    // shadowColor: "#1A1A2E",
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 0.5,
     shadowOpacity: 1,
@@ -122,8 +145,6 @@ const styles = StyleSheet.create({
   },
   BottomTextTime: {
     color: "gray",
-    position: "relative",
-    right: -18,
   },
   LeftImageContainer: {
     // width: deviceWidth < 380 ? 30 : 52,
@@ -131,8 +152,8 @@ const styles = StyleSheet.create({
     // borderRadius: deviceWidth < 380 ? 15 : 26,
     width: 40,
     height: 40,
-    borderRadius: 20,
-    borderWidth: 3,
+    // borderRadius: 20,
+    // borderWidth: 3,
     overflow: "hidden",
     margin: 9,
     marginTop: 36,
@@ -145,8 +166,8 @@ const styles = StyleSheet.create({
     // borderRadius: deviceWidth < 380 ? 15 : 26,
     width: 40,
     height: 40,
-    borderRadius: 20,
-    borderWidth: 3,
+    // borderRadius: 20,
+    // borderWidth: 3,
     overflow: "hidden",
     margin: 9,
     marginTop: 36,
@@ -157,7 +178,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#322d2d",
     position: "absolute",
-    left: 70,
+    fontWeight: "bold",
+    left: 64,
     margin: 9,
     marginTop: 38,
   },
@@ -165,7 +187,8 @@ const styles = StyleSheet.create({
     color: "#322d2d",
     fontSize: 20,
     position: "absolute",
-    right: 70,
+    fontWeight: "bold",
+    right: 64,
     margin: 9,
     marginTop: 38,
   },

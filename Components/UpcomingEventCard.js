@@ -36,15 +36,22 @@ function UpcomingEventCard(props) {
         colors={["white", "#e3e3e3"]}
         style={styles.cardTop}
       >
-        <View>
-          <Text style={{ fontWeight: "700", paddingBottom: 20 }}>
+        <View  style={{
+            height: 0.13 * deviceHeight,
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: 10,
+            // backgroundColor: "black",
+          }}>
+          <Text style={{ fontWeight: "600", fontSize: 20  }}>
             {props.teamA} v/s {props.teamB}
           </Text>
           <Text
             style={{
               fontWeight: "700",
-              position: "relative",
-              left: deviceWidth * 0.045,
+              // position: "relative",
+              // left: deviceWidth * 0.045,
             }}
           >
             {props.id}
@@ -57,11 +64,23 @@ function UpcomingEventCard(props) {
       </LinearGradient>
 
       <View style={styles.cardBottom}>
-        <View>
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+          }}
+        >
           <Text style={styles.BottomTextGame}>{props.gameName}</Text>
           <Text style={styles.BottomTextTeams}>{props.details.location}</Text>
         </View>
-        <View>
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+          }}
+        >
           <Text style={styles.BottomTextGame}>{formattedDate}</Text>
           <Text style={styles.BottomTextTime}>{formattedTime}</Text>
         </View>
@@ -75,7 +94,7 @@ export default UpcomingEventCard;
 const styles = StyleSheet.create({
   cardTop: {
     flexDirection: "row",
-    height: 0.15 * deviceHeight,
+    height: 0.13 * deviceHeight,
     marginTop: 12,
     marginHorizontal: 0.04 * deviceWidth,
     padding: 16,
@@ -92,14 +111,15 @@ const styles = StyleSheet.create({
   },
   cardBottom: {
     marginBottom: 0.01 * deviceHeight,
-    height: 0.09 * deviceHeight,
+    height: 0.07 * deviceHeight,
     marginHorizontal: "4%",
     padding: 10,
     backgroundColor: "#1A1A2E",
     borderBottomRightRadius: 16,
     borderBottomLeftRadius: 16,
     elevation: 6,
-    shadowColor: "white",
+    shadowColor: "#d41d77",
+     // shadowColor: "#1A1A2E",
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 0.5,
     shadowOpacity: 1,
@@ -116,8 +136,8 @@ const styles = StyleSheet.create({
   },
   BottomTextTime: {
     color: "gray",
-    position: "relative",
-    right: -18,
+    // position: "relative",
+    // right: -18,
   },
   LeftImageContainer: {
     width: 40,

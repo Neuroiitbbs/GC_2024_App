@@ -196,7 +196,7 @@ export default function HomePage() {
               renderItem={({ item }) => (
                 <View style={{ flex: 1 }}>
                   <Text
-                    style={{ color: "white", fontSize: 18, paddingBottom: 8 }}
+                    style={{ color: "#d41d77", fontSize: 18, paddingBottom: 1 }}
                   >
                     {newscardata[item]?.title}
                   </Text>
@@ -204,7 +204,8 @@ export default function HomePage() {
                     style={{
                       color: "white",
                       fontSize: 14,
-                      paddingBottom: 2,
+                      paddingBottom: 5,
+          
                     }}
                   >
                     {newscardata[item]?.description

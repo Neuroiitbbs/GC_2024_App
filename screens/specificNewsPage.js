@@ -25,14 +25,26 @@ const SpecificNewsPage = ({ route }) => {
   const formattedTime = `${hour}:${minute < 10 ? "0" : ""}${minute} ${ampm}`;
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{data.title}</Text>
       <ScrollView>
-        <Text style={styles.date}>{formattedDate}</Text>
-        <Text style={styles.time}>{formattedTime}</Text>
         <Image
           source={{ uri: data.imageUrl }}
           style={{ width: width * 0.9, height: 150, borderRadius: 15 }}
         />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: 0.9 * width,
+            padding: 10,
+            paddingBottom:0,
+          }}
+        >
+          <Text style={styles.title}>{data.title}</Text>
+          <Text style={styles.date}>
+            {formattedDate} || {formattedTime}{" "}
+          </Text>
+        </View>
+
         <Text style={styles.description}>{data.description}</Text>
         <View style={{ minHeight: 70 }}></View>
       </ScrollView>

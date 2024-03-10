@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
+import { StyleSheet, Text, View, ScrollView, FlatList,Dimensions } from "react-native";
 import React from "react";
 
 const sortPointsTable = (data) => {
@@ -15,6 +15,8 @@ const sortPointsTable = (data) => {
   }
   return {};
 };
+const deviceWidth = Dimensions.get("window").width;
+const deviceHeight = Dimensions.get("window").height;
 const SpecificEvents = ({ route }) => {
   let data = route.params?.data;
 
@@ -45,13 +47,35 @@ const SpecificEvents = ({ route }) => {
   return (
     <View
       style={{
+        paddingTop: 0.02 * deviceHeight,
         backgroundColor: "black",
         flexDirection: "column",
-        flex: 1,
-        justifyContent: "center",
+        height: "100%",
       }}
     >
-      <ScrollView style={{ flex: 1, padding: 10 }}>
+        <View
+          style={{
+            height: 0.2 * deviceHeight,
+            marginLeft: 10,
+            alignItems: "center",
+            
+          }}
+        >
+          <Text style={{ color: "white", fontWeight: "bold",fontSize:33 }}>
+            {data.details.title}
+          </Text>
+          <View style={{ flexDirection: "row",justifyContent:"space-evenly",alignItems:"center",width:"100%",margin:10 }}>
+          <Text style={{ color: "#b0afac",fontSize:16}}>
+            {data.details.location}
+          </Text>
+          <Text style={{ color: "#b0afac" ,fontSize:16}}>{formattedDate}</Text>
+          <Text style={{ color: "#b0afac" ,fontSize:16}}>{formattedTime}</Text>
+          </View>
+          <Text style={{ color: "white", marginTop: 4 ,paddingLeft:2,paddingRight:2,fontSize:13 }}>
+            {data.details.description}
+          </Text>
+        </View>
+      <ScrollView style={{ flex: 2, padding: 15 }}>
         {sortedTable && (
           <View style={styles.container}>
             <View style={styles.header}>
@@ -80,26 +104,7 @@ const SpecificEvents = ({ route }) => {
           );
         })}
 
-        <View
-          style={{
-            flex: 1,
-            marginLeft: 10,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: "white", fontWeight: "bold" }}>
-            {data.details.title}
-          </Text>
-          <Text style={{ color: "#b0afac", marginTop: 4 }}>
-            {data.details.location}
-          </Text>
-          <Text style={{ color: "#b0afac" }}>{formattedDate}</Text>
-          <Text style={{ color: "#b0afac" }}>{formattedTime}</Text>
-          <Text style={{ color: "white", marginTop: 4 }}>
-            {data.details.description}
-          </Text>
-        </View>
+      
         <View style={{ minHeight: 100 }}></View>
       </ScrollView>
     </View>
@@ -108,6 +113,37 @@ const SpecificEvents = ({ route }) => {
 
 export default SpecificEvents;
 
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 2,
+//     padding: 12,
+//   },
+//   header: {
+//     flexDirection: "row",
+//     borderBottomWidth: 1,
+//     borderColor: "black",
+//     paddingBottom: 5,
+//     marginBottom: 5,
+//   },
+//   row: {
+//     flexDirection: "row",
+//     marginBottom: 5,
+//   },
+//   cell: {
+//     flex: 1,
+//     color: "white",
+//     minWidth: 40,
+//     // minHeight: 40,
+//     padding: 10,
+//     textAlign: "center",
+//     borderWidth: 1,
+//     borderColor: "white",
+//     // padding: 15,
+//   },
+//   headerText: {
+//     fontWeight: "bold",
+//   },
+// });
 const styles = StyleSheet.create({
   container: {
     flex: 2,
@@ -116,24 +152,26 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     borderBottomWidth: 1,
-    borderColor: "black",
-    paddingBottom: 5,
-    marginBottom: 5,
+    borderColor: "white", // Changed border color
+    paddingBottom: 10, // Increased padding
+    marginBottom: 10, // Increased margin
+    // backgroundColor: "#333", // Added background color
+
   },
   row: {
     flexDirection: "row",
     marginBottom: 5,
+    //backgroundColor: "#555", // Added background color
   },
   cell: {
     flex: 1,
     color: "white",
     minWidth: 40,
-    // minHeight: 40,
-    padding: 10,
+    padding: 15, // Increased padding
     textAlign: "center",
     borderWidth: 1,
     borderColor: "white",
-    // padding: 15,
+    fontSize: 16, // Increased font size
   },
   headerText: {
     fontWeight: "bold",

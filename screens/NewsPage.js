@@ -12,11 +12,13 @@ import {
   Image,
   SafeAreaView,
   Pressable,
+  
 } from "react-native";
 
 import axios from "axios";
 import { backend_link } from "../utils/constants";
 const { width, height } = Dimensions.get("window");
+
 
 const sortNewsbyDate = (data) => {
   console.log("data", data);
@@ -74,36 +76,42 @@ const NewsPage = ({ navigation }) => {
             alignItems: "center",
             border: 1,
             borderWidth: 1,
-            borderBottomColor: "white",
-            borderTopColor: index === 0 ? "white" : "black",
+            // borderBottomColor: "white",
+            // borderTopColor: index === 0 ? "white" : "black",
           }}
         >
-          <Text style={{ color: "white", fontSize: 20, padding: 10 }}>
-            {item.title}
-          </Text>
-          <View style={{ flex: 1, border: 2, borderRadius: 15 }}>
+          
+          <View style={{ flex: 1, borderRadius: 15 ,alignItems:"center"}}>
             <Image
               source={{ uri: item.imageUrl }}
-              style={{ width: width * 0.9, height: 150, borderRadius: 15 }}
+              style={{ width: width * 0.87, height: 150, borderRadius: 15 }}
               alt="Carousel-Image"
+              
             />
-            <Text style={{ color: "white", fontSize: 14, padding: 20 }}>
+            <View style={{width:0.8*width,justifyContent:"space-evenly",margin:8}}>
+            <Text style={{ color: "#d41d77", fontSize: 20,textAlign:"left"}}>
+            {item.title}
+            
+          </Text>
+          <Text style={{ color: "white", fontSize: 14 }}>
               {item?.description
                 ? item?.description?.slice(0, 100) + "..."
                 : ""}
             </Text>
+          </View>
+           
+            
           </View>
         </View>
       </Pressable>
     );
   };
   return (
-    <SafeAreaView>
       <View style={styles.newsSection}>
         <Image
           source={require("../assets/OracleLogo.jpg")}
           style={{
-            width: 159,
+            width: 160,
             height: 160,
             resizeMode: "stretch",
             marginBottom: 20,
@@ -117,13 +125,13 @@ const NewsPage = ({ navigation }) => {
           keyExtractor={(item, index) => index.toString()}
           alwaysBounceVertical={false}
           style={{
-            flex: 0.9,
+            flex: 1,
             height: "60%",
           }}
         />
         <View style={{ height: 80 }}></View>
       </View>
-    </SafeAreaView>
+    
   );
 };
 

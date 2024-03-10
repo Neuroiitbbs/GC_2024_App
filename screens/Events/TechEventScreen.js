@@ -97,5 +97,7 @@ const styles = StyleSheet.create({
   eventsContainer: {
     flex: 5,
     maxHeight: "70%",
+    // paddingTop: 10,
+    // paddingBottom:20,
   },
 });

@@ -29,7 +29,7 @@ function TechCultEventCard(props) {
   );
 
   return (
-    <View>
+    <View style={{paddingBottom:2,paddingTop:2}}>
       <Pressable
         onPress={() => {
           navigation.navigate("SpecificEvent", {
@@ -38,20 +38,22 @@ function TechCultEventCard(props) {
         }}
       >
         <LinearGradient
-          start={{ x: 0.2, y: 0.1 }}
-          end={{ x: 0.65, y: 0.5 }}
-          locations={[0.6, 1]}
-          colors={["white", "#e3e3e3"]}
+          start={{ x: -0.4, y: 0.0 }}
+          end={{ x: 0.7, y: 1 }}
+          locations={[0.2, 0.8]}
+          colors={["#FDFCFB", "#E2D1C3"]}
           style={styles.cardTop}
         >
-          <View>
+          <View style={{
+            height: 0.07 * deviceHeight,
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: 10,
+            // backgroundColor: "black",
+          }}>
             <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "700",
-                paddingBottom: 12,
-                color: "#d41d77",
-              }}
+             style={{ fontWeight: "600", fontSize: 20 }}
             >
               {props.details?.title}
             </Text>
@@ -82,7 +84,11 @@ function TechCultEventCard(props) {
               {props.details?.location}
             </Text>
           </View>
-          <View>
+          <View style={{
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+          }}>
             <Text style={styles.BottomTextGame}>{formattedDate}</Text>
             <Text style={styles.BottomTextTime}>{formattedTime}</Text>
           </View>
@@ -98,7 +104,7 @@ export default TechCultEventCard;
 const styles = StyleSheet.create({
   cardTop: {
     flexDirection: "row",
-    height: 0.1 * deviceHeight,
+    height: 0.08 * deviceHeight,
     marginTop: 12,
     marginHorizontal: 0.04 * deviceWidth,
     // padding: 16,
@@ -116,14 +122,15 @@ const styles = StyleSheet.create({
   },
   cardBottom: {
     marginBottom: 0.01 * deviceHeight,
-    height: 0.09 * deviceHeight,
+    height: 0.07 * deviceHeight,
     marginHorizontal: "4%",
     padding: 10,
     backgroundColor: "#1A1A2E",
     borderBottomRightRadius: 16,
     borderBottomLeftRadius: 16,
     elevation: 6,
-    shadowColor: "white",
+    shadowColor: "#d41d77",
+     // shadowColor: "#1A1A2E",
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 0.5,
     shadowOpacity: 1,
@@ -141,8 +148,8 @@ const styles = StyleSheet.create({
   },
   BottomTextTime: {
     color: "gray",
-    position: "relative",
-    right: -26,
+    // position: "relative",
+    // right: -26,
   },
   LeftImageContainer: {
     width: deviceWidth < 380 ? 26 : 46,

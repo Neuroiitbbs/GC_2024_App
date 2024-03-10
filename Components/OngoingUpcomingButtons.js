@@ -39,10 +39,11 @@ const deviceHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   buttonInnerContainer: {
-    borderRadius: 8,
-    marginTop: 0.005 * deviceHeight,
+    borderRadius: 10,
+    marginTop: 0.033 * deviceHeight,
     overflow: "hidden",
-    backgroundColor: "black",
+    // backgroundColor: "white",
+    width: 115,
     paddingTop: "0%",
     paddingHorizontal: "3%",
     elevation: 2,
@@ -52,15 +53,17 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     textAlign: "center",
-    textDecorationLine: "underline",
+
     lineHeight: 35,
   },
   activeButton: {
-    color: "#d41d77",
+    color: "white",
     fontSize: 16,
     textAlign: "center",
-    textDecorationLine: "underline",
+    // textDecorationLine: "underline",
+    backgroundColor: "#d41d77",
     lineHeight: 30,
+    borderRadius: 40,
   },
   pressed: {
     opacity: 0.75,
