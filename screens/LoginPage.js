@@ -46,7 +46,7 @@ const Login = ({ authenticateUser, promptAsync }) => {
         <TouchableOpacity onPress={userLogin} style={styles.loginButton}>
           <Image
             source={require("../assets/Neuro.png")}
-            style={{ width: 30, height: 30, marginRight: 100 }}
+            style={{ width: 40, height: 40,marginRight:"30%"}}
           />
           <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
             Login
@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
     width: "50%",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
   },
   poweredByTextBig: {
     color: "white",
@@ -121,12 +120,12 @@ const styles = StyleSheet.create({
   loginButton: {
     flexDirection: "row",
     backgroundColor: "#25262c", // Example blue color
-    padding: 10,
+    padding: 5,
     borderRadius: 5,
     marginBottom: 10, // Added some margin at the bottom
     width: "90%", // Make the button wider
     alignItems: "center",
-    justifyContent: "start",
+    justifyContent: "flex-start", // Center the text
     borderColor: "orange",
     borderWidth: 3,
   },

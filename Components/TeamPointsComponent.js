@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#252728",
     alignItems: "center",
     justifyContent: "center",
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.87,
     height: 72,
-    borderRadius: 12,
+    borderRadius: 7,
   },
   LeaderBoardElementLeft: {
     flex: 1,

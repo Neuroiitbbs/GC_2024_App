@@ -39,7 +39,7 @@ const deviceHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   buttonInnerContainer: {
-    borderRadius: 10,
+    borderRadius: 1,
     marginTop: 0.033 * deviceHeight,
     overflow: "hidden",
     // backgroundColor: "white",
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     paddingTop: "0%",
     paddingHorizontal: "3%",
     elevation: 2,
-    marginLeft: 14,
+    marginBottom: 0.02 * deviceHeight,
   },
   inactiveButton: {
     color: "white",
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     // textDecorationLine: "underline",
     backgroundColor: "#d41d77",
     lineHeight: 30,
-    borderRadius: 40,
+    borderRadius: 4,
   },
   pressed: {
     opacity: 0.75,

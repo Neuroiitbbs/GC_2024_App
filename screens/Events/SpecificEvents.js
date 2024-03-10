@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, FlatList,Dimensions } from "react-native";
 import React from "react";
+import { height } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
 
 const sortPointsTable = (data) => {
   const pointsTable = data?.pointsTable;
@@ -45,6 +46,7 @@ const SpecificEvents = ({ route }) => {
   );
 
   return (
+    
     <View
       style={{
         paddingTop: 0.02 * deviceHeight,
@@ -53,9 +55,10 @@ const SpecificEvents = ({ route }) => {
         height: "100%",
       }}
     >
+       <ScrollView style={{ flex: 2, padding: 15 }}>
         <View
           style={{
-            height: 0.2 * deviceHeight,
+            marginBottom: 10,
             marginLeft: 10,
             alignItems: "center",
             
@@ -75,7 +78,7 @@ const SpecificEvents = ({ route }) => {
             {data.details.description}
           </Text>
         </View>
-      <ScrollView style={{ flex: 2, padding: 15 }}>
+        
         {sortedTable && (
           <View style={styles.container}>
             <View style={styles.header}>
@@ -105,8 +108,15 @@ const SpecificEvents = ({ route }) => {
         })}
 
       
-        <View style={{ minHeight: 100 }}></View>
-      </ScrollView>
+        <View style={{ Height: 100 }}></View>
+     
+      <View
+            style={{
+              width: "100%",
+              height: 150,
+            }}
+          ></View>
+           </ScrollView>
     </View>
   );
 };
@@ -171,6 +181,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     borderWidth: 1,
     borderColor: "white",
+    height: 50, // Increased height
     fontSize: 16, // Increased font size
   },
   headerText: {

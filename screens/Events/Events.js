@@ -7,6 +7,7 @@ import UpcomingScreen from "./UpcomingScreen";
 import TechEventScreen from "./TechEventScreen";
 import CultEventScreen from "./CultEventScreen";
 import PastScreen from "./PastScreen";
+import { width } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
 
 export default function Events({ route, navigation }) {
   const field = route?.params?.field || "Sports";
@@ -33,7 +34,7 @@ export default function Events({ route, navigation }) {
               currentScreen={screen}
               currentButton={2}
             >
-              PAST
+              PAST 
             </OngoingUpcomingButton>
 
             <OngoingUpcomingButton
@@ -84,11 +85,10 @@ const styles = StyleSheet.create({
   ButtonContainer: {
     flexDirection: "row",
     marginBottom: 24,
-    padding: 0,
+
     flex: 1,
     width: "100%",
-    alignContent: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
   },
   bottomnav: {
