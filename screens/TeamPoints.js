@@ -18,17 +18,44 @@ import { backend_link } from "../utils/constants";
 import axios from "axios";
 import { LoginContext } from "../store/LoginContext";
 
+const formatDate = (datestr) => {
+  const date = new Date(datestr);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const formattedDate = `${day}/${month}/${year}`;
+  return formattedDate;
+};
+
 export default function TeamPoints({ route }) {
   const loginctx = useContext(LoginContext);
   const [loading, setLoading] = useState(true);
   const [eventPoints, setEventPoints] = useState([]);
   const [Ids, setIds] = useState([]);
   const [data, setdata] = useState([]);
+  const [lastUpdated, setLastUpdated] = useState("08/03/2023");
+
   const branch =
     route.params?.branch ||
     setProperTeamName(loginctx?.detail?.dept || "MSc_ITEP");
   console.log("branch", branch);
   const team = setProperTeamName(branch);
+
+  useEffect(() => {
+    const fetchlastUpdated = async () => {
+      try {
+        const response = await axios.get(
+          backend_link + "api/event/lastUpdated"
+        );
+        const lastUpdated = response.data.lastUpdated;
+        const date = formatDate(lastUpdated);
+        setLastUpdated(date);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchlastUpdated();
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -102,7 +129,7 @@ export default function TeamPoints({ route }) {
           </View>
           <View style={styles.bottomcont}>
             <Text style={styles.text01}>Last Updated on: </Text>
-            <Text style={styles.text02}>15/3/2024</Text>
+            <Text style={styles.text02}>{lastUpdated}</Text>
           </View>
           <View style={styles.bottomnav}></View>
         </>
