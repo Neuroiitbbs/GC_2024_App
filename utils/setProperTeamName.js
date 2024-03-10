@@ -15,12 +15,14 @@ const setProperTeamName = (team) => {
   else if (team === "Phd" || team === "phd" || team === "PhD") team = "PHD";
   else if (
     team === "Msc" ||
+    team === "MSc" ||
     team === "msc" ||
     team === "msc" ||
     team === "msc-itep" ||
     team === "MSC-ITEP" ||
     team === "MSC+ITEP" ||
-    team === "MSC_ITEP"
+    team === "MSC_ITEP" || 
+    team === "ITEP"
   )
     team = "MSc_ITEP";
   return team;

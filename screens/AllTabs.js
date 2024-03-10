@@ -3,6 +3,7 @@ import { Icon } from "react-native-elements";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 
+
 import Leaderboard from "./LeaderBoard";
 
 import Events from "./Events/Events";
@@ -25,6 +26,7 @@ import UpdateSportEvents from "./Admin/UpdateSportEvents";
 import AddTechCultEvent from "./Admin/AddTechCultEvent";
 import UpdateTechCultEvents from "./Admin/UpdateTechCultEvent";
 import CheckUpdateTechCultEvents from "../Components/CheckUpdateEvent";
+import setProperTeamName from "../utils/setProperTeamName";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -273,9 +275,9 @@ export default function AllTabs() {
       <Tab.Screen
         name="   "
         component={TeamPoints}
-        options={({ route }) => ({
-          branch: route.params?.branch || "ECE_META",
-        })}
+        // options={({ route }) => ({
+        //   branch: setProperTeamName(userBranch) || "CSE",
+        // })}
       />
       {LoginCtx.isAdmin && (
         <Tab.Screen name="     " component={AdminDashboardStackNavigator} />

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useContext} from "react";
 import {
   View,
   Text,
@@ -16,13 +16,15 @@ import setProperTeamName from "../utils/setProperTeamName";
 import teamColors from "../utils/teamColors";
 import { backend_link } from "../utils/constants";
 import axios from "axios";
+import { LoginContext } from "../store/LoginContext";
 
 export default function TeamPoints({ route }) {
+  const loginctx = useContext(LoginContext);
   const [loading, setLoading] = useState(true);
   const [eventPoints, setEventPoints] = useState([]);
   const [Ids, setIds] = useState([]);
   const [data, setdata] = useState([]);
-  const branch = route.params?.branch || "ECE_META";
+  const branch = setProperTeamName(loginctx.detail?.dept || 'MSc_ITEP');
   console.log("branch", branch);
   const team = setProperTeamName(branch);
 

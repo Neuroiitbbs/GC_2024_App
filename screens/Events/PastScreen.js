@@ -86,7 +86,7 @@ function PastScreen(props) {
       <View style={{ minheight: 60 }}>
         <Loader
           visible={isLoading}
-          top={250}
+          top={270}
           bottom={0}
           setModalVisible={setIsLoading}
         />

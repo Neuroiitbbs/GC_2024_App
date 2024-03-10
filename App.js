@@ -46,6 +46,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const authenticateUser = (status) => {
     LoginCtx.setIsLogin(status);
+    // LoginCtx.setUser({email:'22ec01006@iitbbs.ac.in'});
   };
 
   const isUserLoggedIn = async () => {

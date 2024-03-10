@@ -88,7 +88,7 @@ function UpcomingScreen(props) {
       />
       <Loader
         visible={isLoading}
-        top={250}
+        top={270}
         bottom={0}
         setModalVisible={setIsLoading}
       />
