@@ -75,9 +75,11 @@ const NewsPage = ({ navigation }) => {
             justifyContent: "center",
             alignItems: "center",
             border: 1,
-            borderWidth: 1,
-            // borderBottomColor: "white",
+            borderWidth: 1.2,
+            borderBottomColor: "#303030",
             // borderTopColor: index === 0 ? "white" : "black",
+            marginBottom: 10,
+            marginTop: 10,
           }}
         >
           
@@ -93,7 +95,7 @@ const NewsPage = ({ navigation }) => {
             {item.title}
             
           </Text>
-          <Text style={{ color: "white", fontSize: 14 }}>
+          <Text style={{ color: "white", fontSize: 14, marginBottom:2 }}>
               {item?.description
                 ? item?.description?.slice(0, 100) + "..."
                 : ""}
@@ -106,6 +108,8 @@ const NewsPage = ({ navigation }) => {
       </Pressable>
     );
   };
+
+
   return (
       <View style={styles.newsSection}>
         <Image
@@ -114,7 +118,7 @@ const NewsPage = ({ navigation }) => {
             width: 160,
             height: 160,
             resizeMode: "stretch",
-            marginBottom: 20,
+            marginBottom: 10,
             marginTop: 50,
           }}
         />
@@ -127,6 +131,7 @@ const NewsPage = ({ navigation }) => {
           style={{
             flex: 1,
             height: "60%",
+            paddingTop: 10,
           }}
         />
         <View style={{ height: 80 }}></View>
