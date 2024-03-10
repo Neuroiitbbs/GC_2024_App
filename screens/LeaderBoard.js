@@ -15,6 +15,15 @@ import { backend_link } from "../utils/constants";
 import setProperTeamName from "../utils/setProperTeamName";
 import { initialBranchesData } from "../utils/initialScoreData";
 
+const formatDate = (datestr) => {
+  const date = new Date(datestr);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const formattedDate = `${day}/${month}/${year}`;
+  return formattedDate;
+};
+
 const fetchDataAndUpdateScore = async (teamName, setBranchesData) => {
   try {
     const response = await axios.get(
@@ -44,6 +53,7 @@ const fetchDataAndUpdateScore = async (teamName, setBranchesData) => {
 // const teamId = ["CSE","EE","ECE_META","CIVIL","MECH","PHD","MTech","MSc_ITEP"];
 
 export default function Leaderboard() {
+  const [lastUpdated, setLastUpdated] = useState("08/03/2023");
   const [BranchesData, setBranchesData] = useState(initialBranchesData);
 
   useEffect(() => {
@@ -55,6 +65,22 @@ export default function Leaderboard() {
     fetchDataAndUpdateScore("PHD", setBranchesData);
     fetchDataAndUpdateScore("MECH", setBranchesData);
     fetchDataAndUpdateScore("MSc_ITEP", setBranchesData);
+  }, []);
+
+  useEffect(() => {
+    const fetchlastUpdated = async () => {
+      try {
+        const response = await axios.get(
+          backend_link + "api/event/lastUpdated"
+        );
+        const lastUpdated = response.data.lastUpdated;
+        const date = formatDate(lastUpdated);
+        setLastUpdated(date);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchlastUpdated();
   }, []);
 
   BranchesData.sort((a, b) => b.Score - a.Score);
@@ -134,7 +160,7 @@ export default function Leaderboard() {
       </View>
       <View style={styles.bottomcont}>
         <Text style={styles.text01}>Last Updated on: </Text>
-        <Text style={styles.text02}>05/03/2023</Text>
+        <Text style={styles.text02}>{lastUpdated}</Text>
       </View>
       <View style={styles.bottomnav}></View>
     </SafeAreaView>

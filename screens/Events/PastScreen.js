@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Alert, FlatList, StyleSheet, View } from "react-native";
 import UpcomingEventCard from "../../Components/UpcomingEventCard";
+import OngoingEventCard from "../../Components/OngoingEventCard";
 import Loader from "../../Components/Loader";
 import { backend_link } from "../../utils/constants";
 import axios from "axios";
@@ -67,7 +68,7 @@ function PastScreen(props) {
         data={upcomingEvents}
         renderItem={(itemData) => {
           return (
-            <UpcomingEventCard
+            <OngoingEventCard
               details={itemData.item.details}
               gameName={itemData.item.gameName}
               id={itemData.item.id}
