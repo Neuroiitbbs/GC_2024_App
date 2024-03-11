@@ -6,7 +6,45 @@ import {
   Dimensions,
   Image,
   ScrollView,
+  Linking,
+  TouchableOpacity
 } from "react-native";
+
+import Hyperlink from 'react-native-hyperlink';
+
+const TextWithLinks = ({ children }) => {
+  const handlePress = (url) => {
+    Linking.openURL(url);
+  };
+
+  const renderTextWithLinks = (text) => {
+    const regex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(regex);
+    return parts.map((part, index) => {
+      if (regex.test(part)) {
+        return (
+          <TouchableOpacity
+            key={index}
+            onPress={() => handlePress(part)}
+          >
+            <Text style={{ color: '#0099ff', fontSize:18 }}>{part}</Text>
+          </TouchableOpacity>
+        );
+      } else {
+        return <Text style={styles.description} key={index}>{part}</Text>;
+      }
+    });
+  };
+
+  return (
+    <Text>
+      {renderTextWithLinks(children)}
+    </Text>
+  );
+};
+
+
+
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
@@ -37,15 +75,25 @@ const SpecificNewsPage = ({ route }) => {
             width: 0.9 * width,
             padding: 10,
             paddingBottom:0,
+            flexWrap:'wrap',
+            marginBottom:20,
+            alignItems:'center'
           }}
         >
           <Text style={styles.title}>{data.title}</Text>
-          <Text style={styles.date}>
-            {formattedDate} || {formattedTime}{" "}
-          </Text>
+          <View>
+            <Text style={styles.date}>
+              {formattedDate} || {formattedTime}{" "}
+            </Text>
+          </View>
+          
         </View>
-
-        <Text style={styles.description}>{data.description}</Text>
+          {/* <Hyperlink onPress={Linking.openURL}> */}
+          <TextWithLinks>
+{data.description}
+            {/* <Text style={styles.description}>{data.description}</Text> */}
+          </TextWithLinks>
+          {/* </Hyperlink> */}
         <View style={{ minHeight: 70 }}></View>
       </ScrollView>
     </View>
@@ -64,7 +112,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    // marginBottom: 20,
     textAlign: "left",
   },
   date: {
