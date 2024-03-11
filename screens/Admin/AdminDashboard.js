@@ -177,7 +177,7 @@ const AdminDashboard = ({ navigation }) => {
                   styles.cardView,
                   pressed ? styles.cardPressed : {},
                 ]}
-                onPress={() => {}}
+                onPress={() => {navigation.navigate("AddSportEventResult")}}
               >
                 <FontAwesome5
                   name="trophy"

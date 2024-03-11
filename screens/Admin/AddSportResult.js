@@ -59,7 +59,7 @@ const getCorrectTimeStamp = (date, time) => {
 
   return new Date(date + "T" + time).getTime();
 };
-const AddTechCultEvent = () => {
+const AddSportEventResult = () => {
   const LoginCtx = useContext(LoginContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -118,7 +118,6 @@ const AddTechCultEvent = () => {
       Alert.alert("Error", "Please enter valid points and position");
       return;
     }
-
     const newTeamPoint = {};
     keys.forEach((key) => {
       newTeamPoint[key] = {
@@ -126,6 +125,7 @@ const AddTechCultEvent = () => {
         position:0,
       };
     });
+
     let timestamp = getCorrectTimeStamp(date.toISOString(), time.toISOString());
     if (
       !title ||
@@ -154,7 +154,7 @@ const AddTechCultEvent = () => {
       category: selectedType,
       location: venue,
       timestamp: timestamp,
-      pointsTable: newTeamPoint
+      pointsTable: newTeamPoint,
     };
     console.log(body);
 
@@ -202,11 +202,11 @@ const AddTechCultEvent = () => {
       <View style={styles.container}>
         <ScrollView>
           <Text style={styles.title}>Event</Text>
-          <Text style={styles.subtitle}>Add Tech/Cult Event</Text>
+          <Text style={styles.subtitle}>Add Sport Event Result</Text>
           <View>
             <TextInput
               style={styles.input}
-              placeholder="Event Name"
+              placeholder="Event Name (eg: Football Boys)"
               value={name}
               onChangeText={(text) => setName(text)}
               placeholderTextColor="#5C6168"
@@ -293,19 +293,22 @@ const AddTechCultEvent = () => {
                 }
               >
                 <Picker.Item label="Event Type" value="" />
-                <Picker.Item label="Technical" value="tech" />
-                <Picker.Item label="Cultural" value="cult" />
+                <Picker.Item label="Sports" value="sports" />
               </Picker>
             </TouchableOpacity>
             <View style={{ paddingVertical: 25 }}>
               <Text style={{ color: "red" }}>NOTE:</Text>
               <Text style={{ color: "white" }}>
-                If event has not yet completed
+                Add Final Score only after all matches of that event have been completed!
               </Text>
-              <Text style={{ color: "white" }}>or</Text>
+              <Text style={{ color: "white" }}>AND</Text>
               <Text style={{ color: "white" }}>
-                If a team is not participated add 0 points or leave it.
+                If a team did not participate add 0 points or leave it.
               </Text>
+              <Text style={{ color: "white" }}>AND</Text>
+                <Text style={{ color: "white" }}>
+                    Sum all points from ALL matches of that event for a team (including Final and league matches).
+                </Text>
             </View>
 
             <View
@@ -597,4 +600,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddTechCultEvent;
+export default AddSportEventResult;

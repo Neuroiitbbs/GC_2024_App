@@ -22,11 +22,13 @@ import LiveEvents from "./Admin/LiveEvents";
 import AddNewsImage from "./Admin/AddNewsImage";
 import AddSportEvents from "./Admin/AddSportEvents";
 import AdminDashboard from "./Admin/AdminDashboard";
-import AddCarouselImage from "./Admin/AddCarouselImage";
-import UpdateSportEvents from "./Admin/UpdateSportEvents";
 import AddTechCultEvent from "./Admin/AddTechCultEvent";
+import AddCarouselImage from "./Admin/AddCarouselImage";
+import AddSportEventResult from "./Admin/AddSportResult";
+import UpdateSportEvents from "./Admin/UpdateSportEvents";
 import UpdateTechCultEvents from "./Admin/UpdateTechCultEvent";
 import CheckUpdateTechCultEvents from "../Components/CheckUpdateEvent";
+
 import setProperTeamName from "../utils/setProperTeamName";
 
 const Tab = createBottomTabNavigator();
@@ -205,6 +207,16 @@ function AdminDashboardStackNavigator() {
           headerShown: false,
         }}
       />
+      <AdminDashboardStack.Screen
+        name="AddSportEventResult"
+        component={AddSportEventResult}
+        options={{
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
+        }}
+      />
     </AdminDashboardStack.Navigator>
   );
 }
@@ -297,7 +309,7 @@ export default function AllTabs() {
       />
       {LoginCtx.isAdmin && (
         <Tab.Screen name="     " component={AdminDashboardStackNavigator} />
-      )}
+       )} 
     </Tab.Navigator>
   );
 }

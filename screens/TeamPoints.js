@@ -27,6 +27,25 @@ const formatDate = (datestr) => {
   return formattedDate;
 };
 
+const sortPointsTable=(data)=>{
+
+  const positivepoints = [];
+  const negativepoints = [];
+  const zeropoints = [];
+  data.map((item)=>{
+    if(item[1]*1 > 0 )
+    positivepoints.push(item);
+  else if(item[1]*1<0)
+  negativepoints.push(item);
+else
+zeropoints.push(item);
+  });
+  positivepoints.sort((a, b) => b[1] - a[1]);
+  negativepoints.sort((a, b) => a[1] - b[1]);
+
+  return [...positivepoints,...negativepoints,...zeropoints];
+}
+
 export default function TeamPoints({ route }) {
   const loginctx = useContext(LoginContext);
   const [loading, setLoading] = useState(true);
@@ -76,8 +95,9 @@ export default function TeamPoints({ route }) {
         const ids = Object.keys(response.data.pointsTable);
         setIds(ids);
         const pointsArray = ids.map((id) => [id, eventData[id].points]);
-        pointsArray.sort((a, b) => b[1] - a[1]); // sorting the array in descending order
-        setEventPoints(pointsArray);
+        const newPointsArray = sortPointsTable(pointsArray);
+        // pointsArray.sort((a, b) => b[1] - a[1]); // sorting the array in descending order
+        setEventPoints(newPointsArray);
         return pointsArray;
       } catch (err) {
         console.log(err);
@@ -88,7 +108,7 @@ export default function TeamPoints({ route }) {
   }, [branch]);
 
   const totalPoints = () => {
-    let sum = eventPoints.reduce((acc, curr) => acc + curr[1], 0);
+    let sum = eventPoints.reduce((acc, curr) => acc*1 + curr[1]*1, 0);
     return sum;
   };
 
