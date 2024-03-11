@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { LoginContext } from "../store/LoginContext";
 import { useContext } from "react";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const ModalComponent = ({ modalVisible, setModalVisible }) => {
   const LoginCtx = useContext(LoginContext);
@@ -86,17 +87,26 @@ const ModalComponent = ({ modalVisible, setModalVisible }) => {
                     style={{
                       width: 50,
                       height: 50,
-                      borderRadius: 10,
+                      borderRadius: 40,
                     }}
                   />
                 </View>
               </View>
+              <View style={{alignItems:"center"}}>
+                  <Image source={require("../assets/Neuro.png")}
+                 style={{ width: 100, height: 100, resizeMode: "center" }}>
+
+                </Image>
+                <Text style={{color:"white",fontSize:15,fontWeight:"bold"}}>Developed by Neuromacners</Text>
+                
+              </View>
+        
               <View style={styles.buttonContainer}>
                 {/* <Button title="LOGOUT" onPress={logoutHandler}></Button> */}
                 <Pressable onPress={logoutHandler}>
                   <View
                     style={{
-                      backgroundColor: "#EE4266",
+                      backgroundColor: "#d41d77",
                       padding: 10,
                       borderRadius: 20,
                       alignItems: "center",
@@ -128,7 +138,7 @@ const styles = StyleSheet.create({
   OutermodalContainer: {
     width: "100%",
     minHeight: "50%",
-    backgroundColor: "#9290C3",
+    backgroundColor: "#111319",
     borderRadius: 20,
     padding: 20,
     flexDirection: "column",

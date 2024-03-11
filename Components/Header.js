@@ -84,8 +84,8 @@ export default function Header({ events, showmodal }) {
       </View>
       {showmodal && (
         <View>
-          <TouchableOpacity onPress={openModal}>
-            <Icon name="menu" size={30} color="white" />
+          <TouchableOpacity onPress={openModal} style={{borderWidth:2,borderColor:"#fff",borderRadius:50}}>
+            <Icon name="person" size={27} color="white" />
           </TouchableOpacity>
         </View>
       )}

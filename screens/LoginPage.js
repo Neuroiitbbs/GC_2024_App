@@ -38,6 +38,10 @@ const Login = ({ authenticateUser, promptAsync }) => {
       <View style={styles.poweredBy}>
         <Text style={styles.poweredByTextBig}>Powered By</Text>
         <Image
+          source={require("../assets/Gymkhana.png")}
+          style={styles.poweredByLogo}
+        />
+        <Image
           source={require("../assets/Neuro.png")}
           style={styles.poweredByLogo}
         />
@@ -45,10 +49,10 @@ const Login = ({ authenticateUser, promptAsync }) => {
       <View style={styles.bottombar}>
         <TouchableOpacity onPress={userLogin} style={styles.loginButton}>
           <Image
-            source={require("../assets/Neuro.png")}
-            style={{ width: 40, height: 40, marginRight: "30%" }}
+            source={require("../assets/google.png")}
+            style={{ width: 40, height: 40, marginRight: "26%" }}
           />
-          <Text style={{ color: "white", fontWeight: "bold", fontSize: 18 }}>
+          <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
             Login
           </Text>
         </TouchableOpacity>
@@ -93,9 +97,10 @@ const styles = StyleSheet.create({
     // Increased size
   },
   poweredBy: {
-    width: "50%",
+    width: "70%",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
   },
   poweredByTextBig: {
     color: "white",
@@ -120,7 +125,7 @@ const styles = StyleSheet.create({
   loginButton: {
     flexDirection: "row",
     backgroundColor: "#25262c", // Example blue color
-    padding: 5,
+    padding: 10,
     borderRadius: 5,
     marginBottom: 10, // Added some margin at the bottom
     width: "90%", // Make the button wider
