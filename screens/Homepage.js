@@ -188,7 +188,7 @@ export default function HomePage() {
                 firstItem={1}
                 sliderWidth={width}
                 itemWidth={width * 0.88}
-                inactiveSlideOpacity={0.25}
+                inactiveSlideOpacity={0.4}
                 vertical={false}
                 slideStyle={{ display: "flex", alignItems: "center" }}
                 onSnapToItem={(index) => setActiveIndex(index)}
@@ -256,7 +256,7 @@ export default function HomePage() {
                 firstItem={1}
                 sliderWidth={width}
                 itemWidth={width * 0.88}
-                inactiveSlideOpacity={0.25}
+                inactiveSlideOpacity={0.4}
                 vertical={false}
                 slideStyle={{ display: "flex", alignItems: "center" }}
                 loop={true}
@@ -287,7 +287,7 @@ export default function HomePage() {
                   onSnapToItem={handleSnapToItem}
                   sliderWidth={width}
                   itemWidth={width * 0.87}
-                  inactiveSlideOpacity={0.25}
+                  inactiveSlideOpacity={0.4}
                   vertical={false}
                   slideStyle={{ display: "flex", alignItems: "center"}}
                   loop={true}
