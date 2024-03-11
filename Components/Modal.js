@@ -63,18 +63,18 @@ const ModalComponent = ({ modalVisible, setModalVisible }) => {
                           fontSize: 20,
                         }}
                       >
-                        Devesh Patodkar
+                        {/* Devesh Patodkar */}
                         {name}
                       </Text>
                     </View>
-                    <View  >
+                    <View>
                       <Text
                         style={{
                           color: "#6E7E81",
                           fontSize: 20,
                         }}
                       >
-                        21ec01031@iitbbs.ac.in
+                        {/* 21ec01031@iitbbs.ac.in */}
                         {email}
                       </Text>
                     </View>
@@ -95,13 +95,20 @@ const ModalComponent = ({ modalVisible, setModalVisible }) => {
                 </View>
               </View>
               <View style={{ alignItems: "center" }}>
-                <Text style={{ color: "#6E7E81", fontSize: 18, fontWeight: "500" }}>Developed by</Text>
-                <Image source={require("../assets/Neuro.png")}
-                  style={{ width: 200, height: 160, resizeMode: "center" }}>
-
-                </Image>
-                <Text style={{ color: "#08B09E", fontSize: 25, fontWeight: "bold" }}>NEUROMANCERS</Text>
-
+                <Text
+                  style={{ color: "#6E7E81", fontSize: 18, fontWeight: "500" }}
+                >
+                  Developed by
+                </Text>
+                <Image
+                  source={require("../assets/Neuro.png")}
+                  style={{ width: 200, height: 160, resizeMode: "center" }}
+                ></Image>
+                <Text
+                  style={{ color: "#08B09E", fontSize: 25, fontWeight: "bold" }}
+                >
+                  NEUROMANCERS
+                </Text>
               </View>
 
               <View style={styles.buttonContainer}>
@@ -119,7 +126,9 @@ const ModalComponent = ({ modalVisible, setModalVisible }) => {
                       justifyContent: "center",
                     }}
                   >
-                    <Text style={{ color: "#08B09E", fontSize: 25 }}>LOGOUT</Text>
+                    <Text style={{ color: "#08B09E", fontSize: 25 }}>
+                      LOGOUT
+                    </Text>
                   </View>
                 </Pressable>
               </View>
@@ -165,6 +174,6 @@ const styles = StyleSheet.create({
     color: "white",
   },
   buttonContainer: {
-    alignItems: 'center'
-  }
+    alignItems: "center",
+  },
 });

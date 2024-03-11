@@ -30,9 +30,9 @@ const banners = {
   CSE: require("../assets/TeamBanners/CSE.png"),
   ECE_META: require("../assets/TeamBanners/ECE.png"),
   EE: require("../assets/TeamBanners/EE.png"),
-  CE: require("../assets/TeamBanners/CIVIL.png"),
-  ME: require("../assets/TeamBanners/MECH.png"),
-  MTech: require("../assets/TeamBanners/MTech.png"),
+  CE: require("../assets/TeamBanners/Civil.png"),
+  ME: require("../assets/TeamBanners/Mech.png"),
+  MTech: require("../assets/TeamBanners/Mtech.png"),
   PhD: require("../assets/TeamBanners/PhD.png"),
   MSc_ITEP: require("../assets/TeamBanners/MSc_ITEP.png"),
 };
@@ -310,7 +310,7 @@ export default function HomePage() {
                 loop={true}
                 autoplay={true}
 
-              // enableSnap={true}
+                // enableSnap={true}
               />
             </View>
           </View>

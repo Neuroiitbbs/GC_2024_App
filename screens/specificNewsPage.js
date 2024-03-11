@@ -7,10 +7,8 @@ import {
   Image,
   ScrollView,
   Linking,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
-
-import Hyperlink from 'react-native-hyperlink';
 
 const TextWithLinks = ({ children }) => {
   const handlePress = (url) => {
@@ -23,27 +21,22 @@ const TextWithLinks = ({ children }) => {
     return parts.map((part, index) => {
       if (regex.test(part)) {
         return (
-          <TouchableOpacity
-            key={index}
-            onPress={() => handlePress(part)}
-          >
-            <Text style={{ color: '#0099ff', fontSize:18 }}>{part}</Text>
+          <TouchableOpacity key={index} onPress={() => handlePress(part)}>
+            <Text style={{ color: "#0099ff", fontSize: 18 }}>{part}</Text>
           </TouchableOpacity>
         );
       } else {
-        return <Text style={styles.description} key={index}>{part}</Text>;
+        return (
+          <Text style={styles.description} key={index}>
+            {part}
+          </Text>
+        );
       }
     });
   };
 
-  return (
-    <Text>
-      {renderTextWithLinks(children)}
-    </Text>
-  );
+  return <Text>{renderTextWithLinks(children)}</Text>;
 };
-
-
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -74,10 +67,10 @@ const SpecificNewsPage = ({ route }) => {
             justifyContent: "space-between",
             width: 0.9 * width,
             padding: 10,
-            paddingBottom:0,
-            flexWrap:'wrap',
-            marginBottom:20,
-            alignItems:'center'
+            paddingBottom: 0,
+            flexWrap: "wrap",
+            marginBottom: 20,
+            alignItems: "center",
           }}
         >
           <Text style={styles.title}>{data.title}</Text>
@@ -86,14 +79,8 @@ const SpecificNewsPage = ({ route }) => {
               {formattedDate} || {formattedTime}{" "}
             </Text>
           </View>
-          
         </View>
-          {/* <Hyperlink onPress={Linking.openURL}> */}
-          <TextWithLinks>
-{data.description}
-            {/* <Text style={styles.description}>{data.description}</Text> */}
-          </TextWithLinks>
-          {/* </Hyperlink> */}
+        <TextWithLinks>{data.description}</TextWithLinks>
         <View style={{ minHeight: 70 }}></View>
       </ScrollView>
     </View>
