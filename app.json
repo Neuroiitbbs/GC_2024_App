@@ -28,7 +28,11 @@
     "web": {
       "favicon": "./assets/GClogo.png"
     },
-    "scheme": "gcapp2024"
-
+    "scheme": "gcapp2024",
+    "extra": {
+      "eas": {
+        "projectId": "4c058831-328a-46c7-afeb-200a24a86a98"
+      }
+    }
   }
 }

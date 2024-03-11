@@ -12,7 +12,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import Carousel, { Pagination ,ParallaxImage } from "react-native-snap-carousel-new";
+import Carousel, {
+  Pagination,
+  ParallaxImage,
+} from "react-native-snap-carousel-new";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
@@ -31,7 +34,7 @@ const banners = {
   ME: require("../assets/TeamBanners/MECH.png"),
   MTech: require("../assets/TeamBanners/MTech.png"),
   PhD: require("../assets/TeamBanners/PhD.png"),
-  MSc_ITEP: require("../assets/TeamBanners/MSc_ITEP.png")
+  MSc_ITEP: require("../assets/TeamBanners/MSc_ITEP.png"),
 };
 
 // {
@@ -122,7 +125,7 @@ export default function HomePage() {
       banners.ME,
       banners.MTech,
       banners.MSc_ITEP,
-      banners.PhD
+      banners.PhD,
     ],
     news: [
       require("../assets/news/news1.jpg"),
@@ -130,7 +133,16 @@ export default function HomePage() {
     ],
   };
 
-  const teams = ["CSE", "ECE_META", "EE", "CIVIL", "MECH", "MTech", "MSc_ITEP", "PHD"];
+  const teams = [
+    "CSE",
+    "ECE_META",
+    "EE",
+    "CIVIL",
+    "MECH",
+    "MTech",
+    "MSc_ITEP",
+    "PHD",
+  ];
 
   const renderPagination = () => {
     return (
@@ -172,7 +184,7 @@ export default function HomePage() {
           <View style={styles.content}>
             <View style={styles.newsSection}>
               <Carousel
-              enableMomentum={true}
+                enableMomentum={true}
                 layout="default"
                 decelerationRate={0.9}
                 data={Ids}
@@ -182,13 +194,13 @@ export default function HomePage() {
                     height={"100%"}
                     width={width * 0.9}
                   />
-                //   <ParallaxImage
-                //     source={{ uri: cardata[item]?.imageUrl }}
-                //     containerStyle={styles.imageContainer}
-                //     style={styles.image}
-                //     parallaxFactor={0.4}
-                    
-                // />
+                  //   <ParallaxImage
+                  //     source={{ uri: cardata[item]?.imageUrl }}
+                  //     containerStyle={styles.imageContainer}
+                  //     style={styles.image}
+                  //     parallaxFactor={0.4}
+
+                  // />
                   // : <Text>Loading...</Text>
                 )}
                 firstItem={1}
@@ -224,7 +236,6 @@ export default function HomePage() {
               </View>
 
               <Carousel
-                
                 enableMomentum={true}
                 layout="default"
                 decelerationRate={0.9}
@@ -273,44 +284,41 @@ export default function HomePage() {
 
             <View style={styles.teamsSection}>
               <Text style={styles.teamsTitle}>ALL TEAMS</Text>
-              
-                <Carousel
+
+              <Carousel
                 enableMomentum={true}
                 decelerationRate={0.9}
-                  layout="default"
-                  data={data.teams}
-                  renderItem={({ item }) => (
-                    <Pressable onPress={handlePress}>
+                layout="default"
+                data={data.teams}
+                renderItem={({ item }) => (
+                  <Pressable onPress={handlePress}>
                     <CarouselCard
                       item={item}
                       height={"100%"}
-
                       width={width * 0.9}
                     />
-                    </Pressable>
-                  )}
-                  firstItem={1}
-                  onSnapToItem={handleSnapToItem}
-                  sliderWidth={width}
-                  itemWidth={width * 0.87}
-                  inactiveSlideOpacity={0.4}
-                  vertical={false}
-                  slideStyle={{ display: "flex", alignItems: "center"}}
-                  loop={true}
-                  autoplay={true}
+                  </Pressable>
+                )}
+                firstItem={1}
+                onSnapToItem={handleSnapToItem}
+                sliderWidth={width}
+                itemWidth={width * 0.87}
+                inactiveSlideOpacity={0.4}
+                vertical={false}
+                slideStyle={{ display: "flex", alignItems: "center" }}
+                loop={true}
+                autoplay={true}
 
-                  // enableSnap={true}
-                />
-              
+                // enableSnap={true}
+              />
             </View>
-            
           </View>
           <View
-              style={{
-                width: "100%",
-                height: 200,
-              }}
-            ></View>
+            style={{
+              width: "100%",
+              height: 200,
+            }}
+          ></View>
         </View>
       )}
     </SafeAreaView>
