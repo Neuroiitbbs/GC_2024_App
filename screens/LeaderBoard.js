@@ -112,7 +112,7 @@ export default function Leaderboard() {
                     .replace("-", "")
                 ]
               }
-              style={{ width: 100, height: 100 }}
+              style={{ width: 90, height: 90 }}
             />
           </View>
           <View style={styles.number2bottom}>
@@ -125,9 +125,10 @@ export default function Leaderboard() {
             <View style={styles.iconCont}>
               <FontAwesome5 name="crown" size={24} color="#FFAA00" />
             </View>
+            
             <Image
               source={logoPaths[top3[0].Name.replace(".", "").replace("+", "")]}
-              style={{ width: 100, height: 100 }}
+              style={{ width:120, height: 100 }}
             />
           </View>
           <View style={styles.number1bottom}>
@@ -142,7 +143,7 @@ export default function Leaderboard() {
             </View>
             <Image
               source={logoPaths[top3[2].Name.replace(".", "").replace("+", "")]}
-              style={{ width: 100, height: 100 }}
+              style={{ width: 70, height: 70 }}
             />
           </View>
           <View style={styles.number3bottom}>
@@ -208,6 +209,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#746030",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
+    width: "100%",
+
     justifyContent: "center",
     alignItems: "center",
   },
