@@ -58,62 +58,68 @@ const ModalComponent = ({ modalVisible, setModalVisible }) => {
                     <View style={styles.name}>
                       <Text
                         style={{
-                          color: "white",
-                          paddingVertical: 10,
+                          color: "#6E7E81",
+                          paddingVertical: 0,
                           fontSize: 20,
                         }}
                       >
+                        Devesh Patodkar
                         {name}
                       </Text>
                     </View>
-                    <View>
+                    <View  >
                       <Text
                         style={{
-                          color: "white",
+                          color: "#6E7E81",
                           fontSize: 20,
                         }}
                       >
+                        21ec01031@iitbbs.ac.in
                         {email}
                       </Text>
                     </View>
                   </TouchableOpacity>
                 </View>
-                <View style={{}}>
+                <View>
                   <Image
                     source={{
                       uri: image,
                       alt: "Profile Picture",
                     }}
                     style={{
-                      width: 50,
-                      height: 50,
+                      width: 60,
+                      height: 60,
                       borderRadius: 40,
                     }}
                   />
                 </View>
               </View>
-              <View style={{alignItems:"center"}}>
-                  <Image source={require("../assets/Neuro.png")}
-                 style={{ width: 100, height: 100, resizeMode: "center" }}>
+              <View style={{ alignItems: "center" }}>
+                <Text style={{ color: "#6E7E81", fontSize: 18, fontWeight: "500" }}>Developed by</Text>
+                <Image source={require("../assets/Neuro.png")}
+                  style={{ width: 200, height: 160, resizeMode: "center" }}>
 
                 </Image>
-                <Text style={{color:"white",fontSize:15,fontWeight:"bold"}}>Developed by Neuromacners</Text>
-                
+                <Text style={{ color: "#08B09E", fontSize: 25, fontWeight: "bold" }}>NEUROMANCERS</Text>
+
               </View>
-        
+
               <View style={styles.buttonContainer}>
                 {/* <Button title="LOGOUT" onPress={logoutHandler}></Button> */}
                 <Pressable onPress={logoutHandler}>
                   <View
                     style={{
-                      backgroundColor: "#d41d77",
+                      backgroundColor: "#000",
                       padding: 10,
-                      borderRadius: 20,
+                      height: "auto",
+                      width: 240,
+                      borderRadius: 31,
+                      marginBottom: 20,
                       alignItems: "center",
                       justifyContent: "center",
                     }}
                   >
-                    <Text style={{ color: "white", fontSize: 20 }}>LOGOUT</Text>
+                    <Text style={{ color: "#08B09E", fontSize: 25 }}>LOGOUT</Text>
                   </View>
                 </Pressable>
               </View>
@@ -138,7 +144,9 @@ const styles = StyleSheet.create({
   OutermodalContainer: {
     width: "100%",
     minHeight: "50%",
-    backgroundColor: "#111319",
+    maxHeight: "65%",
+    height: 548,
+    backgroundColor: "#fff",
     borderRadius: 20,
     padding: 20,
     flexDirection: "column",
@@ -156,4 +164,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
   },
+  buttonContainer: {
+    alignItems: 'center'
+  }
 });
