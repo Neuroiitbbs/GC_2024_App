@@ -226,11 +226,11 @@ export default function AllTabs() {
           justifyContent: "space-between",
           alignItems: "center",
           height: 51, // Adjust height as needed
-          paddingBottom: 10, // Adjust padding to ensure icons and text are aligned and not touching the screen's bottom edge
+          paddingBottom: 0, // Adjust padding to ensure icons and text are aligned and not touching the screen's bottom edge
           paddingTop: 10,
           paddingHorizontal: 20, // Adds horizontal padding
           position: "absolute", // This along with the following lines create the hovering effect
-          bottom: 40, // Distance from the bottom of the screen
+          bottom: 25, // Distance from the bottom of the screen
           left: 20,
           right: 20,
           borderRadius: 25, // Rounds the corners of the tabBar

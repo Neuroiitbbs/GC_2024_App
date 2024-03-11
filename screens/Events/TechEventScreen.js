@@ -68,7 +68,7 @@ const TechEventScreen = ({ navigation }) => {
       {loading && (
         <Loader
           visible={loading}
-          top={200}
+          top={300}
           bottom={0}
           setModalVisible={setLoading}
         />

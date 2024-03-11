@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import Carousel, { Pagination } from "react-native-snap-carousel-new";
+import Carousel, { Pagination ,ParallaxImage } from "react-native-snap-carousel-new";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
@@ -162,15 +162,13 @@ export default function HomePage() {
         </View>
       )}
       {!loading && (
-        <View
-          style={{
-            flex: 1,
-            maxHeight: "85%",
-          }}
-        >
-          <ScrollView style={styles.content}>
+        <View style={styles.container}>
+          <View style={styles.content}>
             <View style={styles.newsSection}>
               <Carousel
+              enableMomentum={true}
+                layout="default"
+                decelerationRate={0.9}
                 data={Ids}
                 renderItem={({ item }) => (
                   <CarouselCard
@@ -178,12 +176,19 @@ export default function HomePage() {
                     height={"100%"}
                     width={width * 0.9}
                   />
+                //   <ParallaxImage
+                //     source={{ uri: cardata[item]?.imageUrl }}
+                //     containerStyle={styles.imageContainer}
+                //     style={styles.image}
+                //     parallaxFactor={0.4}
+                    
+                // />
                   // : <Text>Loading...</Text>
                 )}
                 firstItem={1}
                 sliderWidth={width}
-                itemWidth={width * 0.62}
-                inactiveSlideOpacity={0}
+                itemWidth={width * 0.88}
+                inactiveSlideOpacity={0.25}
                 vertical={false}
                 slideStyle={{ display: "flex", alignItems: "center" }}
                 onSnapToItem={(index) => setActiveIndex(index)}
@@ -213,7 +218,10 @@ export default function HomePage() {
               </View>
 
               <Carousel
+                
+                enableMomentum={true}
                 layout="default"
+                decelerationRate={0.9}
                 data={newsIds}
                 renderItem={({ item }) => (
                   <View style={{ flex: 1 }}>
@@ -247,50 +255,56 @@ export default function HomePage() {
                 )}
                 firstItem={1}
                 sliderWidth={width}
-                itemWidth={width * 0.62}
-                inactiveSlideOpacity={0}
+                itemWidth={width * 0.88}
+                inactiveSlideOpacity={0.25}
                 vertical={false}
                 slideStyle={{ display: "flex", alignItems: "center" }}
                 loop={true}
                 autoplay={true}
-                // enableSnap={true}
+                enableSnap={true}
               />
             </View>
 
             <View style={styles.teamsSection}>
               <Text style={styles.teamsTitle}>ALL TEAMS</Text>
-              <Pressable onPress={handlePress}>
+              
                 <Carousel
+                enableMomentum={true}
+                decelerationRate={0.9}
                   layout="default"
                   data={data.teams}
                   renderItem={({ item }) => (
+                    <Pressable onPress={handlePress}>
                     <CarouselCard
                       item={item}
                       height={"100%"}
+
                       width={width * 0.9}
                     />
+                    </Pressable>
                   )}
                   firstItem={1}
                   onSnapToItem={handleSnapToItem}
                   sliderWidth={width}
-                  itemWidth={width * 0.62}
-                  inactiveSlideOpacity={0}
+                  itemWidth={width * 0.87}
+                  inactiveSlideOpacity={0.25}
                   vertical={false}
-                  slideStyle={{ display: "flex", alignItems: "center" }}
+                  slideStyle={{ display: "flex", alignItems: "center"}}
                   loop={true}
                   autoplay={true}
 
                   // enableSnap={true}
                 />
-              </Pressable>
+              
             </View>
-            <View
+            
+          </View>
+          <View
               style={{
                 width: "100%",
-                height: 50,
+                height: 200,
               }}
             ></View>
-          </ScrollView>
         </View>
       )}
     </SafeAreaView>
@@ -301,7 +315,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: "#000000",
   },
   header: {
     width: "90%",
@@ -336,7 +350,7 @@ const styles = StyleSheet.create({
   newsSection1: {
     width: "90%",
     height: 180,
-    marginTop: 30,
+    marginTop: 10,
     paddingHorizontal: 5,
     justifyContent: "center",
     padding: 5,
@@ -349,9 +363,8 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   teamsSection: {
-    width: 358,
-    height: 112,
-    marginTop: 30,
+    width: 370,
+    height: 135,
     justifyContent: "center",
     paddingHorizontal: 3,
   },
