@@ -193,6 +193,7 @@ export default function HomePage() {
                     item={{ uri: cardata[item]?.imageUrl }}
                     height={"100%"}
                     width={width * 0.9}
+                    borderRadius={15}
                   />
                   //   <ParallaxImage
                   //     source={{ uri: cardata[item]?.imageUrl }}
