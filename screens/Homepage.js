@@ -12,7 +12,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import Carousel, { Pagination, ParallaxImage } from "react-native-snap-carousel-new";
+import Carousel, {
+  Pagination,
+  ParallaxImage,
+} from "react-native-snap-carousel-new";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
@@ -27,12 +30,11 @@ const banners = {
   CSE: require("../assets/TeamBanners/CSE.png"),
   ECE_META: require("../assets/TeamBanners/ECE.png"),
   EE: require("../assets/TeamBanners/EE.png"),
-  CE: require("../assets/TeamBanners/Civil.png"),
-  ME: require("../assets/TeamBanners/Mech.png"),
-  Mtech: require("../assets/TeamBanners/Mtech.png"),
+  CE: require("../assets/TeamBanners/CIVIL.png"),
+  ME: require("../assets/TeamBanners/MECH.png"),
+  MTech: require("../assets/TeamBanners/MTech.png"),
   PhD: require("../assets/TeamBanners/PhD.png"),
-  MSC: require("../assets/TeamBanners/MSC.png"),
-
+  MSc_ITEP: require("../assets/TeamBanners/MSc_ITEP.png"),
 };
 
 // {
@@ -121,9 +123,9 @@ export default function HomePage() {
       banners.EE,
       banners.CE,
       banners.ME,
-      banners.Mtech,
+      banners.MTech,
+      banners.MSc_ITEP,
       banners.PhD,
-      banners.MSC,
     ],
     news: [
       require("../assets/news/news1.jpg"),
@@ -131,7 +133,16 @@ export default function HomePage() {
     ],
   };
 
-  const teams = ["CSE", "ECE_META", "EE", "CIVIL", "MECH", "MTech", "PhD", "MSc_ITEP"];
+  const teams = [
+    "CSE",
+    "ECE_META",
+    "EE",
+    "CIVIL",
+    "MECH",
+    "MTech",
+    "MSc_ITEP",
+    "PHD",
+  ];
 
   const renderPagination = () => {
     return (
@@ -182,6 +193,7 @@ export default function HomePage() {
                     item={{ uri: cardata[item]?.imageUrl }}
                     height={"100%"}
                     width={width * 0.9}
+                    borderRadius={15}
                   />
                   //   <ParallaxImage
                   //     source={{ uri: cardata[item]?.imageUrl }}
@@ -225,7 +237,6 @@ export default function HomePage() {
               </View>
 
               <Carousel
-
                 enableMomentum={true}
                 layout="default"
                 decelerationRate={0.9}
@@ -285,7 +296,6 @@ export default function HomePage() {
                     <CarouselCard
                       item={item}
                       height={"100%"}
-
                       width={width * 0.9}
                     />
                   </Pressable>
@@ -302,9 +312,7 @@ export default function HomePage() {
 
               // enableSnap={true}
               />
-
             </View>
-
           </View>
           <View
             style={{
