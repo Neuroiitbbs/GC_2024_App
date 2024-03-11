@@ -8,8 +8,8 @@ const teamColors = {
     bottomColor: "#a8d1f7",
   },
   ECE_META: {
-    topColor: "#CC9000",
-    bottomColor: "#8c6404",
+    topColor: "#90e66a",
+    bottomColor: "#5cb536",
   },
   CIVIL: {
     topColor: "#f74d52",
@@ -24,8 +24,8 @@ const teamColors = {
     bottomColor: "#787777",
   },
   MTech: {
-    topColor: "#fa050d",
-    bottomColor: "#fa464c",
+    topColor: "#99f2df",
+    bottomColor: "#18a385",
   },
   PHD: {
     topColor: "#b846fa",
