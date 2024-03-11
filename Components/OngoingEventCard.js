@@ -49,7 +49,7 @@ function OngoingEventCard(props) {
             // backgroundColor: "black",
           }}
         >
-          <Text style={{ fontWeight: "600", fontSize: 20 }}>
+          <Text style={{ fontWeight: "600", fontSize: 20, marginTop:-12 }}>
             {props.teamA} v/s {props.teamB}
           </Text>
           <Text
@@ -102,7 +102,7 @@ export default OngoingEventCard;
 const styles = StyleSheet.create({
   cardTop: {
     flexDirection: "row",
-    height: 0.13 * deviceHeight,
+    height: 0.15 * deviceHeight,
     marginTop: 12,
     marginHorizontal: 0.04 * deviceWidth,
     padding: 16,

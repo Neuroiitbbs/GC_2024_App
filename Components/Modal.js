@@ -97,7 +97,7 @@ const ModalComponent = ({ modalVisible, setModalVisible }) => {
                  style={{ width: 100, height: 100, resizeMode: "center" }}>
 
                 </Image>
-                <Text style={{color:"white",fontSize:15,fontWeight:"bold"}}>Developed by Neuromacners</Text>
+                <Text style={{color:"white",fontSize:15,fontWeight:"bold"}}>Developed by Neuromancers</Text>
                 
               </View>
         

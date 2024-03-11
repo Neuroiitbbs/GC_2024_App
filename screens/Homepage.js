@@ -24,11 +24,14 @@ import { ActivityIndicator } from "react-native-paper";
 var { width, height } = Dimensions.get("window");
 
 const banners = {
-  CSE: require("../assets/TeamBanners/CSE.jpg"),
-  ECE_META: require("../assets/TeamBanners/ECE.jpg"),
-  EE: require("../assets/TeamBanners/EE.jpg"),
-  CE: require("../assets/TeamBanners/CE.jpg"),
-  ME: require("../assets/TeamBanners/ME.jpg"),
+  CSE: require("../assets/TeamBanners/CSE.png"),
+  ECE_META: require("../assets/TeamBanners/ECE.png"),
+  EE: require("../assets/TeamBanners/EE.png"),
+  CE: require("../assets/TeamBanners/CIVIL.png"),
+  ME: require("../assets/TeamBanners/MECH.png"),
+  MTech: require("../assets/TeamBanners/MTech.png"),
+  PhD: require("../assets/TeamBanners/PhD.png"),
+  MSc_ITEP: require("../assets/TeamBanners/MSc_ITEP.png")
 };
 
 // {
@@ -117,6 +120,9 @@ export default function HomePage() {
       banners.EE,
       banners.CE,
       banners.ME,
+      banners.MTech,
+      banners.MSc_ITEP,
+      banners.PhD
     ],
     news: [
       require("../assets/news/news1.jpg"),
@@ -124,7 +130,7 @@ export default function HomePage() {
     ],
   };
 
-  const teams = ["CSE", "ECE_META", "EE", "CIVIL", "MECH"];
+  const teams = ["CSE", "ECE_META", "EE", "CIVIL", "MECH", "MTech", "MSc_ITEP", "PHD"];
 
   const renderPagination = () => {
     return (
