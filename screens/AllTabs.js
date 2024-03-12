@@ -64,6 +64,9 @@ function EventsStackNavigator() {
   );
 }
 
+
+
+
 function LeaderboardStackNavigator() {
   return (
     <LeaderboardStack.Navigator>

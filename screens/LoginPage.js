@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const Login = ({ authenticateUser, promptAsync }) => {
+const Login = ({ authenticateUser, promptAsync,navigation }) => {
   const AdminLogin = () => {
     promptAsync();
   };
@@ -54,6 +54,11 @@ const Login = ({ authenticateUser, promptAsync }) => {
           />
           <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
             Login
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Credits")} style={styles.Credits}>
+          <Text style={{ color: "#007F87", fontWeight: "bold", fontSize: 20 }}>
+            Developer Credits
           </Text>
         </TouchableOpacity>
         {/* <Text style={styles.forgotPassword}>Forgot Password?</Text> */}
@@ -112,27 +117,31 @@ const styles = StyleSheet.create({
     height: 70,
   },
   bottombar: {
-    padding: 20,
+    padding: 15,
+
     borderRadius: 30,
     backgroundColor: "white",
     position: "absolute", // Positioned at the bottom
-    bottom: 10,
+    bottom: -100,
     alignItems: "center",
-    justifyContent: "center",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
     width: "100%", // Ensure it spans the whole width
-    height: "25%",
+    height: "45%",
   },
   loginButton: {
     flexDirection: "row",
     backgroundColor: "#25262c", // Example blue color
     padding: 10,
     borderRadius: 5,
-    marginBottom: 10, // Added some margin at the bottom
+    marginBottom: 45, // Added some margin at the bottom
     width: "90%", // Make the button wider
     alignItems: "center",
     justifyContent: "flex-start", // Center the text
     borderColor: "orange",
     borderWidth: 3,
+    marginTop: 40,
   },
   forgotPassword: {
     color: "black",

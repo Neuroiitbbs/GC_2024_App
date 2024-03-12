@@ -9,6 +9,7 @@ import * as WebBrowser from "expo-web-browser";
 import { LoginProvider, LoginContext } from "./store/LoginContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import CreditsPage from "./screens/CreditsPage";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -48,7 +49,6 @@ const App = () => {
     LoginCtx.setIsLogin(status);
     // LoginCtx.setUser({email:'22ec01006@iitbbs.ac.in'});
   };
-
   const isUserLoggedIn = async () => {
     const userInfo = await AsyncStorage.getItem("userInfo");
     if (userInfo) {
@@ -149,7 +149,15 @@ const App = () => {
                     promptAsync={promptAsync}
                   />
                 )}
+                
               </Stack.Screen>
+              <Stack.Screen
+                  name="Credits"
+                  component={CreditsPage}
+                  options={({ route }) => ({
+                    title: "Credits",
+                  })}
+                />
             </Stack.Navigator>
           )}
         </NavigationContainer>
