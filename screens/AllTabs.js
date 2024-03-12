@@ -13,6 +13,7 @@ import SpecificEvents from "./Events/SpecificEvents";
 import Homepage from "./Homepage";
 import NewsPage from "./NewsPage";
 import SpecificNewsPage from "./specificNewsPage";
+import FollowTeam from "./FollowTeam";
 
 import Header from "../Components/Header";
 import TeamPoints from "./TeamPoints";
@@ -33,6 +34,7 @@ import CheckSportUpdateEvent from "../Components/CheckSportUpdateEvent";
 import SportPoints from "./Admin/SportPoints";
 
 import setProperTeamName from "../utils/setProperTeamName";
+// import FollowTeam from "./FollowTeam";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -307,6 +309,8 @@ export default function AllTabs() {
             iconName = focused ? "account-group" : "account-group-outline";
           } else if (route.name === "    ") {
             iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "      ") {
+            iconName = focused ? "bell" : "bell-outline";
           }
           return (
             <Icon
@@ -345,7 +349,8 @@ export default function AllTabs() {
       />
       {LoginCtx.isAdmin && (
         <Tab.Screen name="     " component={AdminDashboardStackNavigator} />
-      )}
+       )}
+       <Tab.Screen name="      " component={FollowTeam} />
     </Tab.Navigator>
   );
 }
