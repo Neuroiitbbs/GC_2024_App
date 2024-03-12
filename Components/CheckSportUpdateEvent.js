@@ -36,15 +36,14 @@ const CheckUpdateEvent = ({ navigation }) => {
       );
       console.log(response.data);
       if (response.data.length !== 0) {
+        console.log("ji", response.data.event);
         if (response.data?.event?.data?.category === "sports") {
-          Alert.alert(
-            "Sport route is Different ,Here only Tech/Cult events are allowed to be updated"
-          );
-        } else {
-          navigation.navigate("UpdateTechCultEvent", {
+          navigation.navigate("UpdateSportEventResult", {
             data: response.data.event,
             eventId: eventid,
           });
+        } else {
+          alert("Sport Event not found");
         }
       } else {
         alert("Event not found");
@@ -55,7 +54,7 @@ const CheckUpdateEvent = ({ navigation }) => {
     }
   };
   const onClose = () => {
-    navigation.navigate("LiveEvents");
+    navigation.navigate("SportPoints");
     // setModalVisible(false);
   };
   return (

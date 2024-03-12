@@ -25,9 +25,12 @@ import AdminDashboard from "./Admin/AdminDashboard";
 import AddTechCultEvent from "./Admin/AddTechCultEvent";
 import AddCarouselImage from "./Admin/AddCarouselImage";
 import AddSportEventResult from "./Admin/AddSportResult";
-import UpdateSportEvents from "./Admin/UpdateSportEvents";
+import UpdateSportEvents from "./Admin/UpdateSportScore";
 import UpdateTechCultEvents from "./Admin/UpdateTechCultEvent";
+import UpdateSportEventResult from "./Admin/UpdateSportEventPoint";
 import CheckUpdateTechCultEvents from "../Components/CheckUpdateEvent";
+import CheckSportUpdateEvent from "../Components/CheckSportUpdateEvent";
+import SportPoints from "./Admin/SportPoints";
 
 import setProperTeamName from "../utils/setProperTeamName";
 
@@ -211,8 +214,38 @@ function AdminDashboardStackNavigator() {
         }}
       />
       <AdminDashboardStack.Screen
+        name="SportPoints"
+        component={SportPoints}
+        options={{
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
+        }}
+      />
+      <AdminDashboardStack.Screen
         name="AddSportEventResult"
         component={AddSportEventResult}
+        options={{
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
+        }}
+      />
+      <AdminDashboardStack.Screen
+        name="CheckUpdateSportsEvent"
+        component={CheckSportUpdateEvent}
+        options={{
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
+        }}
+      />
+      <AdminDashboardStack.Screen
+        name="UpdateSportEventResult"
+        component={UpdateSportEventResult}
         options={{
           // headerTitle: () => <Header />,
           // headerTintColor: "white", // YAY! Proper format!
@@ -312,7 +345,7 @@ export default function AllTabs() {
       />
       {LoginCtx.isAdmin && (
         <Tab.Screen name="     " component={AdminDashboardStackNavigator} />
-       )} 
+      )}
     </Tab.Navigator>
   );
 }

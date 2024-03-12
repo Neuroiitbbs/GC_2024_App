@@ -1,4 +1,3 @@
-import React, { useState, useContext } from "react";
 import {
   KeyboardAvoidingView,
   StatusBar,
@@ -9,15 +8,20 @@ import {
   View,
   Platform,
   ScrollView,
+  BackHandler,
   Pressable,
+  Modal,
   Alert,
+  Button,
 } from "react-native";
+import React, { useState, useContext, useEffect } from "react";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
 import { LoginContext } from "../../store/LoginContext";
 import { backend_link } from "../../utils/constants";
+import { useNavigation } from "@react-navigation/native";
 
 const defaultPoint = {
   MTech: {
@@ -59,19 +63,62 @@ const getCorrectTimeStamp = (date, time) => {
 
   return new Date(date + "T" + time).getTime();
 };
-const AddTechCultEvent = () => {
+const UpdateEvent = ({ route, navigation }) => {
+  let data = route.params?.data;
+  data = data?.data;
   const LoginCtx = useContext(LoginContext);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState(new Date());
-  const [venue, setVenue] = useState("");
-  const [selectedType, setSelectedType] = useState("");
 
-  const [teamPoint, setTeamPoint] = useState(defaultPoint);
+  const name = data?.details?.title || "";
+  const description = data?.details?.description || "";
+  const timestampMs = data?.details?.timestamp || data?.timestamp || Date.now();
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("LiveEvents");
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+    return () => backHandler.remove();
+  }, []);
+
+  console.log(timestampMs);
+  // const formattedDateTime = new Date(timestampMs).toLocaleString("en-US", {
+  //   month: "2-digit",
+  //   day: "2-digit",
+  //   year: "numeric",
+  //   hour: "2-digit",
+  //   minute: "2-digit",
+  //   second: "2-digit",
+  //   hour12: true,
+  // });
+  // const [formattedDate, formattedTime] = formattedDateTime.split(", ");
+
+  const [date, setDate] = useState(
+    new Date(data?.details?.timestamp) || new Date()
+  );
+  const [time, setTime] = useState(
+    new Date(data?.details?.timestamp) || new Date()
+  );
+  console.log("pointsTable", data?.pointsTable);
+  const [venue, setVenue] = useState(data?.details?.location || "");
+  const [selectedType, setSelectedType] = useState(data?.category || "");
+  const [teamPoint, setTeamPoint] = useState(data?.pointsTable || defaultPoint);
 
   const handlePointChange = (team, points) => {
-    setTeamPoint({ ...teamPoint, [team]: { points: points, position: 0 } });
+    setTeamPoint({
+      ...teamPoint,
+      [team]: { points: points, position: teamPoint[team].position },
+    });
+  };
+
+  const handlePosChange = (team, position) => {
+    setTeamPoint({
+      ...teamPoint,
+      [team]: { points: teamPoint[team].points, position: position },
+    });
   };
 
   const [showDatepicker, setShowDatepicker] = useState(false);
@@ -109,7 +156,7 @@ const AddTechCultEvent = () => {
     let flag = true;
     const keys = Object.keys(teamPoint);
     Object.keys(teamPoint).forEach((key) => {
-      if (isNaN(teamPoint[key].points)) {
+      if (isNaN(teamPoint[key].points) || isNaN(teamPoint[key].position)) {
         flag = false;
       }
     });
@@ -122,9 +169,10 @@ const AddTechCultEvent = () => {
     keys.forEach((key) => {
       newTeamPoint[key] = {
         points: parseInt(teamPoint[key].points),
-        position: 0,
+        position: parseInt(teamPoint[key].position),
       };
     });
+    console.log(newTeamPoint);
     let timestamp = getCorrectTimeStamp(date.toISOString(), time.toISOString());
     if (
       !title ||
@@ -146,10 +194,10 @@ const AddTechCultEvent = () => {
       return;
     }
     const body = {
-      title: title.trim(),
-      eventId: title.trim(),
+      title: title,
+      eventId: title,
       email: LoginCtx?.user?.email,
-      description: description.trim(),
+      description: description,
       category: selectedType,
       location: venue,
       timestamp: timestamp,
@@ -159,19 +207,17 @@ const AddTechCultEvent = () => {
 
     try {
       const response = await axios.post(
-        backend_link + "api/event/addEvent",
+        backend_link + "api/event/updateEvent",
         body
       );
       console.log(response.data);
       Alert.alert("Success", response.data.message);
-
       setSelectedType("");
       setVenue("");
-      setDescription("");
-      setName("");
       setDate(new Date());
       setTime(new Date());
       setTeamPoint(defaultPoint);
+      navigation.navigate("SportPoints");
     } catch (error) {
       console.log(error);
       Alert.alert("Error", "Something went wrong");
@@ -181,7 +227,7 @@ const AddTechCultEvent = () => {
   const showConfirmationAlert = () => {
     Alert.alert(
       "Proceed?",
-      "The title and description can't be edited later. Do you want to proceed?",
+      "Do you want to proceed?",
       [
         {
           text: "No",
@@ -193,33 +239,33 @@ const AddTechCultEvent = () => {
       { cancelable: false }
     );
   };
+
+  console.log("data", teamPoint["MTech"].points, teamPoint["MTech"].position);
+  console.log(
+    "data",
+    teamPoint.ECE_META.points,
+    teamPoint["ECE_META"].position
+  );
+  console.log(teamPoint, description, name, date, time, venue, selectedType);
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
         <ScrollView>
           <Text style={styles.title}>Event</Text>
           <Text style={styles.subtitle}>Add Tech/Cult Event</Text>
           <View>
-            <TextInput
-              style={styles.input}
-              placeholder="Event Name"
-              value={name}
-              onChangeText={(text) => setName(text)}
-              placeholderTextColor="#5C6168"
-            />
-
-            <TextInput
-              style={styles.input}
-              placeholder="Description"
-              multiline={true}
-              numberOfLines={10}
-              value={description}
-              onChangeText={(text) => setDescription(text)}
-              placeholderTextColor="#5C6168"
-            />
+            <View>
+              <Text style={[styles.input, { color: "grey" }]}>{name}</Text>
+            </View>
+            <View>
+              <Text style={[styles.input, { color: "grey" }]}>
+                {description}
+              </Text>
+            </View>
 
             <TouchableOpacity
               style={styles.dropdowntime}
@@ -277,7 +323,7 @@ const AddTechCultEvent = () => {
           </Picker>
         </TouchableOpacity> */}
             <TextInput
-              style={styles.input}
+              style={[styles.input, { color: "white" }]}
               placeholder="Event Location / Venue  LHC-120-1"
               value={venue}
               onChangeText={(text) => setVenue(text)}
@@ -286,25 +332,25 @@ const AddTechCultEvent = () => {
             <TouchableOpacity style={styles.dropdown} onPress={toggleDropdown}>
               <Picker
                 selectedValue={selectedType}
-                style={{ height: 50, width: 300, color: "#5C6168" }}
+                style={{ height: 50, width: 300, color: "white" }}
                 onValueChange={(itemValue, itemIndex) =>
                   setSelectedType(itemValue)
                 }
               >
                 <Picker.Item label="Event Type" value="" />
-                <Picker.Item label="Technical" value="tech" />
-                <Picker.Item label="Cultural" value="cult" />
+                <Picker.Item label="Sports" value="sports" />
               </Picker>
             </TouchableOpacity>
             <View style={{ paddingVertical: 25 }}>
               <Text style={{ color: "red" }}>NOTE:</Text>
               <Text style={{ color: "white" }}>
-                If event has not yet completed
+                Add points after match is over{"\n"} Do not add Scores (eg .
+                Goals in football or runs in cricket) {"\n"}This page is for
+                adding participation point and points received after winning a
+                match/event.
               </Text>
-              <Text style={{ color: "white" }}>or</Text>
-              <Text style={{ color: "white" }}>
-                If a team is not participated add 0 points or leave it.
-              </Text>
+              {/* <Text style={{ color: "white" }}>or</Text> */}
+              {/* <Text style={{ color: "white" }}></Text> */}
             </View>
 
             <View
@@ -316,15 +362,46 @@ const AddTechCultEvent = () => {
               }}
             >
               <View style={styles.box}>
+                <Text style={styles.text}>Team</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.input, { color: "white" }]}>Points</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.input, { color: "white" }]}>
+                  Position{" "}
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                flex: 1,
+                flexWrap: "wrap",
+              }}
+            >
+              <View style={styles.box}>
                 <Text style={styles.text}>Team A: Mtech</Text>
               </View>
-              <View>
+              <View style={{ flex: 1 }}>
                 <TextInput
                   keyboardType="numeric"
-                  style={styles.input}
-                  placeholder="Team A Points"
+                  style={[styles.input, { color: "white" }]}
+                  value={teamPoint["MTech"]?.points.toString()}
+                  placeholder="Points"
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("MTech", text)}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <TextInput
+                  keyboardType="numeric"
+                  style={[styles.input, { color: "white" }]}
+                  placeholder="Position"
+                  value={teamPoint["MTech"]?.position.toString()}
+                  placeholderTextColor="#5C6168"
+                  onChangeText={(text) => handlePosChange("MTech", text)}
                 />
               </View>
             </View>
@@ -339,13 +416,24 @@ const AddTechCultEvent = () => {
               <View style={styles.box}>
                 <Text style={styles.text}>Team B: ECE-META</Text>
               </View>
-              <View>
+              <View style={{ flex: 1 }}>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input, { color: "white" }]}
                   keyboardType="numeric"
-                  placeholder="Team B Points"
+                  placeholder="Points"
+                  value={teamPoint["ECE_META"]?.points.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("ECE_META", text)}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <TextInput
+                  keyboardType="numeric"
+                  style={[styles.input, { color: "white" }]}
+                  placeholder="Position"
+                  value={teamPoint["ECE_META"]?.position.toString()}
+                  placeholderTextColor="#5C6168"
+                  onChangeText={(text) => handlePosChange("ECE_META", text)}
                 />
               </View>
             </View>
@@ -361,13 +449,24 @@ const AddTechCultEvent = () => {
               <View style={styles.box}>
                 <Text style={styles.text}>Team C: CSE</Text>
               </View>
-              <View>
+              <View style={{ flex: 1 }}>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input, { color: "white" }]}
                   keyboardType="numeric"
-                  placeholder="Team C Points"
+                  placeholder="Points"
+                  value={teamPoint["CSE"]?.points.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("CSE", text)}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <TextInput
+                  keyboardType="numeric"
+                  style={[styles.input, { color: "white" }]}
+                  placeholder="Position"
+                  value={teamPoint["CSE"]?.position.toString()}
+                  placeholderTextColor="#5C6168"
+                  onChangeText={(text) => handlePosChange("CSE", text)}
                 />
               </View>
             </View>
@@ -382,13 +481,24 @@ const AddTechCultEvent = () => {
               <View style={styles.box}>
                 <Text style={styles.text}>Team D: CIVIL</Text>
               </View>
-              <View>
+              <View style={{ flex: 1 }}>
                 <TextInput
-                  style={styles.input}
-                  placeholder="Team D Points"
+                  style={[styles.input, { color: "white" }]}
+                  placeholder="Points"
+                  value={teamPoint["CIVIL"]?.points.toString()}
                   keyboardType="numeric"
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("CIVIL", text)}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <TextInput
+                  keyboardType="numeric"
+                  style={[styles.input, { color: "white" }]}
+                  placeholder="Position"
+                  value={teamPoint["CIVIL"]?.position.toString()}
+                  placeholderTextColor="#5C6168"
+                  onChangeText={(text) => handlePosChange("CIVIL", text)}
                 />
               </View>
             </View>
@@ -405,13 +515,24 @@ const AddTechCultEvent = () => {
               <View style={styles.box}>
                 <Text style={styles.text}>Team E: EE</Text>
               </View>
-              <View>
+              <View style={{ flex: 1 }}>
                 <TextInput
                   keyboardType="numeric"
-                  style={styles.input}
-                  placeholder="Team E Points"
+                  style={[styles.input, { color: "white" }]}
+                  placeholder="Points"
+                  value={teamPoint["EE"]?.points.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("EE", text)}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <TextInput
+                  keyboardType="numeric"
+                  style={[styles.input, { color: "white" }]}
+                  placeholder="Position"
+                  value={teamPoint["EE"]?.position.toString()}
+                  placeholderTextColor="#5C6168"
+                  onChangeText={(text) => handlePosChange("EE", text)}
                 />
               </View>
             </View>
@@ -426,13 +547,24 @@ const AddTechCultEvent = () => {
               <View style={styles.box}>
                 <Text style={styles.text}>Team F: PhD</Text>
               </View>
-              <View>
+              <View style={{ flex: 1 }}>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input, { color: "white" }]}
                   keyboardType="numeric"
-                  placeholder="Team F Points"
+                  placeholder="Points"
+                  value={teamPoint["PHD"]?.points.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("PHD", text)}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <TextInput
+                  keyboardType="numeric"
+                  style={[styles.input, { color: "white" }]}
+                  placeholder="Position"
+                  value={teamPoint["PHD"]?.position.toString()}
+                  placeholderTextColor="#5C6168"
+                  onChangeText={(text) => handlePosChange("PHD", text)}
                 />
               </View>
             </View>
@@ -448,13 +580,24 @@ const AddTechCultEvent = () => {
               <View style={styles.box}>
                 <Text style={styles.text}>Team G: Mech</Text>
               </View>
-              <View>
+              <View style={{ flex: 1 }}>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input, { color: "white" }]}
                   keyboardType="numeric"
-                  placeholder="Team G Points"
+                  placeholder="Points"
+                  value={teamPoint["MECH"]?.points.toString()}
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("MECH", text)}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <TextInput
+                  keyboardType="numeric"
+                  style={[styles.input, { color: "white" }]}
+                  placeholder="Position"
+                  value={teamPoint["MECH"]?.position.toString()}
+                  placeholderTextColor="#5C6168"
+                  onChangeText={(text) => handlePosChange("MECH", text)}
                 />
               </View>
             </View>
@@ -467,15 +610,26 @@ const AddTechCultEvent = () => {
               }}
             >
               <View style={styles.box}>
-                <Text style={styles.text}>Team H: Msc-Itep</Text>
+                <Text style={styles.text}>Team H: MSC-ITEP</Text>
               </View>
-              <View>
+              <View style={{ flex: 1 }}>
                 <TextInput
-                  style={styles.input}
-                  placeholder="Team H Points"
+                  style={[styles.input, { color: "white" }]}
+                  placeholder="Points"
+                  value={teamPoint["MSc_ITEP"]?.points.toString()}
                   keyboardType="numeric"
                   placeholderTextColor="#5C6168"
                   onChangeText={(text) => handlePointChange("MSc_ITEP", text)}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <TextInput
+                  keyboardType="numeric"
+                  style={[styles.input, { color: "white" }]}
+                  placeholder="Position"
+                  value={teamPoint["MSc_ITEP"]?.position.toString()}
+                  placeholderTextColor="#5C6168"
+                  onChangeText={(text) => handlePosChange("MSc_ITEP", text)}
                 />
               </View>
             </View>
@@ -500,14 +654,14 @@ const AddTechCultEvent = () => {
                   fontSize: 18,
                 }}
               >
-                Add Event
+                Update Event
               </Text>
             </View>
           </Pressable>
           <View style={{ minHeight: 80 }}></View>
         </ScrollView>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -524,10 +678,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     marginBottom: 10,
-    // position: "absolute",
-    // top: 0,
-    // left: 0,
-    // backgroundColor: '#FF0000',
     paddingVertical: 10,
     color: "#D41D77",
   },
@@ -537,10 +687,6 @@ const styles = StyleSheet.create({
     color: "#257CFF",
     marginBottom: 6,
     marginTop: 5,
-    // position: "absolute",
-    // top: 30,
-    // left: 0,
-    // backgroundColor: '#FF0000',
     paddingVertical: 8,
   },
 
@@ -561,7 +707,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 10,
-    // paddingVertical: ,
     borderWidth: 2,
     margin: 3,
     borderColor: "#5C6168",
@@ -572,7 +717,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
-    // paddingVertical: ,
     borderWidth: 2,
     margin: 3,
     borderColor: "#5C6168",
@@ -583,6 +727,7 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     flex: 1,
+    fontSize: 10,
   },
   box: {
     padding: 10,
@@ -594,6 +739,33 @@ const styles = StyleSheet.create({
     width: "auto",
     borderRadius: 5,
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "black",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
 });
 
-export default AddTechCultEvent;
+export default UpdateEvent;

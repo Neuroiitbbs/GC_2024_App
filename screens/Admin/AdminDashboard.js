@@ -135,6 +135,7 @@ const AdminDashboard = ({ navigation }) => {
                   style={{ paddingVertical: 2 }}
                 />
                 <Text style={styles.cardTitle}>Add Score</Text>
+                <Text style={styles.cardDescription}>Only for Sports</Text>
                 <AntDesign name="arrowright" size={20} color="white" />
               </Pressable>
             </View>
@@ -177,7 +178,9 @@ const AdminDashboard = ({ navigation }) => {
                   styles.cardView,
                   pressed ? styles.cardPressed : {},
                 ]}
-                onPress={() => {navigation.navigate("AddSportEventResult")}}
+                onPress={() => {
+                  navigation.navigate("SportPoints");
+                }}
               >
                 <FontAwesome5
                   name="trophy"
@@ -185,7 +188,7 @@ const AdminDashboard = ({ navigation }) => {
                   color="#0066FF"
                   style={{ paddingVertical: 2 }}
                 />
-                <Text style={styles.cardTitle}>Add Event Result</Text>
+                <Text style={styles.cardTitle}>Add Sports Result</Text>
                 <AntDesign name="arrowright" size={20} color="white" />
               </Pressable>
             </View>

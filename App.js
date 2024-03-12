@@ -45,6 +45,7 @@ const App = () => {
     webClientId: webClientId,
   });
   const [loading, setLoading] = useState(true);
+  const [isLoading1, setIsLoading1] = useState(false);
   const authenticateUser = (status) => {
     LoginCtx.setIsLogin(status);
     // LoginCtx.setUser({email:'22ec01006@iitbbs.ac.in'});
@@ -63,10 +64,14 @@ const App = () => {
 
   useEffect(() => {
     if (response?.type === "success") {
+      setIsLoading1(true);
       const { id_token } = response.params;
       const credential = GoogleAuthProvider.credential(id_token);
       signInWithCredential(auth, credential);
       setLoading(false);
+      setTimeout(() => {
+        setIsLoading1(false);
+      }, 1000 * 4);
     }
   }, [response]);
 
@@ -147,17 +152,17 @@ const App = () => {
                     {...props}
                     authenticateUser={authenticateUser}
                     promptAsync={promptAsync}
+                    loading1={isLoading1}
                   />
                 )}
-                
               </Stack.Screen>
               <Stack.Screen
-                  name="Credits"
-                  component={CreditsPage}
-                  options={({ route }) => ({
-                    title: "Credits",
-                  })}
-                />
+                name="Credits"
+                component={CreditsPage}
+                options={({ route }) => ({
+                  title: "Credits",
+                })}
+              />
             </Stack.Navigator>
           )}
         </NavigationContainer>

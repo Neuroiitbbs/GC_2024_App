@@ -55,7 +55,17 @@ const fetchDataAndUpdateScore = async (teamName, setBranchesData) => {
 export default function Leaderboard() {
   const [lastUpdated, setLastUpdated] = useState("08/03/2023");
   const [BranchesData, setBranchesData] = useState(initialBranchesData);
+  const [number, setNumber] = useState(0);
 
+  useEffect(() => {
+    setInterval(
+      () => {
+        setNumber(number + 1);
+        console.log("Number updated");
+      },
+      1000 * 60 * 2
+    );
+  }, []);
   useEffect(() => {
     fetchDataAndUpdateScore("MTech", setBranchesData);
     fetchDataAndUpdateScore("ECE_META", setBranchesData);
@@ -65,7 +75,7 @@ export default function Leaderboard() {
     fetchDataAndUpdateScore("PHD", setBranchesData);
     fetchDataAndUpdateScore("MECH", setBranchesData);
     fetchDataAndUpdateScore("MSc_ITEP", setBranchesData);
-  }, []);
+  }, [number]);
 
   useEffect(() => {
     const fetchlastUpdated = async () => {
@@ -125,10 +135,10 @@ export default function Leaderboard() {
             <View style={styles.iconCont}>
               <FontAwesome5 name="crown" size={24} color="#FFAA00" />
             </View>
-            
+
             <Image
               source={logoPaths[top3[0].Name.replace(".", "").replace("+", "")]}
-              style={{ width:120, height: 100 }}
+              style={{ width: 120, height: 100 }}
             />
           </View>
           <View style={styles.number1bottom}>
