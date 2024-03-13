@@ -31,6 +31,7 @@ import UpdateTechCultEvents from "./Admin/UpdateTechCultEvent";
 import UpdateSportEventResult from "./Admin/UpdateSportEventPoint";
 import CheckUpdateTechCultEvents from "../Components/CheckUpdateEvent";
 import CheckSportUpdateEvent from "../Components/CheckSportUpdateEvent";
+import AddNotification from "./Admin/AddNotification";
 import SportPoints from "./Admin/SportPoints";
 
 import setProperTeamName from "../utils/setProperTeamName";
@@ -68,9 +69,6 @@ function EventsStackNavigator() {
     </EventsStack.Navigator>
   );
 }
-
-
-
 
 function LeaderboardStackNavigator() {
   return (
@@ -255,6 +253,16 @@ function AdminDashboardStackNavigator() {
           headerShown: false,
         }}
       />
+      <AdminDashboardStack.Screen
+        name="AddNotification"
+        component={AddNotification}
+        options={{
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
+        }}
+      />
     </AdminDashboardStack.Navigator>
   );
 }
@@ -349,8 +357,8 @@ export default function AllTabs() {
       />
       {LoginCtx.isAdmin && (
         <Tab.Screen name="     " component={AdminDashboardStackNavigator} />
-       )}
-       <Tab.Screen name="      " component={FollowTeam} />
+      )}
+      <Tab.Screen name="      " component={FollowTeam} />
     </Tab.Navigator>
   );
 }

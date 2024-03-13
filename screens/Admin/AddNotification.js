@@ -11,6 +11,10 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from "react-native";
+import {
+  sendNotificationAll,
+  sendNotificationTeam,
+} from "../../utils/notifications/push";
 import { Picker } from "@react-native-picker/picker";
 import { LoginContext } from "../../store/LoginContext";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -30,14 +34,8 @@ import axios from "axios";
 //     <Picker.Item label="MSC+ITEP" value="MSC_ITEP" />
 //   </>
 // );
-const getCorrectTimeStamp = (date, time) => {
-  date = date.split("T")[0];
-  time = time.split("T")[1];
 
-  return new Date(date + "T" + time).getTime();
-};
-
-const AddNotification = () => {
+const AddNotification = ({ navigation }) => {
   const LoginCtx = useContext(LoginContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -67,24 +65,40 @@ const AddNotification = () => {
       alert("Please fill all the fields");
       return;
     }
-    if (
-      title === "" ||
-      description === "" 
-    ) {
+    if (title === "" || description === "") {
       Alert.alert("Error", "Please fill all the fields");
       return;
     }
 
-    console.log(new Date(timestamp));
+    // console.log(new Date(timestamp));
     const data = {
       title,
       description,
-      team
-      }
-    
+      team,
+    };
+
     console.log(data);
     try {
-      return data;
+      if (team === "All") {
+        await sendNotificationAll(title, description, data);
+      } else {
+        await sendNotificationTeam(title, description, team, data);
+      }
+      const newtitle = title.split(" ").join("+");
+      const newdescription = description.split(" ").join("+");
+      const response = await axios.post(
+        backend_link +
+          "api/announcements/addAnnouncement?title=" +
+          newtitle +
+          "&description=" +
+          newdescription
+      );
+      console.log(response.data, "Response");
+      Alert.alert("Success", "Notification sent successfully");
+      setTitle("");
+      setDescription("");
+      setTeam("");
+      navigation.navigate("AdminDashboardStack");
     } catch (e) {
       console.log(e);
       Alert.alert("Error", "Something went wrong" + e.message);
@@ -134,6 +148,7 @@ const AddNotification = () => {
                 onValueChange={(itemValue, itemIndex) => setTeam(itemValue)}
               >
                 <Picker.Item label="Select Team" value="" />
+                <Picker.Item label="Notify All" value="All" />
                 <Picker.Item label="Mtech" value="MTech" />
                 <Picker.Item label="ECE+META" value="ECE_META" />
                 <Picker.Item label="CSE" value="CSE" />
@@ -157,8 +172,7 @@ const AddNotification = () => {
       </ScrollView>
     </KeyboardAvoidingView>
   );
-}
-
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -52,6 +52,7 @@ export default function LoginContextWrapper() {
 }
 const App = () => {
   const LoginCtx = useContext(LoginContext);
+  const [expoPushToken, setExpoPushToken] = useState("");
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     iosClientId: iosClientId,
     androidClientId: androidClientId,
@@ -64,16 +65,43 @@ const App = () => {
     const gettoken = async () => {
       const pushToken = await configurePushNotifications();
       console.log(pushToken, "Push Token");
+      setExpoPushToken(pushToken);
     };
     gettoken();
   }, []);
+
+  useEffect(() => {
+    if (expoPushToken !== "") {
+      const sendToken = async () => {
+        const email = LoginCtx?.user?.email;
+        if (email !== null && email !== undefined) {
+          try {
+            const response = await axios.post(
+              backend_link +
+                "api/expotoken/addexpotoken?email=" +
+                email +
+                "&token=" +
+                expoPushToken
+            );
+            console.log(response.data, "Push Token");
+          } catch (e) {
+            console.log(e, "Error in sending push token");
+          }
+        }
+      };
+      sendToken();
+    }
+  }, [expoPushToken, LoginCtx.isLogin]);
+
   useEffect(() => {
     const subscription1 = receivedNotification();
     const subscription2 = receivedNotificationResponse();
 
     return () => {
       // subscription1.remove();
-      subscription2.remove();
+      // subscription2.remove();
+      Notifications.removeNotificationSubscription(subscription1);
+      Notifications.removeNotificationSubscription(subscription2);
     };
   }, []);
   const [loading, setLoading] = useState(true);
@@ -82,6 +110,7 @@ const App = () => {
     LoginCtx.setIsLogin(status);
     // LoginCtx.setUser({email:'22ec01006@iitbbs.ac.in'});
   };
+
   const isUserLoggedIn = async () => {
     const userInfo = await AsyncStorage.getItem("userInfo");
     if (userInfo) {
@@ -177,14 +206,14 @@ const App = () => {
           {!loading && LoginCtx.isLogin ? (
             <>
               <AllTabs />
-              <Button
+              {/* <Button
                 title="notify"
                 style={{ backgroundColor: "red", padding: "10px" }}
                 onPress={() => {
                   scheduleNotificationHandler("title", "body");
                   console.log("Notification");
                 }}
-              />
+              /> */}
             </>
           ) : (
             <Stack.Navigator screenOptions={{ headerShown: false }}>

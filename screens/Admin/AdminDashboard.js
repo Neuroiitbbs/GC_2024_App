@@ -39,7 +39,9 @@ const AdminDashboard = ({ navigation }) => {
                   styles.cardView,
                   pressed ? styles.cardPressed : {},
                 ]}
-                onPress={() => {}}
+                onPress={() => {
+                  navigation.navigate("AddNotification");
+                }}
               >
                 <MaterialCommunityIcons
                   name="bell"
