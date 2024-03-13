@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84, // for iOS
   },
   title: {
-    fontSize: 20,
+    fontSize: 16,
     color: "white",
     //fontWeight: "bold",
   },
