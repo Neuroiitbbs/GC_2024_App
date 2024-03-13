@@ -13,6 +13,7 @@ import SpecificEvents from "./Events/SpecificEvents";
 import Homepage from "./Homepage";
 import NewsPage from "./NewsPage";
 import SpecificNewsPage from "./specificNewsPage";
+import FollowTeam from "./FollowTeam";
 
 import Header from "../Components/Header";
 import TeamPoints from "./TeamPoints";
@@ -30,9 +31,11 @@ import UpdateTechCultEvents from "./Admin/UpdateTechCultEvent";
 import UpdateSportEventResult from "./Admin/UpdateSportEventPoint";
 import CheckUpdateTechCultEvents from "../Components/CheckUpdateEvent";
 import CheckSportUpdateEvent from "../Components/CheckSportUpdateEvent";
+import AddNotification from "./Admin/AddNotification";
 import SportPoints from "./Admin/SportPoints";
 
 import setProperTeamName from "../utils/setProperTeamName";
+// import FollowTeam from "./FollowTeam";
 
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
@@ -66,9 +69,6 @@ function EventsStackNavigator() {
     </EventsStack.Navigator>
   );
 }
-
-
-
 
 function LeaderboardStackNavigator() {
   return (
@@ -253,6 +253,16 @@ function AdminDashboardStackNavigator() {
           headerShown: false,
         }}
       />
+      <AdminDashboardStack.Screen
+        name="AddNotification"
+        component={AddNotification}
+        options={{
+          // headerTitle: () => <Header />,
+          // headerTintColor: "white", // YAY! Proper format!
+          // headerStyle: { backgroundColor: "#111319" },
+          headerShown: false,
+        }}
+      />
     </AdminDashboardStack.Navigator>
   );
 }
@@ -307,6 +317,8 @@ export default function AllTabs() {
             iconName = focused ? "account-group" : "account-group-outline";
           } else if (route.name === "    ") {
             iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "      ") {
+            iconName = focused ? "bell" : "bell-outline";
           }
           return (
             <Icon
@@ -346,6 +358,7 @@ export default function AllTabs() {
       {LoginCtx.isAdmin && (
         <Tab.Screen name="     " component={AdminDashboardStackNavigator} />
       )}
+      <Tab.Screen name="      " component={FollowTeam} />
     </Tab.Navigator>
   );
 }

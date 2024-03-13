@@ -51,14 +51,14 @@ const styles = StyleSheet.create({
   },
   inactiveButton: {
     color: "white",
-    fontSize: 16,
+    fontSize: 14,
     textAlign: "center",
 
     lineHeight: 35,
   },
   activeButton: {
     color: "white",
-    fontSize: 16,
+    fontSize: 14,
     textAlign: "center",
     // textDecorationLine: "underline",
     backgroundColor: "#d41d77",

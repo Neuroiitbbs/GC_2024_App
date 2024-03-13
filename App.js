@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Modal, ActivityIndicator } from "react-native";
-import { Provider as PaperProvider } from "react-native-paper";
+import { Button, Provider as PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as Google from "expo-auth-session/providers/google";
@@ -21,10 +21,23 @@ import {
   androidClientId,
   webClientId,
 } from "./firebaseConfig";
-
 import LoginScreen from "./screens/LoginPage";
 import AllTabs from "./screens/AllTabs";
 import { backend_link } from "./utils/constants";
+
+import * as Notifications from "expo-notifications";
+import {
+  scheduleNotificationHandler,
+  requestPermissions,
+  receivedNotification,
+  receivedNotificationResponse,
+} from "./utils/notifications/local";
+
+import {
+  getPushToken,
+  configurePushNotifications,
+} from "./utils/notifications/push";
+// setNotificationHandler();
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -39,17 +52,65 @@ export default function LoginContextWrapper() {
 }
 const App = () => {
   const LoginCtx = useContext(LoginContext);
+  const [expoPushToken, setExpoPushToken] = useState("");
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     iosClientId: iosClientId,
     androidClientId: androidClientId,
     webClientId: webClientId,
   });
+  useEffect(() => {
+    requestPermissions();
+  }, []);
+  useEffect(() => {
+    const gettoken = async () => {
+      const pushToken = await configurePushNotifications();
+      console.log(pushToken, "Push Token");
+      setExpoPushToken(pushToken);
+    };
+    gettoken();
+  }, []);
+
+  useEffect(() => {
+    if (expoPushToken !== "") {
+      const sendToken = async () => {
+        const email = LoginCtx?.user?.email;
+        if (email !== null && email !== undefined) {
+          try {
+            const response = await axios.post(
+              backend_link +
+                "api/expotoken/addexpotoken?email=" +
+                email +
+                "&token=" +
+                expoPushToken
+            );
+            console.log(response.data, "Push Token");
+          } catch (e) {
+            console.log(e, "Error in sending push token");
+          }
+        }
+      };
+      sendToken();
+    }
+  }, [expoPushToken, LoginCtx.isLogin]);
+
+  useEffect(() => {
+    const subscription1 = receivedNotification();
+    const subscription2 = receivedNotificationResponse();
+
+    return () => {
+      // subscription1.remove();
+      // subscription2.remove();
+      Notifications.removeNotificationSubscription(subscription1);
+      Notifications.removeNotificationSubscription(subscription2);
+    };
+  }, []);
   const [loading, setLoading] = useState(true);
   const [isLoading1, setIsLoading1] = useState(false);
   const authenticateUser = (status) => {
     LoginCtx.setIsLogin(status);
     // LoginCtx.setUser({email:'22ec01006@iitbbs.ac.in'});
   };
+
   const isUserLoggedIn = async () => {
     const userInfo = await AsyncStorage.getItem("userInfo");
     if (userInfo) {
@@ -143,17 +204,29 @@ const App = () => {
             </Modal>
           )}
           {!loading && LoginCtx.isLogin ? (
-            <AllTabs />
+            <>
+              <AllTabs />
+              {/* <Button
+                title="notify"
+                style={{ backgroundColor: "red", padding: "10px" }}
+                onPress={() => {
+                  scheduleNotificationHandler("title", "body");
+                  console.log("Notification");
+                }}
+              /> */}
+            </>
           ) : (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Login">
                 {(props) => (
-                  <LoginScreen
-                    {...props}
-                    authenticateUser={authenticateUser}
-                    promptAsync={promptAsync}
-                    loading1={isLoading1}
-                  />
+                  <>
+                    <LoginScreen
+                      {...props}
+                      authenticateUser={authenticateUser}
+                      promptAsync={promptAsync}
+                      loading1={isLoading1}
+                    />
+                  </>
                 )}
               </Stack.Screen>
               <Stack.Screen

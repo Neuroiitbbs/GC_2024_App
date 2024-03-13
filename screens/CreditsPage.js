@@ -110,7 +110,7 @@ export default function CreditsPage() {
         </View>
         <View style={[styles.section, styles.elevation]}>
           <Image
-            source={require("../assets/DevTeam/AyushGupta.jpg")}
+            source={require("../assets/DevTeam/Karthick.jpg")}
             style={{
               width: 50,
               height: 50,
