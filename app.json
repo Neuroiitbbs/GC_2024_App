@@ -28,6 +28,7 @@
     "web": {
       "favicon": "./assets/GClogo.png"
     },
+
     "scheme": "gcapp2024",
     "extra": {
       "eas": {
@@ -43,6 +44,5 @@
         }
       ]
     ]
-
   }
 }

@@ -135,10 +135,10 @@ export default function Leaderboard() {
             <View style={styles.iconCont}>
               <FontAwesome5 name="crown" size={24} color="#FFAA00" />
             </View>
-
+         
             <Image
               source={logoPaths[top3[0].Name.replace(".", "").replace("+", "")]}
-              style={{ width: 120, height: 100 }}
+              style={{ width: 100, height: 100 }}
             />
           </View>
           <View style={styles.number1bottom}>
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   iconCont: {
-    padding: 5,
+    padding: 0,
   },
   container2: {
     flex: 2,

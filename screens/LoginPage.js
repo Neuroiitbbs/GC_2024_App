@@ -31,11 +31,11 @@ const Login = ({ authenticateUser, promptAsync, loading1, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topbar}>
-        <TouchableOpacity onPress={AdminLogin} style={styles.topbtn}>
+        {/* <TouchableOpacity onPress={AdminLogin} style={styles.topbtn}>
           <Text style={{ color: "black", fontSize: 16, fontWeight: "bold" }}>
             Admin
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <View style={styles.logoContainer}>
@@ -106,12 +106,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logoBig: {
-    width: 400,
-    height: 400, // Increased size
+    width: 330,
+    height: 330, // Increased size
     // Increased size
   },
   poweredBy: {
-    marginTop: -40,
+    marginTop: 10,
     width: "70%",
     flexDirection: "row",
     alignItems: "center",
