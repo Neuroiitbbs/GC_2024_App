@@ -33,6 +33,16 @@
       "eas": {
         "projectId": "4c058831-328a-46c7-afeb-200a24a86a98"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/GClogo.png",
+          "color": "#ffffff"
+        }
+      ]
+    ]
+
   }
 }
