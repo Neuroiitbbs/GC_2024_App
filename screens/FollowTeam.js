@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import {
-    View,
+  View,
   Text,
   StyleSheet,
   Image,
@@ -9,41 +9,48 @@ import {
   Alert,
 } from "react-native";
 
-import { LoginContext } from "../store/LoginContext"
+import { LoginContext } from "../store/LoginContext";
 import FollowTeamComponent from "../Components/FollowTeamComponent";
-import axios from 'axios';
+import axios from "axios";
 import { backend_link } from "../utils/constants";
 
 export default function FollowTeam() {
-    
   const loginctx = useContext(LoginContext);
   const [loading, setLoading] = useState(false);
   const [teamFollowing, setTeamFollowing] = useState([]);
+  const [reload, setReload] = useState(false);
 
-  useEffect(()=>{        
-      const getFollow = async () => {
-          try{
-              const email = loginctx?.user?.email;
-              const response = await axios.get(backend_link+"api/user/getFollowing?email="+email);
-              const data = response.data;
-              const teamsCurrentlyFollowing = data.following.team;
-              setTeamFollowing(teamsCurrentlyFollowing);
-              // console.log(response.data);
-              return response;
-          } catch(err) {
-              console.log("Error", err);
-              Alert.alert("Uh-oh! Some Error Occured");
-          }
-      };
-      getFollow();
-  },[teamFollowing]);
-
+  useEffect(() => {
+    const getFollow = async () => {
+      try {
+        const email = loginctx?.user?.email;
+        if (email === undefined) {
+          return;
+        }
+        const response = await axios.get(
+          backend_link + "api/user/getFollowing?email=" + email
+        );
+        const data = response.data;
+        const teamsCurrentlyFollowing = data.following.team;
+        setTeamFollowing(teamsCurrentlyFollowing);
+        // console.log(response.data);
+        return response;
+      } catch (err) {
+        console.log("Error", err);
+      }
+    };
+    getFollow();
+  }, [teamFollowing, reload]);
 
   const renderItem = (props) => {
     const isFollowing = teamFollowing.includes(props.item);
     return (
       <View style={{ padding: 5 }}>
-        <FollowTeamComponent branchData={props.item} isFollowing={isFollowing}/>
+        <FollowTeamComponent
+          setReload={setReload}
+          branchData={props.item}
+          isFollowing={isFollowing}
+        />
       </View>
     );
   };
@@ -59,7 +66,9 @@ export default function FollowTeam() {
     "PHD",
   ];
 
-  const teamNotFollowing = teams.filter(team => !teamFollowing.includes(team));
+  const teamNotFollowing = teams.filter(
+    (team) => !teamFollowing.includes(team)
+  );
 
   return (
     <View style={styles.container}>
@@ -68,12 +77,27 @@ export default function FollowTeam() {
         <>
           <View style={styles.container2}>
             <View>
-                <Text style={{color:'#d41d77', fontSize:24, padding:24, fontWeight:'bold', paddingBottom:4}}>
-                    Follow your Team!
-                </Text>
-                <Text style={{color:'white', fontSize:18, padding:10, paddingBottom:20}}>
-                    Stay updated and get all news about GC!
-                </Text>
+              <Text
+                style={{
+                  color: "#d41d77",
+                  fontSize: 24,
+                  padding: 24,
+                  fontWeight: "bold",
+                  paddingBottom: 4,
+                }}
+              >
+                Follow your Team!
+              </Text>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 18,
+                  padding: 10,
+                  paddingBottom: 20,
+                }}
+              >
+                Stay updated and get all news about GC!
+              </Text>
             </View>
             <FlatList
               data={teams}
@@ -84,7 +108,7 @@ export default function FollowTeam() {
               alwaysBounceVertical={false}
             />
           </View>
-          
+
           <View style={styles.bottomnav}></View>
         </>
       )}
