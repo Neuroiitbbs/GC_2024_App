@@ -106,7 +106,6 @@ const AddSportEventResult = () => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
 
-
     let flag = true;
     const keys = Object.keys(teamPoint);
     Object.keys(teamPoint).forEach((key) => {
@@ -122,7 +121,7 @@ const AddSportEventResult = () => {
     keys.forEach((key) => {
       newTeamPoint[key] = {
         points: parseInt(teamPoint[key].points),
-        position:0,
+        position: 0,
       };
     });
 
@@ -147,10 +146,10 @@ const AddSportEventResult = () => {
       return;
     }
     const body = {
-      title: title,
-      eventId: title,
+      title: title.trim(),
+      eventId: title.trim(),
       email: LoginCtx?.user?.email,
-      description: description,
+      description: description.trim(),
       category: selectedType,
       location: venue,
       timestamp: timestamp,
@@ -299,16 +298,18 @@ const AddSportEventResult = () => {
             <View style={{ paddingVertical: 25 }}>
               <Text style={{ color: "red" }}>NOTE:</Text>
               <Text style={{ color: "white" }}>
-                Add Final Score only after all matches of that event have been completed!
+                Add Final Score only after all matches of that event have been
+                completed!
               </Text>
               <Text style={{ color: "white" }}>AND</Text>
               <Text style={{ color: "white" }}>
                 If a team did not participate add 0 points or leave it.
               </Text>
               <Text style={{ color: "white" }}>AND</Text>
-                <Text style={{ color: "white" }}>
-                    Sum all points from ALL matches of that event for a team (including Final and league matches).
-                </Text>
+              <Text style={{ color: "white" }}>
+                Sum all points from ALL matches of that event for a team
+                (including Final and league matches).
+              </Text>
             </View>
 
             <View

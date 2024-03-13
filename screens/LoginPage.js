@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -7,14 +7,20 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
+import { LoginContext } from "../store/LoginContext";
+import { ActivityIndicator } from "react-native-paper";
 
-const Login = ({ authenticateUser, promptAsync,navigation }) => {
+const Login = ({ authenticateUser, promptAsync, loading1, navigation }) => {
+  const LoginCtx = useContext(LoginContext);
   const AdminLogin = () => {
     promptAsync();
   };
   const userLogin = () => {
     if (__DEV__) {
       console.log("Running in development mode");
+      LoginCtx.setUser({
+        email: "22ec01006@iitbbs.ac.in",
+      });
       authenticateUser(true);
     } else {
       console.log("Running in production mode");
@@ -53,10 +59,13 @@ const Login = ({ authenticateUser, promptAsync,navigation }) => {
             style={{ width: 40, height: 40, marginRight: "26%" }}
           />
           <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
-            Login
+            {!loading1 ? "Login" : <ActivityIndicator size={"large"} />}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Credits")} style={styles.Credits}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Credits")}
+          style={styles.Credits}
+        >
           <Text style={{ color: "#007F87", fontWeight: "bold", fontSize: 20 }}>
             Developer Credits
           </Text>
@@ -102,6 +111,7 @@ const styles = StyleSheet.create({
     // Increased size
   },
   poweredBy: {
+    marginTop: -40,
     width: "70%",
     flexDirection: "row",
     alignItems: "center",

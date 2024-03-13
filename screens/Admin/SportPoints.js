@@ -9,23 +9,22 @@ import {
   ScrollView,
 } from "react-native";
 
-const LiveEvents = ({ navigation }) => {
+const SportPoints = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView>
         <View style={styles.container}>
-          <Text style={styles.title}>Live Events</Text>
-          <Text style={styles.subtitle}>Add or Update Live Events</Text>
+          <Text style={styles.title}>Add/Update Sport Live Events</Text>
+          <Text style={styles.subtitle}></Text>
+
           <Image
             source={require("../../assets/liveEvent.png")}
             style={styles.logo}
           />
           <View style={{ flex: 1, paddingTop: 10 }}>
             <Text style={[styles.input, { color: "white" }]}>
-              NOTE: {"\n"}Tech/Cult : This page is for adding a new tech/cult
-              event that does not exist previously and updating a tech/cult
-              event points{"\n\n"}Sports : This page is for adding a new sport
-              match between two teams that does not exist previously.
+              NOTE: {"\n"}This page is for adding a new sport event that does
+              not exist previously and updating a sport points{" "}
             </Text>
           </View>
           <View style={styles.buttonContainer}>
@@ -33,8 +32,8 @@ const LiveEvents = ({ navigation }) => {
               style={[styles.buttonWrapper, { backgroundColor: "#240A34" }]}
             >
               <Button
-                title="Add Tech./Cultural Event"
-                onPress={() => navigation.navigate("AddTechCultEvent")}
+                title="Add Sport Event Result"
+                onPress={() => navigation.navigate("AddSportEventResult")}
                 style={styles.button}
                 color="#240A34"
               />
@@ -43,18 +42,8 @@ const LiveEvents = ({ navigation }) => {
               style={[styles.buttonWrapper, { backgroundColor: "#240A34" }]}
             >
               <Button
-                title="Update Tech./Cultural Event"
-                onPress={() => navigation.navigate("CheckUpdateTechCultEvent")}
-                style={styles.button}
-                color="#240A34"
-              />
-            </View>
-            <View
-              style={[styles.buttonWrapper, { backgroundColor: "#240A34" }]}
-            >
-              <Button
-                title="Add Sports Event"
-                onPress={() => navigation.navigate("AddSportEvent")}
+                title="Update Sport Event Result"
+                onPress={() => navigation.navigate("CheckUpdateSportsEvent")}
                 style={styles.button}
                 color="#240A34"
               />
@@ -143,4 +132,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LiveEvents;
+export default SportPoints;

@@ -178,10 +178,16 @@ export default function CreditsPage() {
           <View styles={{ alignItems: "center" }}>
             <Text style={styles.member}>Sambit Mishra</Text>
             <Text style={{ fontSize: 10, marginLeft: 20, color: "white" }}>
-              Genral Secretary 
+              Genral Secretary
             </Text>
-            <Text style={{ fontSize: 10, marginLeft: -60, color: "white" }}>
-            Science and Technological Council ,Students' Gymkhana
+            <Text
+              style={{
+                fontSize: 10,
+                marginLeft: 0,
+                color: "white",
+              }}
+            >
+              STC ,Students' Gymkhana
             </Text>
           </View>
         </View>
@@ -213,7 +219,7 @@ export default function CreditsPage() {
               Ayush Patap Singh
             </Text>
             <Text style={{ fontSize: 10, marginLeft: -10, color: "white" }}>
-             NEUROMANCERS Secretary 
+              NEUROMANCERS Secretary
             </Text>
             <Text style={{ fontSize: 10, marginLeft: 7, color: "white" }}>
               Students' Gymkhana
@@ -254,7 +260,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
     marginBottom: 30,
-    
   },
   section: {
     marginBottom: 30,
@@ -269,7 +274,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
-    color:"#323232"
+    color: "#323232",
   },
   memberGroup: {
     flexDirection: "row",
