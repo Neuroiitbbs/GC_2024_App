@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 
 const LeaderBoardElement = (props) => {
   return (
-    <>
+    
       <View style={styles.LeaderBoardElement}>
         <View style={styles.LeaderBoardElementText}>
           <Text style={styles.LeaderBoardSNo}>{props.branchData.rank}</Text>
@@ -24,7 +24,7 @@ const LeaderBoardElement = (props) => {
           <Text style={styles.LeaderBoardPoints}>{props.branchData.Score}</Text>
         </View>
       </View>
-    </>
+    
   );
 };
 
@@ -53,12 +53,12 @@ const styles = StyleSheet.create({
   LeaderBoardNameHolder: {
     color: "white",
     marginLeft: 10,
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "bold",
   },
   LeaderBoardLogo: {
-    width: 32,
-    height: 32,
+    width: 35,
+    height: 35,
     marginLeft: 10,
   },
   LeaderBoardSNo: {
@@ -73,6 +73,8 @@ const styles = StyleSheet.create({
   },
   LeaderBoardElementText: {
     flexDirection: "row",
+    alignItems:"center",
+    justifyContent:"space-between",
     flex: 0.75,
     padding: 20,
   },
