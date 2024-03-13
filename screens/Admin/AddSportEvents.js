@@ -131,7 +131,7 @@ const AddLiveEvents = () => {
     const data = {
       eventId: eventIdFormatted,
       subEventId: subEventID,
-      email: LoginContext?.user?.email,
+      email: LoginCtx?.user?.email,
       title: teamA + " vs " + teamB,
       description,
       location: venue,
