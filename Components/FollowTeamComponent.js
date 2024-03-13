@@ -33,7 +33,7 @@ const FollowTeamComponent = (props) => {
               backend_link+"api/user/unfollow?email="+
               email+"&team="+teamName);
             const response1 = await axios.post(
-            backend_link+"api/user/unfollow?email="+
+            backend_link+"api/user/removeFollower?email="+
             email+"&team="+teamName);
             console.log(response.data);
             console.log(response1.data);
