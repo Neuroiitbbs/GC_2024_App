@@ -26,18 +26,18 @@ import AllTabs from "./screens/AllTabs";
 import { backend_link } from "./utils/constants";
 
 import * as Notifications from "expo-notifications";
-import {
-  scheduleNotificationHandler,
-  requestPermissions,
-  receivedNotification,
-  receivedNotificationResponse,
-} from "./utils/notifications/local";
+// import {
+//   scheduleNotificationHandler,
+//   requestPermissions,
+//   receivedNotification,
+//   receivedNotificationResponse,
+// } from "./utils/notifications/local";
 
-import {
-  getPushToken,
-  configurePushNotifications,
-} from "./utils/notifications/push";
-// setNotificationHandler();
+// import {
+//   getPushToken,
+//   configurePushNotifications,
+// } from "./utils/notifications/push";
+// // setNotificationHandler();
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -52,58 +52,58 @@ export default function LoginContextWrapper() {
 }
 const App = () => {
   const LoginCtx = useContext(LoginContext);
-  const [expoPushToken, setExpoPushToken] = useState("");
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     iosClientId: iosClientId,
     androidClientId: androidClientId,
     webClientId: webClientId,
   });
-  useEffect(() => {
-    requestPermissions();
-  }, []);
-  useEffect(() => {
-    const gettoken = async () => {
-      const pushToken = await configurePushNotifications();
-      console.log(pushToken, "Push Token");
-      setExpoPushToken(pushToken);
-    };
-    gettoken();
-  }, []);
+  // const [expoPushToken, setExpoPushToken] = useState("");
+  // useEffect(() => {
+  //   requestPermissions();
+  // }, []);
+  // useEffect(() => {
+  //   const gettoken = async () => {
+  //     const pushToken = await configurePushNotifications();
+  //     console.log(pushToken, "Push Token");
+  //     setExpoPushToken(pushToken);
+  //   };
+  //   gettoken();
+  // }, []);
 
-  useEffect(() => {
-    if (expoPushToken !== "") {
-      const sendToken = async () => {
-        const email = LoginCtx?.user?.email;
-        if (email !== null && email !== undefined) {
-          try {
-            const response = await axios.post(
-              backend_link +
-                "api/expotoken/addexpotoken?email=" +
-                email +
-                "&token=" +
-                expoPushToken
-            );
-            console.log(response.data, "Push Token");
-          } catch (e) {
-            console.log(e, "Error in sending push token");
-          }
-        }
-      };
-      sendToken();
-    }
-  }, [expoPushToken, LoginCtx.isLogin]);
+  // useEffect(() => {
+  //   if (expoPushToken !== "") {
+  //     const sendToken = async () => {
+  //       const email = LoginCtx?.user?.email;
+  //       if (email !== null && email !== undefined) {
+  //         try {
+  //           const response = await axios.post(
+  //             backend_link +
+  //               "api/expotoken/addexpotoken?email=" +
+  //               email +
+  //               "&token=" +
+  //               expoPushToken
+  //           );
+  //           console.log(response.data, "Push Token");
+  //         } catch (e) {
+  //           console.log(e, "Error in sending push token");
+  //         }
+  //       }
+  //     };
+  //     sendToken();
+  //   }
+  // }, [expoPushToken, LoginCtx.isLogin]);
 
-  useEffect(() => {
-    const subscription1 = receivedNotification();
-    const subscription2 = receivedNotificationResponse();
+  // useEffect(() => {
+  //   const subscription1 = receivedNotification();
+  //   const subscription2 = receivedNotificationResponse();
 
-    return () => {
-      // subscription1.remove();
-      // subscription2.remove();
-      Notifications.removeNotificationSubscription(subscription1);
-      Notifications.removeNotificationSubscription(subscription2);
-    };
-  }, []);
+  //   return () => {
+  //     // subscription1.remove();
+  //     // subscription2.remove();
+  //     Notifications.removeNotificationSubscription(subscription1);
+  //     Notifications.removeNotificationSubscription(subscription2);
+  //   };
+  // }, []);
   const [loading, setLoading] = useState(true);
   const [isLoading1, setIsLoading1] = useState(false);
   const authenticateUser = (status) => {

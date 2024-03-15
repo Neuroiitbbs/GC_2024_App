@@ -23,46 +23,9 @@ import { LoginContext } from "../../store/LoginContext";
 import { backend_link } from "../../utils/constants";
 import { useNavigation } from "@react-navigation/native";
 
-const defaultPoint = {
-  MTech: {
-    points: 0,
-    position: 0,
-  },
-  ECE_META: {
-    points: 0,
-    position: 0,
-  },
-  CSE: {
-    points: 0,
-    position: 0,
-  },
-  CIVIL: {
-    points: 0,
-    position: 0,
-  },
-  EE: {
-    points: 0,
-    position: 0,
-  },
-  PHD: {
-    points: 0,
-    position: 0,
-  },
-  MECH: {
-    points: 0,
-    position: 0,
-  },
-  MSc_ITEP: {
-    points: 0,
-    position: 0,
-  },
-};
-const getCorrectTimeStamp = (date, time) => {
-  date = date.split("T")[0];
-  time = time.split("T")[1];
+import { defaultPoint } from "../../utils/initialScoreData";
+import { getCorrectTimeStamp } from "../../utils/helperFunctions";
 
-  return new Date(date + "T" + time).getTime();
-};
 const UpdateEvent = ({ route, navigation }) => {
   let data = route.params?.data;
   data = data?.data;

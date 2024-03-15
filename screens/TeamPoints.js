@@ -27,24 +27,20 @@ const formatDate = (datestr) => {
   return formattedDate;
 };
 
-const sortPointsTable=(data)=>{
-
+const sortPointsTable = (data) => {
   const positivepoints = [];
   const negativepoints = [];
   const zeropoints = [];
-  data.map((item)=>{
-    if(item[1]*1 > 0 )
-    positivepoints.push(item);
-  else if(item[1]*1<0)
-  negativepoints.push(item);
-else
-zeropoints.push(item);
+  data.map((item) => {
+    if (item[1] * 1 > 0) positivepoints.push(item);
+    else if (item[1] * 1 < 0) negativepoints.push(item);
+    else zeropoints.push(item);
   });
   positivepoints.sort((a, b) => b[1] - a[1]);
   negativepoints.sort((a, b) => a[1] - b[1]);
 
-  return [...positivepoints,...negativepoints,...zeropoints];
-}
+  return [...positivepoints, ...negativepoints, ...zeropoints];
+};
 
 export default function TeamPoints({ route }) {
   const loginctx = useContext(LoginContext);
@@ -57,7 +53,6 @@ export default function TeamPoints({ route }) {
   const branch =
     route.params?.branch ||
     setProperTeamName(loginctx?.detail?.dept || "MSc_ITEP");
-  console.log("branch", branch);
   const team = setProperTeamName(branch);
 
   useEffect(() => {
@@ -108,7 +103,7 @@ export default function TeamPoints({ route }) {
   }, [branch]);
 
   const totalPoints = () => {
-    let sum = eventPoints.reduce((acc, curr) => acc*1 + curr[1]*1, 0);
+    let sum = eventPoints.reduce((acc, curr) => acc * 1 + curr[1] * 1, 0);
     return sum;
   };
 

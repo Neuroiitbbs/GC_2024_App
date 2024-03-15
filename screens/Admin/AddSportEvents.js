@@ -17,25 +17,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { backend_link } from "../../utils/constants";
 import axios from "axios";
 
-// const teamPicker = (
-//   <>
-//     <Picker.Item label="Select Team" value="" />
-//     <Picker.Item label="Mtech" value="Mtech" />
-//     <Picker.Item label="ECE+META" value="ECE_META" />
-//     <Picker.Item label="CSE" value="CSE" />
-//     <Picker.Item label="CIVIL" value="CIVIL" />
-//     <Picker.Item label="EE" value="EE" />
-//     <Picker.Item label="PhD" value="Phd" />
-//     <Picker.Item label="MECH" value="MECH" />
-//     <Picker.Item label="MSC+ITEP" value="MSC_ITEP" />
-//   </>
-// );
-const getCorrectTimeStamp = (date, time) => {
-  date = date.split("T")[0];
-  time = time.split("T")[1];
-
-  return new Date(date + "T" + time).getTime();
-};
+import { getCorrectTimeStamp } from "../../utils/helperFunctions";
 
 const AddLiveEvents = () => {
   const LoginCtx = useContext(LoginContext);
@@ -164,197 +146,191 @@ const AddLiveEvents = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
-      style={styles.container}
-      keyboardVerticalOffset={100}
-    >
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.liveEventsContainer}>
-            <Text style={styles.liveEventsText}>Event</Text>
-          </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.liveEventsContainer}>
+          <Text style={styles.liveEventsText}>Event</Text>
+        </View>
 
-          <View style={styles.addLiveEventContainer}>
-            <Text style={styles.addLiveEventText}>Add Sport Events</Text>
-          </View>
+        <View style={styles.addLiveEventContainer}>
+          <Text style={styles.addLiveEventText}>Add Sport Events</Text>
+        </View>
 
-          <View style={styles.formContainer1} borderColor={"white"}>
-            <TextInput
-              placeholder="Name/Title (eg. Football Boys )"
-              style={styles.formContainer}
-              placeholderTextColor={"white"}
-              value={eventID}
-              onChangeText={(text) => setEventID(text)}
-            />
-          </View>
-          <View style={styles.formContainer1} borderColor={"white"}>
-            <TextInput
-              placeholder="EventID (eg. Match 1)"
-              style={styles.formContainer}
-              value={subEventID}
-              placeholderTextColor={"white"}
-              onChangeText={(text) => setSubEventID(text)}
-            />
-          </View>
-          <View style={styles.formContainer1} borderColor={"white"}>
-            <TextInput
-              placeholder="Description"
-              style={styles.formContainer}
-              multiline={true}
-              numberOfLines={8}
-              value={description}
-              placeholderTextColor={"white"}
-              onChangeText={(text) => setDescription(text)}
-            />
-          </View>
-          <View style={styles.formContainer1}>
-            <TextInput
-              placeholder="Venue/Location"
-              style={styles.formContainer}
-              value={venue}
-              placeholderTextColor={"white"}
-              onChangeText={(text) => setVenue(text)}
-            />
-          </View>
-          <View style={styles.formContainer1}>
-            <TextInput
-              placeholder="Type eg. Final, Semi-Final, etc."
-              style={styles.formContainer}
-              placeholderTextColor={"white"}
-              value={type}
-              onChangeText={(text) => setType(text)}
-            />
-          </View>
-          <View style={styles.formContainer1}>
-            <TouchableOpacity
-              style={styles.dropdowntime}
-              onPress={() => setShowDatepicker(true)}
+        <View style={styles.formContainer1} borderColor={"white"}>
+          <TextInput
+            placeholder="Name/Title (eg. Football Boys )"
+            style={styles.formContainer}
+            placeholderTextColor={"grey"}
+            value={eventID}
+            onChangeText={(text) => setEventID(text)}
+          />
+        </View>
+        <View style={styles.formContainer1} borderColor={"white"}>
+          <TextInput
+            placeholder="EventID (eg. Match 1)"
+            style={styles.formContainer}
+            value={subEventID}
+            placeholderTextColor={"grey"}
+            onChangeText={(text) => setSubEventID(text)}
+          />
+        </View>
+        <View style={styles.formContainer1} borderColor={"white"}>
+          <TextInput
+            placeholder="Description"
+            style={styles.formContainer}
+            multiline={true}
+            numberOfLines={8}
+            value={description}
+            placeholderTextColor={"grey"}
+            onChangeText={(text) => setDescription(text)}
+          />
+        </View>
+        <View style={styles.formContainer1}>
+          <TextInput
+            placeholder="Venue/Location"
+            style={styles.formContainer}
+            value={venue}
+            placeholderTextColor={"grey"}
+            onChangeText={(text) => setVenue(text)}
+          />
+        </View>
+        <View style={styles.formContainer1}>
+          <TextInput
+            placeholder="Type eg. Final, Semi-Final, etc."
+            style={styles.formContainer}
+            placeholderTextColor={"grey"}
+            value={type}
+            onChangeText={(text) => setType(text)}
+          />
+        </View>
+        <View style={styles.formContainer1}>
+          <TouchableOpacity
+            style={styles.dropdowntime}
+            onPress={() => setShowDatepicker(true)}
+          >
+            <Text style={{ color: "white" }}>
+              {" "}
+              Date: {date.toLocaleDateString()}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {showDatepicker && (
+          <DateTimePicker
+            testID="datePicker"
+            value={date}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
+
+        <View style={styles.formContainer1}>
+          <TouchableOpacity
+            style={styles.dropdowntime}
+            onPress={() => setShowTimepicker(true)}
+          >
+            <Text style={{ color: "white" }}>
+              {" "}
+              Time: {time.toLocaleTimeString()}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {showTimepicker && (
+          <DateTimePicker
+            testID="timePicker"
+            value={time}
+            mode="time"
+            is24Hour={true}
+            display="default"
+            onChange={handleTimeChange}
+          />
+        )}
+
+        <View style={styles.formContainer1}>
+          <TouchableOpacity style={styles.dropdown}>
+            <Picker
+              selectedValue={status}
+              style={{ height: 50, width: 300, color: "white" }}
+              onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
             >
-              <Text style={{ color: "white" }}>
-                {" "}
-                Date: {date.toLocaleDateString()}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          {showDatepicker && (
-            <DateTimePicker
-              testID="datePicker"
-              value={date}
-              mode="date"
-              is24Hour={true}
-              display="default"
-              onChange={handleDateChange}
-            />
-          )}
+              <Picker.Item label="Select status" value="" />
+              <Picker.Item label="Ongoing" value="live" />
+              <Picker.Item label="Upcoming" value="upcoming" />
+              <Picker.Item label="Past/Completed" value="concluded" />
+            </Picker>
+          </TouchableOpacity>
+        </View>
 
-          <View style={styles.formContainer1}>
-            <TouchableOpacity
-              style={styles.dropdowntime}
-              onPress={() => setShowTimepicker(true)}
+        <View style={styles.formContainer1}>
+          <TouchableOpacity style={styles.dropdown}>
+            <Picker
+              selectedValue={teamA}
+              style={{ height: 50, width: 300, color: "white" }}
+              onValueChange={(itemValue, itemIndex) => setTeamA(itemValue)}
             >
-              <Text style={{ color: "white" }}>
-                {" "}
-                Time: {time.toLocaleTimeString()}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          {showTimepicker && (
-            <DateTimePicker
-              testID="timePicker"
-              value={time}
-              mode="time"
-              is24Hour={true}
-              display="default"
-              onChange={handleTimeChange}
-            />
-          )}
+              <Picker.Item label="Select Team1" value="" />
+              <Picker.Item label="Mtech" value="MTech" />
+              <Picker.Item label="ECE+META" value="ECE_META" />
+              <Picker.Item label="CSE" value="CSE" />
+              <Picker.Item label="CIVIL" value="CIVIL" />
+              <Picker.Item label="EE" value="EE" />
+              <Picker.Item label="PhD" value="PHD" />
+              <Picker.Item label="MECH" value="MECH" />
+              <Picker.Item label="MSC+ITEP" value="MSc_ITEP" />
+            </Picker>
+          </TouchableOpacity>
+        </View>
 
-          <View style={styles.formContainer1}>
-            <TouchableOpacity style={styles.dropdown}>
-              <Picker
-                selectedValue={status}
-                style={{ height: 50, width: 300, color: "white" }}
-                onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
-              >
-                <Picker.Item label="Select status" value="" />
-                <Picker.Item label="Ongoing" value="live" />
-                <Picker.Item label="Upcoming" value="upcoming" />
-                <Picker.Item label="Past/Completed" value="concluded" />
-              </Picker>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.formContainer1}>
-            <TouchableOpacity style={styles.dropdown}>
-              <Picker
-                selectedValue={teamA}
-                style={{ height: 50, width: 300, color: "white" }}
-                onValueChange={(itemValue, itemIndex) => setTeamA(itemValue)}
-              >
-                <Picker.Item label="Select Team1" value="" />
-                <Picker.Item label="Mtech" value="MTech" />
-                <Picker.Item label="ECE+META" value="ECE_META" />
-                <Picker.Item label="CSE" value="CSE" />
-                <Picker.Item label="CIVIL" value="CIVIL" />
-                <Picker.Item label="EE" value="EE" />
-                <Picker.Item label="PhD" value="PHD" />
-                <Picker.Item label="MECH" value="MECH" />
-                <Picker.Item label="MSC+ITEP" value="MSc_ITEP" />
-              </Picker>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.formContainer1}>
-            <TextInput
-              keyboardType="numeric"
-              placeholder="Team 1 Points (eg. 0)"
-              style={styles.formContainer}
-              value={teamApoints}
-              placeholderTextColor={"white"}
-              onChangeText={(text) => setTeamApoints(text)}
-            />
-          </View>
-          <View style={styles.formContainer1}>
-            <TouchableOpacity style={styles.dropdown}>
-              <Picker
-                selectedValue={teamB}
-                style={{ height: 50, width: 300, color: "white" }}
-                onValueChange={(itemValue, itemIndex) => setTeamB(itemValue)}
-              >
-                <Picker.Item label="Select Team 2" value="" />
-                <Picker.Item label="Mtech" value="MTech" />
-                <Picker.Item label="ECE+META" value="ECE_META" />
-                <Picker.Item label="CSE" value="CSE" />
-                <Picker.Item label="CIVIL" value="CIVIL" />
-                <Picker.Item label="EE" value="EE" />
-                <Picker.Item label="PhD" value="PHD" />
-                <Picker.Item label="MECH" value="MECH" />
-                <Picker.Item label="MSC+ITEP" value="MSc_ITEP" />
-              </Picker>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.formContainer1}>
-            <TextInput
-              keyboardType="numeric"
-              placeholder="Team 2 Points (eg. 0)"
-              style={styles.formContainer}
-              value={teamBpoints}
-              placeholderTextColor={"white"}
-              onChangeText={(text) => setTeamBpoints(text)}
-            />
-          </View>
-          <View style={styles.addLiveEventSubmitButton}>
-            <Button
-              title="Submit"
-              onPress={showConfirmationAlert}
-              style={styles.submitButton}
-            />
-          </View>
+        <View style={styles.formContainer1}>
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Team 1 Points (eg. 0)"
+            style={styles.formContainer}
+            value={teamApoints}
+            placeholderTextColor={"grey"}
+            onChangeText={(text) => setTeamApoints(text)}
+          />
+        </View>
+        <View style={styles.formContainer1}>
+          <TouchableOpacity style={styles.dropdown}>
+            <Picker
+              selectedValue={teamB}
+              style={{ height: 50, width: 300, color: "white" }}
+              onValueChange={(itemValue, itemIndex) => setTeamB(itemValue)}
+            >
+              <Picker.Item label="Select Team 2" value="" />
+              <Picker.Item label="Mtech" value="MTech" />
+              <Picker.Item label="ECE+META" value="ECE_META" />
+              <Picker.Item label="CSE" value="CSE" />
+              <Picker.Item label="CIVIL" value="CIVIL" />
+              <Picker.Item label="EE" value="EE" />
+              <Picker.Item label="PhD" value="PHD" />
+              <Picker.Item label="MECH" value="MECH" />
+              <Picker.Item label="MSC+ITEP" value="MSc_ITEP" />
+            </Picker>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.formContainer1}>
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Team 2 Points (eg. 0)"
+            style={styles.formContainer}
+            value={teamBpoints}
+            placeholderTextColor={"grey"}
+            onChangeText={(text) => setTeamBpoints(text)}
+          />
+        </View>
+        <View style={styles.addLiveEventSubmitButton}>
+          <Button
+            title="Submit"
+            onPress={showConfirmationAlert}
+            style={styles.submitButton}
+          />
         </View>
         <View style={{ minHeight: 80 }}></View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </View>
+    </ScrollView>
   );
 };
 

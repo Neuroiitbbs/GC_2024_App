@@ -358,7 +358,7 @@ export default function AllTabs() {
       {LoginCtx.isAdmin && (
         <Tab.Screen name="     " component={AdminDashboardStackNavigator} />
       )}
-      <Tab.Screen name="      " component={FollowTeam} />
+      {/* <Tab.Screen name="      " component={FollowTeam} /> */}
     </Tab.Navigator>
   );
 }
