@@ -1,4 +1,13 @@
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TextInput,
+  Dimensions,
+} from "react-native";
+import { Icon } from "react-native-elements";
+
 import { useState } from "react";
 import TopMostCard from "../../Components/TopMostCard";
 import OngoingUpcomingButton from "../../Components/OngoingUpcomingButtons";
@@ -7,12 +16,16 @@ import UpcomingScreen from "./UpcomingScreen";
 import TechEventScreen from "./TechEventScreen";
 import CultEventScreen from "./CultEventScreen";
 import PastScreen from "./PastScreen";
-import { width } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
+
+const deviceWidth = Dimensions.get("window").width;
+const deviceHeight = Dimensions.get("window").height;
 
 export default function Events({ route, navigation }) {
   const field = route?.params?.field || "Sports";
   console.log("field", field);
-  const [screen, setScreen] = useState(1);
+  console.log("field", field);
+  const [screen, setScreen] = useState(2);
+  const [search, setSearch] = useState("");
 
   function renderOngoing() {
     setScreen(1);
@@ -25,6 +38,43 @@ export default function Events({ route, navigation }) {
   }
   return (
     <SafeAreaView style={styles.container}>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          paddingBottom: 10,
+        }}
+      >
+        <View
+          style={{
+            color: "white",
+            width: "90%",
+            marginTop: 10,
+            alignItems: "center",
+            flexDirection: "row",
+
+            borderWidth: 1,
+            paddingLeft: 10,
+            borderRadius: 10,
+            borderColor: "white",
+          }}
+          onPress={() => console.log("hi")}
+        >
+          <Icon name="search1" type="antdesign" color="white" size={20} />
+          <TextInput
+            style={{
+              width: "90%",
+              height: 40,
+              paddingLeft: 10,
+            }}
+            color="white"
+            onChangeText={(text) => setSearch(text)}
+            placeholder="Search"
+            placeholderTextColor={"grey"}
+          />
+        </View>
+      </View>
       <TopMostCard />
       {field === "Sports" && (
         <>
@@ -34,7 +84,7 @@ export default function Events({ route, navigation }) {
               currentScreen={screen}
               currentButton={2}
             >
-              PAST 
+              PAST
             </OngoingUpcomingButton>
 
             <OngoingUpcomingButton
@@ -54,24 +104,23 @@ export default function Events({ route, navigation }) {
             </OngoingUpcomingButton>
           </View>
           {screen == 1 ? (
-            <OngoingScreen />
+            <OngoingScreen search={search} />
           ) : screen == 0 ? (
-            <UpcomingScreen />
+            <UpcomingScreen search={search} />
           ) : (
-            <PastScreen />
+            <PastScreen search={search} />
           )}
           <View style={styles.bottomnav}></View>
         </>
       )}
-
       {field === "Tech" && (
         <>
-          <TechEventScreen navigation={navigation} />
+          <TechEventScreen navigation={navigation} search={search} />
         </>
       )}
       {field === "Cultural" && (
         <>
-          <CultEventScreen navigation={navigation} />
+          <CultEventScreen navigation={navigation} search={search} />
         </>
       )}
     </SafeAreaView>

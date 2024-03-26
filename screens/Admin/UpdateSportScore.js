@@ -3,10 +3,13 @@ import {
   Alert,
   FlatList,
   StyleSheet,
+  TextInput,
   ScrollView,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+
+import { Icon } from "react-native-elements";
 
 import axios from "axios";
 import Loader from "../../Components/Loader";
@@ -18,6 +21,32 @@ function UpdateSportScreen(props) {
   const [isEventUpdated, setIsEventUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [ongoingEvents, setOngoingEvents] = useState([]);
+
+  const [search, setSearch] = useState("");
+
+  const [filteredData, setFilteredData] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  useEffect(() => {
+    console.log(search);
+    if (search.length == 0 || !search) {
+      setFilteredData(ongoingEvents);
+      return;
+    }
+    const data = ongoingEvents.filter((item) => {
+      let teamA = item?.teamA.toLowerCase();
+      let teamB = item?.teamB.toLowerCase();
+      let gameName = item?.gameName.toLowerCase();
+      const id = item?.id.toLowerCase();
+      return (
+        teamA.includes(search.toLowerCase()) ||
+        teamB.includes(search.toLowerCase()) ||
+        gameName.includes(search.toLowerCase()) ||
+        id.includes(search.toLowerCase())
+      );
+    });
+    setFilteredData(data);
+  }, [search, dataLoaded]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,8 +79,7 @@ function UpdateSportScreen(props) {
                 item1.data.details.title.split(" ").join("") +
                 "++" +
                 item1.subEventId.split(" ").join(""),
-              // teamA: item1.subEventId.split(" vs ")[0],
-              // teamB: item1.subEventId.split(" vs ")[1],
+
               teamA: teamA?.name || item1.subEventId.split(" vs ")[0],
               teamB: teamB?.name || item1.subEventId.split(" vs ")[1],
               scoreA: teamA?.points,
@@ -63,6 +91,9 @@ function UpdateSportScreen(props) {
         //console.log("hi");
         console.log(newData.flat());
         setOngoingEvents(newData.flat());
+
+        setDataLoaded(true);
+        setFilteredData(newData.flat());
       } catch (err) {
         console.log(err);
         Alert.alert("Error", "Something went wrong", [{ text: "Okay" }]);
@@ -75,9 +106,47 @@ function UpdateSportScreen(props) {
 
   return (
     <View style={styles.eventsContainer}>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          paddingBottom: 10,
+        }}
+      >
+        <View
+          style={{
+            color: "white",
+            width: "90%",
+            marginTop: 10,
+            alignItems: "center",
+            flexDirection: "row",
+
+            borderWidth: 1,
+            paddingLeft: 10,
+            borderRadius: 10,
+            borderColor: "white",
+          }}
+          onPress={() => console.log("hi")}
+        >
+          <Icon name="search1" type="antdesign" color="white" size={20} />
+          <TextInput
+            style={{
+              width: "90%",
+              height: 40,
+              paddingLeft: 10,
+            }}
+            color="white"
+            onChangeText={(text) => setSearch(text)}
+            placeholder="Search"
+            placeholderTextColor={"grey"}
+          />
+        </View>
+      </View>
+
       <View style={{ maxHeight: "90%" }}>
         <FlatList
-          data={ongoingEvents}
+          data={filteredData}
           renderItem={(itemData, index) => {
             return (
               <AdminSportEventCard
@@ -105,6 +174,7 @@ function UpdateSportScreen(props) {
           bottom={0}
           setModalVisible={setIsLoading}
         />
+        <View style={{ minHeight: 70 }} />
       </View>
     </View>
   );

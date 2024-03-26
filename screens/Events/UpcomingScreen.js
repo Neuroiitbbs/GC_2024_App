@@ -16,6 +16,29 @@ const sortData = (data) => {
 function UpcomingScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  useEffect(() => {
+    console.log(props.search);
+    if (props.search.length == 0) {
+      setFilteredData(upcomingEvents);
+      return;
+    }
+    const data = upcomingEvents.filter((item) => {
+      let teamA = item?.teamA.toLowerCase();
+      let teamB = item?.teamB.toLowerCase();
+      let gameName = item?.gameName.toLowerCase();
+      const id = item?.id.toLowerCase();
+      return (
+        teamA.includes(props.search.toLowerCase()) ||
+        teamB.includes(props.search.toLowerCase()) ||
+        gameName.includes(props.search.toLowerCase()) ||
+        id.includes(props.search.toLowerCase())
+      );
+    });
+    setFilteredData(data);
+  }, [props.search, dataLoaded]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -53,6 +76,8 @@ function UpcomingScreen(props) {
         });
         events = sortData(events.flat());
         setUpcomingEvents(events.flat());
+        setFilteredData(events.flat());
+        setDataLoaded(true);
         setIsLoading(false);
       } catch (err) {
         console.log(err);
@@ -67,7 +92,7 @@ function UpcomingScreen(props) {
     <View style={styles.eventsContainer}>
       <FlatList
         key={1}
-        data={upcomingEvents}
+        data={filteredData}
         renderItem={(itemData) => {
           return (
             <UpcomingEventCard
@@ -88,7 +113,7 @@ function UpcomingScreen(props) {
       />
       <Loader
         visible={isLoading}
-        top={270}
+        top={300}
         bottom={0}
         setModalVisible={setIsLoading}
       />

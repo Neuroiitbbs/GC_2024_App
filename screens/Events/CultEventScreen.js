@@ -32,9 +32,30 @@ const sortData = (data) => {
   return nextdata.concat(prevdata);
 };
 
-const CultEventScreen = ({ navigation }) => {
+const CultEventScreen = ({ navigation, search }) => {
   const [cultEvents, setCultEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [filteredData, setFilteredData] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  useEffect(() => {
+    console.log(search);
+    if (search.length == 0 || !search) {
+      setFilteredData(cultEvents);
+      return;
+    }
+    const data = cultEvents.filter((item) => {
+      let title = item?.data?.details?.title.toLowerCase();
+      let event = item?.data?.eventId.toLowerCase();
+      const location = item?.data?.details?.location.toLowerCase();
+      return (
+        title?.includes(search.toLowerCase()) ||
+        event?.includes(search.toLowerCase()) ||
+        location?.includes(search.toLowerCase())
+      );
+    });
+    setFilteredData(data);
+  }, [search, dataLoaded]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,6 +71,8 @@ const CultEventScreen = ({ navigation }) => {
 
         cultdata = sortData(cultdata);
         setCultEvents(cultdata);
+        setDataLoaded(true);
+        setFilteredData(cultdata);
         // console.log(cultdata);
       } catch (error) {
         console.log(error);
@@ -72,7 +95,7 @@ const CultEventScreen = ({ navigation }) => {
       )}
       {!loading && (
         <FlatList
-          data={cultEvents}
+          data={filteredData}
           renderItem={(itemData) => {
             return (
               <TechCultEventCard data={itemData} navigation={navigation} />

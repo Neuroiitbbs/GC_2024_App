@@ -254,7 +254,7 @@ function AdminSportEventCard(props) {
                     <Picker.Item label="select" value="" />
                     <Picker.Item label="Live" value="live" />
                     <Picker.Item label="UpComing" value="upcoming" />
-                    <Picker.Item label="Past" value="past" />
+                    <Picker.Item label="Past" value="concluded" />
                   </Picker>
                 </TouchableOpacity>
               </View>

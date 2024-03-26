@@ -16,6 +16,28 @@ const sortData = (data) => {
 function OngoingScreen(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [ongoingEvents, setOngoingEvents] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  useEffect(() => {
+    console.log(props.search);
+    if (props.search.length == 0) {
+      setFilteredData(ongoingEvents);
+      return;
+    }
+    const data = ongoingEvents.filter((item) => {
+      let teamA = item?.teamA.toLowerCase();
+      let teamB = item?.teamB.toLowerCase();
+      let gameName = item?.gameName.toLowerCase();
+      const id = item?.id.toLowerCase();
+      return (
+        teamA.includes(props.search.toLowerCase()) ||
+        teamB.includes(props.search.toLowerCase()) ||
+        gameName.includes(props.search.toLowerCase()) ||
+        id.includes(props.search.toLowerCase())
+      );
+    });
+    setFilteredData(data);
+  }, [props.search, dataLoaded]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +74,8 @@ function OngoingScreen(props) {
 
         events = sortData(events.flat());
         setOngoingEvents(events.flat());
+        setFilteredData(events.flat());
+        setDataLoaded(true);
       } catch (err) {
         console.log(err);
         Alert.alert("Error", "Something went wrong", [{ text: "Okay" }]);
@@ -66,7 +90,7 @@ function OngoingScreen(props) {
     <View style={styles.eventsContainer}>
       <FlatList
         key={1}
-        data={ongoingEvents}
+        data={filteredData}
         renderItem={(itemData) => {
           return (
             <OngoingEventCard
@@ -87,7 +111,7 @@ function OngoingScreen(props) {
       />
       <Loader
         visible={isLoading}
-        top={270}
+        top={300}
         bottom={0}
         setModalVisible={setIsLoading}
       />

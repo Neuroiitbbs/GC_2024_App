@@ -34,9 +34,30 @@ const sortData = (data) => {
   return nextdata.concat(prevdata);
 };
 
-const TechEventScreen = ({ navigation }) => {
+const TechEventScreen = ({ navigation, search }) => {
   const [loading, setLoading] = useState(true);
   const [techEvents, setTechEvents] = useState([]);
+
+  const [filteredData, setFilteredData] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  useEffect(() => {
+    console.log(search);
+    if (search.length == 0 || !search) {
+      setFilteredData(techEvents);
+      return;
+    }
+    const data = techEvents.filter((item) => {
+      let title = item?.data?.details?.title.toLowerCase();
+      let event = item?.data?.eventId.toLowerCase();
+      const location = item?.data?.details?.location.toLowerCase();
+      return (
+        title?.includes(search.toLowerCase()) ||
+        event?.includes(search.toLowerCase()) ||
+        location?.includes(search.toLowerCase())
+      );
+    });
+    setFilteredData(data);
+  }, [search, dataLoaded]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,7 +72,9 @@ const TechEventScreen = ({ navigation }) => {
         });
         techdata = sortData(techdata);
         setTechEvents(techdata);
-        console.log(techdata);
+        setDataLoaded(true);
+        setFilteredData(techdata);
+        console.log(techdata[0]);
       } catch (error) {
         console.log(error);
       } finally {
@@ -75,7 +98,7 @@ const TechEventScreen = ({ navigation }) => {
       )}
       {!loading && (
         <FlatList
-          data={techEvents}
+          data={filteredData}
           renderItem={(itemData) => {
             return (
               <TechCultEventCard data={itemData} navigation={navigation} />

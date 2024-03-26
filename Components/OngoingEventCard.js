@@ -16,7 +16,7 @@ const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
 
 function OngoingEventCard(props) {
-  console.log(props);
+  // console.log(props);
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);
 
@@ -33,11 +33,11 @@ function OngoingEventCard(props) {
   return (
     <View>
       <LinearGradient
-         start={{ x: -0.4, y: 0.0 }}
-         end={{ x: 0.7, y: 1 }}
-         locations={[0.2, 0.8]}
-         colors={['#B0B0B0', '#E0E0E0']}
-         style={styles.cardTop}
+        start={{ x: -0.4, y: 0.0 }}
+        end={{ x: 0.7, y: 1 }}
+        locations={[0.2, 0.8]}
+        colors={["#B0B0B0", "#E0E0E0"]}
+        style={styles.cardTop}
       >
         <View
           style={{
@@ -49,7 +49,7 @@ function OngoingEventCard(props) {
             // backgroundColor: "black",
           }}
         >
-          <Text style={{ fontWeight: "600", fontSize: 20, marginTop:-12 }}>
+          <Text style={{ fontWeight: "600", fontSize: 20, marginTop: -12 }}>
             {props.teamA} v/s {props.teamB}
           </Text>
           <Text
