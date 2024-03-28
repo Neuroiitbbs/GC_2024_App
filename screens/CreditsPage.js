@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function CreditsPage() {
   return (
     <SafeAreaView style={styles.container}>
+      
       <Text style={styles.title}>Credits Page</Text>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         {/* Credits for team members */}

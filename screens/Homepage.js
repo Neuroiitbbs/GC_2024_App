@@ -180,7 +180,7 @@ export default function HomePage() {
         </View>
       )}
       {!loading && (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
           <View style={styles.content}>
             <View style={styles.newsSection}>
               <Carousel
@@ -320,7 +320,7 @@ export default function HomePage() {
               height: 200,
             }}
           ></View>
-        </View>
+        </ScrollView>
       )}
     </SafeAreaView>
   );
