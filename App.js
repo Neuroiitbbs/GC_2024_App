@@ -120,6 +120,7 @@ const App = () => {
     } else {
       LoginCtx.setIsLogin(false);
       setLoading(false);
+      promptAsync();
     }
   };
 
@@ -137,7 +138,7 @@ const App = () => {
   }, [response]);
 
   useEffect(() => {
-    isUserLoggedIn();
+    // isUserLoggedIn();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log(user, "User");
@@ -225,6 +226,7 @@ const App = () => {
                       authenticateUser={authenticateUser}
                       promptAsync={promptAsync}
                       loading1={isLoading1}
+                      isUserLoggedIn={isUserLoggedIn}
                     />
                   </>
                 )}

@@ -10,7 +10,13 @@ import {
 import { LoginContext } from "../store/LoginContext";
 import { ActivityIndicator } from "react-native-paper";
 
-const Login = ({ authenticateUser, promptAsync, loading1, navigation }) => {
+const Login = ({
+  authenticateUser,
+  promptAsync,
+  loading1,
+  navigation,
+  isUserLoggedIn,
+}) => {
   const LoginCtx = useContext(LoginContext);
   const AdminLogin = () => {
     promptAsync();
@@ -24,7 +30,8 @@ const Login = ({ authenticateUser, promptAsync, loading1, navigation }) => {
       authenticateUser(true);
     } else {
       console.log("Running in production mode");
-      promptAsync();
+      // promptAsync();
+      isUserLoggedIn();
     }
   };
 

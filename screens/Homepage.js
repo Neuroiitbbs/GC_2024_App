@@ -250,7 +250,7 @@ export default function HomePage() {
                         paddingBottom: 1,
                       }}
                     >
-                      {newscardata[item]?.title}
+                      {newscardata[item]?.title.slice(0, 30) + "..."}
                     </Text>
                     <Text
                       style={{

@@ -88,7 +88,7 @@ const CultEventScreen = ({ navigation, search }) => {
       {loading && (
         <Loader
           visible={loading}
-          top={200}
+          top={300}
           bottom={0}
           setModalVisible={setLoading}
         />

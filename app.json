@@ -2,7 +2,7 @@
   "expo": {
     "name": "GC '24",
     "slug": "GC_App_2024",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/appiconwhite.png",
     "userInterfaceStyle": "dark",

@@ -7,7 +7,7 @@ function OngoingUpcomingButton({
   currentButton,
 }) {
   return (
-    <View>
+    <View style={{ height: 80 }}>
       <Pressable
         style={({ pressed }) =>
           pressed
