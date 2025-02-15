@@ -41,7 +41,24 @@ export const configurePushNotifications = async () => {
   }
   return pushToken.data;
 };
-export const sendNotificationAll = async (title, body, data) => {
+
+const loggerNotification = async (message, from, to) => {
+  const data = {
+    noti: message,
+    email: from,
+    receiver: to,
+  };
+  try {
+    const resp = await axios.post(
+      backend_link + "api/logger/add-notification",
+      data
+    );
+    console.log(resp.data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+export const sendNotificationAll = async (title, body, data, from) => {
   try {
     const resp = await axios.get(backend_link + "api/expotoken/getexpotoken");
     console.log(resp.data, "allnoti");
@@ -59,7 +76,12 @@ export const sendNotificationAll = async (title, body, data) => {
         await axios.post("https://exp.host/--/api/v2/push/send", message);
       })
     );
-
+    const message = {
+      title: title,
+      body: body,
+      data: data,
+    };
+    loggerNotification(message, from, "All");
     console.log("Notifications sent successfully");
   } catch (e) {
     console.log(e);
@@ -68,7 +90,7 @@ export const sendNotificationAll = async (title, body, data) => {
 };
 // sendNotificationAll("titleam", "body", { data: "data" });
 
-export const sendNotificationTeam = async (title, body, team, data) => {
+export const sendNotificationTeam = async (title, body, team, data, from) => {
   try {
     const resp = await axios.get(backend_link + "api/expotoken/getexpotoken");
     const allusersToken = resp.data?.details;
@@ -86,7 +108,6 @@ export const sendNotificationTeam = async (title, body, team, data) => {
     console.log(tokens, "tokens");
 
     const message = {
-      sound: "default",
       title: title,
       body: body,
       data: data,
@@ -108,6 +129,8 @@ export const sendNotificationTeam = async (title, body, team, data) => {
         );
       })
     );
+
+    loggerNotification(message, from, team);
     console.log("All notifications sent successfully");
   } catch (e) {
     console.error("Error sending notifications:", e, e.message);

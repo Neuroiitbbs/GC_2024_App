@@ -64,7 +64,7 @@ if (Platform.OS === "android") {
     handleNotification: async () => ({
       shouldShowAlert: true,
       shouldPlaySound: true,
-      shouldSetBadge: false,
+      shouldSetBadge: true,
     }),
     handleSuccess: async () => {
       // Handle notification click

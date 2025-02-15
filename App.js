@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Modal, ActivityIndicator } from "react-native";
 import { Button, Provider as PaperProvider } from "react-native-paper";
@@ -25,19 +25,75 @@ import LoginScreen from "./screens/LoginPage";
 import AllTabs from "./screens/AllTabs";
 import { backend_link } from "./utils/constants";
 
+import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-// import {
-//   scheduleNotificationHandler,
-//   requestPermissions,
-//   receivedNotification,
-//   receivedNotificationResponse,
-// } from "./utils/notifications/local";
+import Constants from "expo-constants";
 
-// import {
-//   getPushToken,
-//   configurePushNotifications,
-// } from "./utils/notifications/push";
-// // setNotificationHandler();
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
+
+function handleRegistrationError(errorMessage) {
+  alert(errorMessage);
+  console.log(errorMessage);
+  // throw new Error(errorMessage);
+}
+
+async function registerForPushNotificationsAsync() {
+  if (Platform.OS === "android") {
+    Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+  }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    console.log(existingStatus, "Existing Status");
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      handleRegistrationError(
+        "Permission not granted to get push token for push notification!"
+      );
+      return;
+    }
+    const projectId =
+      Constants?.expoConfig?.extra?.eas?.projectId ??
+      Constants?.easConfig?.projectId;
+
+    console.log(projectId, "Project ID");
+    if (!projectId) {
+      handleRegistrationError("Project ID not found");
+    }
+    try {
+      const pushTokenString = await Notifications.getExpoPushTokenAsync({
+        projectId,
+      });
+      console.log(pushTokenString, "Push Token");
+      console.log(pushTokenString.data, "Push Token");
+      console.log(
+        "\n\n\n #################### Push Token #################### \n\n\n\n\n"
+      );
+      console.log(pushTokenString);
+      return pushTokenString.data;
+    } catch (e) {
+      handleRegistrationError(`${e}`);
+    }
+  } else {
+    handleRegistrationError("Must use physical device for push notifications");
+  }
+}
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -57,53 +113,69 @@ const App = () => {
     androidClientId: androidClientId,
     webClientId: webClientId,
   });
-  // const [expoPushToken, setExpoPushToken] = useState("");
-  // useEffect(() => {
-  //   requestPermissions();
-  // }, []);
-  // useEffect(() => {
-  //   const gettoken = async () => {
-  //     const pushToken = await configurePushNotifications();
-  //     console.log(pushToken, "Push Token");
-  //     setExpoPushToken(pushToken);
-  //   };
-  //   gettoken();
-  // }, []);
 
-  // useEffect(() => {
-  //   if (expoPushToken !== "") {
-  //     const sendToken = async () => {
-  //       const email = LoginCtx?.user?.email;
-  //       if (email !== null && email !== undefined) {
-  //         try {
-  //           const response = await axios.post(
-  //             backend_link +
-  //               "api/expotoken/addexpotoken?email=" +
-  //               email +
-  //               "&token=" +
-  //               expoPushToken
-  //           );
-  //           console.log(response.data, "Push Token");
-  //         } catch (e) {
-  //           console.log(e, "Error in sending push token");
-  //         }
-  //       }
-  //     };
-  //     sendToken();
-  //   }
-  // }, [expoPushToken, LoginCtx.isLogin]);
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [notification, setNotification] = useState();
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
-  // useEffect(() => {
-  //   const subscription1 = receivedNotification();
-  //   const subscription2 = receivedNotificationResponse();
+  useEffect(() => {
+    console.log(expoPushToken, "Push Token in App.js");
 
-  //   return () => {
-  //     // subscription1.remove();
-  //     // subscription2.remove();
-  //     Notifications.removeNotificationSubscription(subscription1);
-  //     Notifications.removeNotificationSubscription(subscription2);
-  //   };
-  // }, []);
+    if (
+      expoPushToken !== null &&
+      expoPushToken !== undefined &&
+      expoPushToken !== "" &&
+      LoginCtx.isLogin
+    ) {
+      const sendToken = async () => {
+        const email = LoginCtx?.user?.email;
+        if (email !== null && email !== undefined) {
+          try {
+            const response = await axios.post(
+              backend_link +
+                "api/expotoken/addexpotoken?email=" +
+                email +
+                "&token=" +
+                expoPushToken
+            );
+            console.log(response.data, "Push Token");
+          } catch (e) {
+            console.log(e, "Error in sending push token");
+          }
+        }
+      };
+      sendToken();
+    }
+  }, [expoPushToken, LoginCtx.isLogin]);
+
+  useEffect(() => {
+    registerForPushNotificationsAsync()
+      .then((token) => setExpoPushToken(token ?? ""))
+      .catch((error) => console.log(`${error}`));
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        // Notification is received while the app is foregrounded(running)
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        // Notification response: user interacts with a notification (Tapping on it)
+        console.log(response);
+      });
+
+    return () => {
+      notificationListener.current &&
+        Notifications.removeNotificationSubscription(
+          notificationListener.current
+        );
+      responseListener.current &&
+        Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
   const [loading, setLoading] = useState(true);
   const [isLoading1, setIsLoading1] = useState(false);
   const authenticateUser = (status) => {

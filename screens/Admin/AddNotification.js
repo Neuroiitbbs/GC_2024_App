@@ -80,9 +80,20 @@ const AddNotification = ({ navigation }) => {
     console.log(data);
     try {
       if (team === "All") {
-        await sendNotificationAll(title, description, data);
+        await sendNotificationAll(
+          title,
+          description,
+          data,
+          LoginCtx.user?.email
+        );
       } else {
-        await sendNotificationTeam(title, description, team, data);
+        await sendNotificationTeam(
+          title,
+          description,
+          team,
+          data,
+          LoginCtx.user?.email
+        );
       }
       const newtitle = title.split(" ").join("+");
       const newdescription = description.split(" ").join("+");

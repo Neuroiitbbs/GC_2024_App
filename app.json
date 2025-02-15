@@ -23,7 +23,8 @@
         "foregroundImage": "./assets/GClogo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.iitbbs.gcapp"
+      "package": "com.iitbbs.gcapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/GClogo.png"
@@ -35,14 +36,6 @@
         "projectId": "4c058831-328a-46c7-afeb-200a24a86a98"
       }
     },
-    "plugins": [
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/GClogo.png",
-          "color": "#ffffff"
-        }
-      ]
-    ]
+    "plugins": [ ]
   }
 }
