@@ -40,7 +40,7 @@ const AddNotification = ({ navigation }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [team, setTeam] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const showConfirmationAlert = () => {
     Alert.alert(
       "Proceed?",
@@ -77,6 +77,7 @@ const AddNotification = ({ navigation }) => {
       team,
     };
 
+    setLoading(true);
     console.log(data);
     try {
       if (team === "All") {
@@ -109,10 +110,13 @@ const AddNotification = ({ navigation }) => {
       setTitle("");
       setDescription("");
       setTeam("");
+      setLoading(false);
       navigation.navigate("AdminDashboardStack");
     } catch (e) {
       console.log(e);
       Alert.alert("Error", "Something went wrong" + e.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -176,6 +180,7 @@ const AddNotification = ({ navigation }) => {
               title="Submit"
               onPress={showConfirmationAlert}
               style={styles.submitButton}
+              disabled={loading}
             />
           </View>
         </View>
