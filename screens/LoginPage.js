@@ -25,7 +25,7 @@ const Login = ({
     if (__DEV__) {
       console.log("Running in development mode");
       LoginCtx.setUser({
-        email: "22ec01006@iitbbs.ac.in",
+        email: "23cs01001@iitbbs.ac.in",
       });
       authenticateUser(true);
     } else {
