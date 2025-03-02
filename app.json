@@ -31,11 +31,11 @@
     },
     "scheme": "gcapp2024",
     "plugins": [],
-    "extra": {
-      "eas": {
-        "projectId": "6df58503-0b8c-4446-99b6-7c12ac782344"
-      }
-    },
+    // "extra": {
+    //   "eas": {
+    //     "projectId": "6df58503-0b8c-4446-99b6-7c12ac782344"
+    //   }
+    // },
     "owner": "jeeban_jyoti_patra"
   }
 }

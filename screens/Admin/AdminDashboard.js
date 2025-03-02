@@ -8,6 +8,7 @@ import {
   View,
   Pressable,
   ScrollView,
+  Alert,
 } from "react-native";
 
 import {
@@ -16,6 +17,27 @@ import {
   MaterialCommunityIcons,
   Octicons,
 } from "@expo/vector-icons";
+import axios from "axios";
+import { backend_link } from "../../utils/constants";
+
+const handleBetsUpdate = async () => {
+  try {
+    const res = await axios.post(
+      `${backend_link}api/points/updateFantasyPoints`,
+      {
+        backend_link,
+      }
+    );
+    // console.log("Updated Fantasy Points");
+    console.log(res.data);
+    if (res.data.message != "success") {
+      new Error("something went wrong");
+    }
+    Alert.alert("Updated Fantasy Points,");
+  } catch (error) {
+    console.error("Error updating coins(frontend)", error);
+  }
+};
 
 const AdminDashboard = ({ navigation }) => {
   const AddPoints = () => {
@@ -55,8 +77,27 @@ const AdminDashboard = ({ navigation }) => {
                 </Text>
                 <AntDesign name="arrowright" size={20} color="white" />
               </Pressable>
-
               <Pressable
+                style={({ pressed }) => [
+                  styles.cardView,
+                  pressed ? styles.cardPressed : {},
+                ]}
+                onPress={() => {
+                  AddPoints();
+                }}
+              >
+                <Octicons
+                  name="north-star"
+                  size={30}
+                  color="#0066FF"
+                  style={{ paddingVertical: 2 }}
+                />
+                <Text style={styles.cardTitle}>Add Score</Text>
+                <Text style={styles.cardDescription}>Only for Sports</Text>
+                <AntDesign name="arrowright" size={20} color="white" />
+              </Pressable>
+
+              {/* <Pressable
                 style={({ pressed }) => [
                   styles.cardView,
                   pressed ? styles.cardPressed : {},
@@ -76,7 +117,7 @@ const AdminDashboard = ({ navigation }) => {
                   Only for Oracle Members
                 </Text>
                 <AntDesign name="arrowright" size={20} color="white" />
-              </Pressable>
+              </Pressable> */}
 
               {/* <Pressable
                 style={({ pressed }) => [
@@ -122,24 +163,28 @@ const AdminDashboard = ({ navigation }) => {
               </Pressable>
 
               <Pressable
-                style={({ pressed }) => [
-                  styles.cardView,
-                  pressed ? styles.cardPressed : {},
-                ]}
-                onPress={() => {
-                  AddPoints();
-                }}
-              >
-                <Octicons
-                  name="north-star"
-                  size={30}
-                  color="#0066FF"
-                  style={{ paddingVertical: 2 }}
-                />
-                <Text style={styles.cardTitle}>Add Score</Text>
-                <Text style={styles.cardDescription}>Only for Sports</Text>
-                <AntDesign name="arrowright" size={20} color="white" />
-              </Pressable>
+              style={({ pressed }) => [
+                styles.cardView,
+                pressed ? styles.cardPressed : {},
+              ]}
+              onPress={() => {
+                // console.log("Test button pressed");
+                handleBetsUpdate();
+                // navigation.navigate("UpdateFantasyPoints");
+              }}
+            >
+              <MaterialCommunityIcons
+                name="star-circle"
+                size={30}
+                color="#0066FF"
+                style={{ paddingVertical: 2 }}
+              />
+              <Text style={styles.cardTitle}>Update User Points</Text>
+              <Text style={styles.cardDescription}>
+                Click to Update fantasy League points for Users
+              </Text>
+              {/* <AntDesign name="arrowright" size={20} color="white" /> */}
+            </Pressable>
             </View>
             {/* Right Column */}
             <View style={styles.column}>
@@ -194,6 +239,9 @@ const AdminDashboard = ({ navigation }) => {
                 <AntDesign name="arrowright" size={20} color="white" />
               </Pressable>
             </View>
+          </View>
+          <View style={{alignItems: "center"}}>
+            
           </View>
         </ScrollView>
       </View>
