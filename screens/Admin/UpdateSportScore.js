@@ -53,23 +53,24 @@ function UpdateSportScreen(props) {
         const response = await axios.get(
           backend_link + "api/event/getAllLiveEvents"
         );
-        console.log("hi");
-        console.log(response.data.events[0]);
+        console.log("adarsh is tthe best");
+        console.log(response.data) // array of live events
         const data = response.data.events;
         const newData = data.map((item) => {
           const gameName = item.eventId;
           const teams = item.subEvents;
-          console.log("teams", item);
+          console.log("teams", teams); // .data
           const newSubEvents = teams.map((item1) => {
             console.log("item11", item1);
             const subEventId = item1.subEventId;
             const teamA = item1.data.points
-              ? item1.data.points?.teamA
-              : item1.data.pointsTable?.teamA;
+            ? item1.data.points?.teamA
+            : item1.data.pointsTable?.teamA;
             const teamB = item1.data.points
-              ? item1.data.points?.teamB
-              : item1.data.pointsTable?.teamB;
-
+            ? item1.data.points?.teamB
+            : item1.data.pointsTable?.teamB;
+            
+            console.log("sid testingsdsf: ", teamA.bets, teamB.bets); // sending data to console correctly
             return {
               subEventId: subEventId,
               details: item1.data.details,
@@ -84,6 +85,8 @@ function UpdateSportScreen(props) {
               teamB: teamB?.name || item1.subEventId.split(" vs ")[1],
               scoreA: teamA?.points,
               scoreB: teamB?.points,
+              betsA: teamA?.bets,
+              betsB: teamB?.bets,
             };
           });
           return newSubEvents;
@@ -159,6 +162,9 @@ function UpdateSportScreen(props) {
                 scoreB={itemData.item.scoreB}
                 details={itemData.item.details}
                 status={itemData.item.status}
+                // item={itemData.item}
+                betsA={itemData.item.betsA}
+                betsB={itemData.item.betsB}
                 setIsEventUpdated={setIsEventUpdated}
               />
             );

@@ -40,7 +40,7 @@ export default function FollowTeam() {
       }
     };
     getFollow();
-  }, [teamFollowing, reload]);
+  }, [reload]);
 
   const renderItem = (props) => {
     const isFollowing = teamFollowing.includes(props.item);

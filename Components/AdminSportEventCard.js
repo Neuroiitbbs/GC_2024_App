@@ -22,12 +22,15 @@ import { AntDesign } from "@expo/vector-icons";
 import axios from "axios";
 
 function AdminSportEventCard(props) {
-  // console.log(props);
+  // console.log("testing for bets: ", props);
   const [status, setStatus] = useState(props.status);
   const loginCtx = useContext(LoginContext);
 
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);
+
+  // const item = props.item;
+  // console.log("siddart is now testing: ", props);
 
   const [update, setUpdate] = useState(false);
   const [scoreTeamA, setScoreTeamA] = useState(props.scoreA);
@@ -114,10 +117,12 @@ function AdminSportEventCard(props) {
     }
     const points = {
       teamA: {
+        bets: props.betsA,
         name: props.teamA,
         points: teamAscore,
       },
       teamB: {
+        bets: props.betsB,
         name: props.teamB,
         points: teamBscore,
       },
@@ -228,7 +233,7 @@ function AdminSportEventCard(props) {
                     style={{ height: 40 }}
                     placeholder={" Score of " + teamA}
                     onChangeText={(newText) => setScoreTeamA(newText)}
-                    value={scoreTeamA}
+                    value={scoreTeamA.toString()}
                   />
                 </View>
                 <View style={{ width: 10 }}></View>
@@ -238,7 +243,7 @@ function AdminSportEventCard(props) {
                     style={{ height: 40 }}
                     placeholder={" Score of " + teamB}
                     onChangeText={(newText) => setScoreTeamB(newText)}
-                    value={scoreTeamB}
+                    value={scoreTeamB.toString()}
                   />
                 </View>
               </View>

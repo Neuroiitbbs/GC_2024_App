@@ -30,6 +30,7 @@ const AddLiveEvents = () => {
   const [type, setType] = useState("");
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
   const [teamA, setTeamA] = useState("");
   const [teamApoints, setTeamApoints] = useState("0");
   const [teamBpoints, setTeamBpoints] = useState("0");
@@ -37,6 +38,7 @@ const AddLiveEvents = () => {
 
   const [showDatepicker, setShowDatepicker] = useState(false);
   const [showTimepicker, setShowTimepicker] = useState(false);
+  const [showEndTimepicker, setShowEndTimepicker] = useState(false);
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -51,6 +53,14 @@ const AddLiveEvents = () => {
     setTime(currentTime);
     console.log(currentTime);
   };
+
+  const handleEndTimeChange = (event, selectedTime) => {
+    const currentTime = selectedTime || endTime;
+    setShowEndTimepicker(false);
+    setEndTime(currentTime);
+    console.log(currentTime);
+  };
+
   const showConfirmationAlert = () => {
     Alert.alert(
       "Proceed?",
@@ -87,6 +97,7 @@ const AddLiveEvents = () => {
       type === "" ||
       date === "" ||
       time === "" ||
+      endTime === "" ||
       teamA === "" ||
       teamB === "" ||
       teamApoints === "" ||
@@ -101,7 +112,9 @@ const AddLiveEvents = () => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
     const ts = getCorrectTimeStamp(date.toISOString(), time.toISOString());
+    const te = getCorrectTimeStamp(date.toISOString(), endTime.toISOString());
     let timestamp = ts;
+    let endTimestamp = te;
     let teamApointsnumber = parseInt(teamApoints);
     let teamBpointsnumber = parseInt(teamBpoints);
     if (isNaN(teamApointsnumber) || isNaN(teamBpointsnumber)) {
@@ -118,6 +131,7 @@ const AddLiveEvents = () => {
       description,
       location: venue,
       timestamp,
+      endTimestamp,
       type,
       status,
       points: {
@@ -203,6 +217,7 @@ const AddLiveEvents = () => {
             onChangeText={(text) => setType(text)}
           />
         </View>
+
         <View style={styles.formContainer1}>
           <TouchableOpacity
             style={styles.dropdowntime}
@@ -232,7 +247,7 @@ const AddLiveEvents = () => {
           >
             <Text style={{ color: "white" }}>
               {" "}
-              Time: {time.toLocaleTimeString()}
+              Start Time: {time.toLocaleTimeString()}
             </Text>
           </TouchableOpacity>
         </View>
@@ -244,6 +259,28 @@ const AddLiveEvents = () => {
             is24Hour={true}
             display="default"
             onChange={handleTimeChange}
+          />
+        )}
+
+        <View style={styles.formContainer1}>
+          <TouchableOpacity
+            style={styles.dropdowntime}
+            onPress={() => setShowEndTimepicker(true)}
+          >
+            <Text style={{ color: "white" }}>
+              {" "}
+              End Time: {endTime.toLocaleTimeString()}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {showEndTimepicker && (
+          <DateTimePicker
+            testID="timePicker"
+            value={endTime}
+            mode="time"
+            is24Hour={true}
+            display="default"
+            onChange={handleEndTimeChange}
           />
         )}
 

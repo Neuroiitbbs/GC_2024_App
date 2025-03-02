@@ -1,122 +1,70 @@
-import { useState, useEffect } from "react";
-import { View, Alert, FlatList, StyleSheet } from "react-native";
+import { useState, useEffect, useContext } from "react";
+import { View, FlatList, StyleSheet } from "react-native";
 import UpcomingEventCard from "../../Components/UpcomingEventCard";
 import Loader from "../../Components/Loader";
-import { backend_link } from "../../utils/constants";
-import axios from "axios";
+import { EventsContext } from "../../store/EventsContext";
 
 const sortData = (data) => {
-  data.sort((a, b) => {
-    return new Date(a.details.timestamp) - new Date(b.details.timestamp); //sort by date ascending
-  });
-
-  return data;
+  return data.sort((a, b) => new Date(a.details.timestamp) - new Date(b.details.timestamp)); // Sort by date ascending
 };
 
-function UpcomingScreen(props) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [upcomingEvents, setUpcomingEvents] = useState([]);
+function UpcomingScreen({ search }) {
+  const { upcomingEvents, isLoading } = useContext(EventsContext); // Get state directly
   const [filteredData, setFilteredData] = useState([]);
-  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    console.log(props.search);
-    if (props.search.length == 0) {
-      setFilteredData(upcomingEvents);
+    if (upcomingEvents.length > 0) {
+      setFilteredData(sortData(upcomingEvents)); // Set state when events are loaded
+    }
+  }, [upcomingEvents]);
+
+  useEffect(() => {
+    if (!upcomingEvents.length) return; // Prevent unnecessary filtering if no data is available
+
+    if (search.length === 0) {
+      setFilteredData(sortData(upcomingEvents)); // Reset if search is empty
       return;
     }
+
     const data = upcomingEvents.filter((item) => {
       let teamA = item?.teamA.toLowerCase();
       let teamB = item?.teamB.toLowerCase();
       let gameName = item?.gameName.toLowerCase();
       const id = item?.id.toLowerCase();
+
       return (
-        teamA.includes(props.search.toLowerCase()) ||
-        teamB.includes(props.search.toLowerCase()) ||
-        gameName.includes(props.search.toLowerCase()) ||
-        id.includes(props.search.toLowerCase())
+        teamA.includes(search.toLowerCase()) ||
+        teamB.includes(search.toLowerCase()) ||
+        gameName.includes(search.toLowerCase()) ||
+        id.includes(search.toLowerCase())
       );
     });
-    setFilteredData(data);
-  }, [props.search, dataLoaded]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          backend_link + "api/event/getUpcomingEvents"
-        );
 
-        console.log(response.data);
-
-        const data = response.data.events;
-        let events = data.map((item) => {
-          const eventName = item.eventId;
-          const matches = item.subEvents;
-          const match = matches.map((match_item) => {
-            const matchId = match_item.subEventId;
-            const matchData = match_item.data;
-            const teamA = match_item.data.points
-              ? match_item.data.points?.teamA
-              : match_item.data.pointsTable?.teamA;
-            const teamB = match_item.data.points
-              ? match_item.data.points?.teamB
-              : match_item.data.pointsTable?.teamB;
-            return {
-              details: match_item.data.details,
-              status: match_item.data.status,
-              gameName: eventName,
-              id: matchId,
-              teamA: teamA?.name || match_item.subEventId.split(" vs ")[0],
-              teamB: teamB?.name || match_item.subEventId.split(" vs ")[1],
-              scoreA: teamA?.points,
-              scoreB: teamB?.points,
-            };
-          });
-          return match;
-        });
-        events = sortData(events.flat());
-        setUpcomingEvents(events.flat());
-        setFilteredData(events.flat());
-        setDataLoaded(true);
-        setIsLoading(false);
-      } catch (err) {
-        console.log(err);
-        setIsLoading(false);
-        Alert.alert("Error", "Something went wrong");
-      }
-    };
-    fetchData();
-  }, []);
+    setFilteredData(sortData(data));
+  }, [search, upcomingEvents]);
 
   return (
     <View style={styles.eventsContainer}>
       <FlatList
         key={1}
         data={filteredData}
-        renderItem={(itemData) => {
-          return (
-            <UpcomingEventCard
-              details={itemData.item.details}
-              gameName={itemData.item.gameName}
-              id={itemData.item.id}
-              teamA={itemData.item.teamA}
-              teamB={itemData.item.teamB}
-              scoreA={itemData.item.scoreA}
-              scoreB={itemData.item.scoreB}
-            />
-          );
-        }}
-        keyExtractor={(item, index) => {
-          return item.id + index;
-        }}
+        renderItem={(itemData) => (
+          <UpcomingEventCard
+            details={itemData.item.details}
+            gameName={itemData.item.gameName}
+            id={itemData.item.id}
+            teamA={itemData.item.teamA}
+            teamB={itemData.item.teamB}
+            scoreA={itemData.item.scoreA}
+            scoreB={itemData.item.scoreB}
+          />
+        )}
+        keyExtractor={(item, index) => item.id + index}
         alwaysBounceVertical={false}
       />
-      <Loader
-        visible={isLoading}
-        top={300}
-        bottom={0}
-        setModalVisible={setIsLoading}
-      />
+      <View style={{ minHeight: 0 }}>
+        <Loader visible={isLoading} top={300} bottom={0} setModalVisible={() => {}} />
+      </View>
     </View>
   );
 }

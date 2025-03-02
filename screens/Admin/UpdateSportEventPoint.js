@@ -34,7 +34,10 @@ const UpdateEvent = ({ route, navigation }) => {
   const name = data?.details?.title || "";
   const description = data?.details?.description || "";
   const timestampMs = data?.details?.timestamp || data?.timestamp || Date.now();
+  const endtimestampMs = data?.details?.endTimeStamp || data?.timestamp || Date.now();
 
+  console.log("adarsh test: ",timestampMs,data);
+  
   useEffect(() => {
     const backAction = () => {
       navigation.navigate("LiveEvents");
@@ -62,6 +65,10 @@ const UpdateEvent = ({ route, navigation }) => {
   const [date, setDate] = useState(
     new Date(data?.details?.timestamp) || new Date()
   );
+  const [endDate, setendDate] = useState(
+    new Date(data?.details?.endTimeStamp) || new Date()
+  );
+  
   const [time, setTime] = useState(
     new Date(data?.details?.timestamp) || new Date()
   );
@@ -80,7 +87,7 @@ const UpdateEvent = ({ route, navigation }) => {
   const handlePosChange = (team, position) => {
     setTeamPoint({
       ...teamPoint,
-      [team]: { points: teamPoint[team].points, position: position },
+      [team]: { points: teamPoint[team].points, position: position, },
     });
   };
 
@@ -145,6 +152,7 @@ const UpdateEvent = ({ route, navigation }) => {
       !venue ||
       !selectedType ||
       !timestamp ||
+      // !endTimeStamp || 
       selectedType === "" ||
       venue === "" ||
       description === "" ||
@@ -164,6 +172,7 @@ const UpdateEvent = ({ route, navigation }) => {
       category: selectedType,
       location: venue,
       timestamp: timestamp,
+      // endTimeStamp : endTimeStamp,
       pointsTable: newTeamPoint,
     };
     console.log(body);

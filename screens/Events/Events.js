@@ -7,8 +7,8 @@ import {
   Dimensions,
 } from "react-native";
 import { Icon } from "react-native-elements";
-
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { EventsContext } from "../../store/EventsContext";
 import TopMostCard from "../../Components/TopMostCard";
 import OngoingUpcomingButton from "../../Components/OngoingUpcomingButtons";
 import OngoingScreen from "./OngoingScreen";
@@ -22,119 +22,101 @@ const deviceHeight = Dimensions.get("window").height;
 
 export default function Events({ route, navigation }) {
   const field = route?.params?.field || "Sports";
-  console.log("field", field);
-  console.log("field", field);
-  const [screen, setScreen] = useState(2);
+  const [screen, setScreen] = useState(1);
   const [search, setSearch] = useState("");
 
-  function renderOngoing() {
-    setScreen(1);
-  }
-  function renderUpcoming() {
-    setScreen(0);
-  }
-  function renderPast() {
-    setScreen(2);
-  }
+  // Access EventsContext
+  const { fetchAllLiveEvents } = useContext(EventsContext);
+
+  // Fetch events only once when the component mounts
+  useEffect(() => {
+    fetchAllLiveEvents();
+  }, []);
+
+  // Unified function to update active screen
+  const setActiveScreen = (screenIndex) => setScreen(screenIndex);
+
+  const screens = {
+    1: <OngoingScreen search={search} />,
+    0: <UpcomingScreen search={search} />,
+    2: <PastScreen search={search} />,
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          paddingBottom: 10,
-        }}
-      >
-        <View
-          style={{
-            color: "white",
-            width: "90%",
-            marginTop: 10,
-            alignItems: "center",
-            flexDirection: "row",
-
-            borderWidth: 1,
-            paddingLeft: 10,
-            borderRadius: 10,
-            borderColor: "white",
-          }}
-          onPress={() => console.log("hi")}
-        >
+      <View style={styles.searchContainer}>
+        <View style={styles.searchBox}>
           <Icon name="search1" type="antdesign" color="white" size={20} />
           <TextInput
-            style={{
-              width: "90%",
-              height: 40,
-              paddingLeft: 10,
-            }}
+            style={styles.searchInput}
             color="white"
             onChangeText={(text) => setSearch(text)}
             placeholder="Search"
-            placeholderTextColor={"grey"}
+            placeholderTextColor="grey"
           />
         </View>
       </View>
+
       <TopMostCard />
-      {field === "Sports" && (
+
+      {field === "Sports" ? (
         <>
           <View style={styles.ButtonContainer}>
-            <OngoingUpcomingButton
-              onPress={renderPast}
-              currentScreen={screen}
-              currentButton={2}
-            >
+            <OngoingUpcomingButton onPress={() => setActiveScreen(2)} currentScreen={screen} currentButton={2}>
               PAST
             </OngoingUpcomingButton>
 
-            <OngoingUpcomingButton
-              onPress={renderOngoing}
-              currentScreen={screen}
-              currentButton={1}
-            >
+            <OngoingUpcomingButton onPress={() => setActiveScreen(1)} currentScreen={screen} currentButton={1}>
               ONGOING
             </OngoingUpcomingButton>
 
-            <OngoingUpcomingButton
-              onPress={renderUpcoming}
-              currentScreen={screen}
-              currentButton={0}
-            >
+            <OngoingUpcomingButton onPress={() => setActiveScreen(0)} currentScreen={screen} currentButton={0}>
               UPCOMING
             </OngoingUpcomingButton>
           </View>
-          {screen == 1 ? (
-            <OngoingScreen search={search} />
-          ) : screen == 0 ? (
-            <UpcomingScreen search={search} />
-          ) : (
-            <PastScreen search={search} />
-          )}
+
+          {screens[screen]} 
           <View style={styles.bottomnav}></View>
         </>
-      )}
-      {field === "Tech" && (
-        <>
-          <TechEventScreen navigation={navigation} search={search} />
-        </>
-      )}
-      {field === "Cultural" && (
-        <>
-          <CultEventScreen navigation={navigation} search={search} />
-        </>
+      ) : field === "Tech" ? (
+        <TechEventScreen navigation={navigation} search={search} />
+      ) : (
+        <CultEventScreen navigation={navigation} search={search} />
       )}
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: "#000000",
   },
+  searchContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingBottom: 10,
+  },
+  searchBox: {
+    color: "white",
+    width: "90%",
+    marginTop: 10,
+    alignItems: "center",
+    flexDirection: "row",
+    borderWidth: 1,
+    paddingLeft: 10,
+    borderRadius: 10,
+    borderColor: "white",
+  },
+  searchInput: {
+    width: "90%",
+    height: 40,
+    paddingLeft: 10,
+  },
   ButtonContainer: {
     flexDirection: "row",
     marginBottom: 24,
-
     flex: 1,
     width: "100%",
     justifyContent: "space-evenly",

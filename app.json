@@ -29,13 +29,13 @@
     "web": {
       "favicon": "./assets/GClogo.png"
     },
-
     "scheme": "gcapp2024",
+    "plugins": [],
     "extra": {
       "eas": {
-        "projectId": "4c058831-328a-46c7-afeb-200a24a86a98"
+        "projectId": "6df58503-0b8c-4446-99b6-7c12ac782344"
       }
     },
-    "plugins": [ ]
+    "owner": "jeeban_jyoti_patra"
   }
 }

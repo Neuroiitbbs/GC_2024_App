@@ -28,6 +28,8 @@ import { backend_link } from "./utils/constants";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
+import Events from "./screens/Events/Events";
+import { EventsProvider } from "./store/EventsContext";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -101,9 +103,11 @@ const Stack = createStackNavigator();
 
 export default function LoginContextWrapper() {
   return (
+    <EventsProvider>
     <LoginProvider>
       <App />
     </LoginProvider>
+    </EventsProvider>
   );
 }
 const App = () => {
