@@ -8,7 +8,7 @@ const sortData = (data) => {
   return data.sort((a, b) => new Date(a.details.timestamp) - new Date(b.details.timestamp)); // Sort by date ascending
 };
 
-function UpcomingScreen({ search }) {
+function UpcomingScreen({ search ,navigation}) {
   const { upcomingEvents, isLoading } = useContext(EventsContext); // Get state directly
   const [filteredData, setFilteredData] = useState([]);
 
@@ -20,7 +20,8 @@ function UpcomingScreen({ search }) {
 
   useEffect(() => {
     if (!upcomingEvents.length) return; // Prevent unnecessary filtering if no data is available
-
+    
+    console.log("aaa",search);
     if (search.length === 0) {
       setFilteredData(sortData(upcomingEvents)); // Reset if search is empty
       return;
@@ -30,6 +31,8 @@ function UpcomingScreen({ search }) {
       let teamA = item?.teamA.toLowerCase();
       let teamB = item?.teamB.toLowerCase();
       let gameName = item?.gameName.toLowerCase();
+      // let betsA = item?.betsA;
+      // let betsB = item?.betsB;
       const id = item?.id.toLowerCase();
 
       return (
@@ -57,6 +60,9 @@ function UpcomingScreen({ search }) {
             teamB={itemData.item.teamB}
             scoreA={itemData.item.scoreA}
             scoreB={itemData.item.scoreB}
+            betsA = {itemData.item.betsA}
+            betsB = {itemData.item.betsB}
+            navigation={navigation}
           />
         )}
         keyExtractor={(item, index) => item.id + index}

@@ -770,6 +770,8 @@ import CreditsPage from "./CreditsPage";
 import ModalComponent from "../Components/Modal";
 // import FollowTeam from "./FollowTeam";
 
+import BettingScreen from "./Events/BettingScreen";
+
 const Tab = createBottomTabNavigator();
 const EventsStack = createStackNavigator();
 const LeaderboardStack = createStackNavigator();
@@ -793,6 +795,16 @@ function EventsStackNavigator() {
       <EventsStack.Screen
         name="SpecificEvent"
         component={SpecificEvents}
+        options={({ route }) => ({
+          headerTitle: () => <Header />,
+          headerStyle: { backgroundColor: "#111319", height: 120 },
+          headerTintColor: "white",
+          data: route.params.data,
+        })}
+      />
+      <EventsStack.Screen
+        name="BettingScreen"
+        component={BettingScreen}
         options={({ route }) => ({
           headerTitle: () => <Header />,
           headerStyle: { backgroundColor: "#111319", height: 120 },
@@ -865,7 +877,7 @@ function HomepageStackNavigator({ navigation }) {
         options={{
           headerShown: true,
           headerTitle: (props) => (
-            <Header {...props} showmodal={true} navigation={navigation}/>
+            <Header {...props} showmodal={true} navigation={navigation} />
           ), // Pass navigation
           headerStyle: { backgroundColor: "#111319", height: 100 },
         }}

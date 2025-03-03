@@ -38,7 +38,7 @@ export default function Events({ route, navigation }) {
 
   const screens = {
     1: <OngoingScreen search={search} />,
-    0: <UpcomingScreen search={search} />,
+    0: <UpcomingScreen search={search} navigation = {navigation} />,
     2: <PastScreen search={search} />,
   };
 

@@ -20,96 +20,6 @@ import { LoginContext } from "../store/LoginContext";
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
 
-
-async function handleClick(eventName, eventId, LoginCtx, betTeamName) {
-  // console.log(LoginCtx.user.email);
-  try {
-    // ✅ Fetch the existing event data
-    const response = await axios.get(
-      `${backend_link}api/event/getUpcomingEventsById?eventId=${eventName}`
-    );
-
-    console.log("Event ID:", eventId);
-    const eventData = response.data;
-    if (!eventData) {
-      console.error("No events found.");
-      return;
-    }
-
-    // ✅ Extract event details
-    const eventDetails = eventData.event[eventId].data;
-    console.log("Event Details:", eventDetails);
-
-    const user_email = LoginCtx.user.email;
-
-    // ✅ Ensure points structure exists
-    if (!eventDetails.points || !eventDetails.points.teamA || !eventDetails.points.teamB) {
-      console.error("Invalid event data structure!");
-      return;
-    }
-
-    // ✅ Check if the user has already placed a bet on either team
-    const userInTeamA = eventDetails.points.teamA.bets.includes(user_email);
-    const userInTeamB = eventDetails.points.teamB.bets.includes(user_email);
-
-    if (userInTeamA || userInTeamB) {
-      alert("❌ You have already placed a bet on this event!");
-      return; // ✅ Do NOT send a request to the backend
-    } 
-
-    // ✅ Determine the correct team to update
-    const teamKey = betTeamName === "A" ? "teamA" : "teamB";
-    //  TODO : WRITE A FUNCTON TO CHECK IF USER HAS ALREADY BET
-    const updatedBets = [...eventDetails.points[teamKey].bets, user_email];
-
-    console.log(`Updated Bets for ${teamKey}:`, updatedBets);
-
-    // ✅ Prepare updated event data (REMOVED `betTeamName` from request)
-    const updatedEventData = {
-      event: {
-        [eventId]: {
-          updatedBy: [
-            ...eventData.event[eventId].updatedBy, // ✅ Keep existing `updatedBy` entries
-            // {
-            //   email: user_email,
-            //   timestamp: new Date().toISOString(),
-            // },
-          ],
-          data: {
-            ...eventDetails,
-            points: {
-              ...eventDetails.points,
-              [teamKey]: {
-                ...eventDetails.points[teamKey],
-                bets: updatedBets, // ✅ Updating the correct team's bets
-              },
-            },
-          },
-        },
-      },
-      eventName,
-      user_email,
-      betTeamName,
-    };
-
-    console.log("Sending data to API:", JSON.stringify(updatedEventData, null, 2));
-
-    // ✅ Make API call to update the database
-    const res = await axios.post(
-      `${backend_link}api/event/scheduleLiveEventWithBets`, 
-      updatedEventData
-    );
-
-    console.log("API Response:", res.data);
-    Alert.alert(`Bet placed successfully on ${betTeamName}`);
-  } catch (error) {
-    console.error("Error updating bets:", error.message);
-  }
-}
-
-
-
-
 function UpcomingEventCard(props) {
   const timestamp = props.details?.timestamp;
   const date = new Date(timestamp);
@@ -134,7 +44,9 @@ function UpcomingEventCard(props) {
         style={styles.cardTop}
       >
         <View style={styles.headerContainer}>
-          <Text style={styles.matchText}>{props.teamA} v/s {props.teamB}</Text>
+          <Text style={styles.matchText}>
+            {props.teamA} v/s {props.teamB}
+          </Text>
           <Text style={styles.matchId}>{props.id}</Text>
         </View>
 
@@ -142,18 +54,31 @@ function UpcomingEventCard(props) {
           <View style={styles.teamWrapper}>
             <Image style={styles.teamImage} source={logoPaths[teamA]} />
             <Text style={styles.teamScore}>{props.scoreA}</Text>
-            <TouchableOpacity style={styles.voteButton} onPress={() => handleClick(props.gameName, props.id, LoginCtx, "A")}>
+            {/* <TouchableOpacity style={styles.voteButton} onPress={() => handleClick(props.gameName, props.id, LoginCtx, "A")}>
               <Text style={styles.voteButtonText}>{props.teamA}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <View style={styles.teamWrapper}>
             <Image style={styles.teamImage} source={logoPaths[teamB]} />
             <Text style={styles.teamScore}>{props.scoreB}</Text>
-            <TouchableOpacity style={styles.voteButton} onPress={() => handleClick(props.gameName, props.id, LoginCtx, "B")}>
+            {/* <TouchableOpacity style={styles.voteButton} onPress={() => handleClick(props.gameName, props.id, LoginCtx, "B")}>
               <Text style={styles.voteButtonText}>{props.teamB}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
+        </View>
+        <View style={styles.buttonview}>
+          <TouchableOpacity
+            style={styles.voteButton}
+            // onPress={() => handleClick(props.gameName, props.id, LoginCtx, "B")}
+            onPress={() => 
+              props.navigation.navigate("BettingScreen", { 
+                data : props
+              })
+            }
+          >
+            <Text style={styles.voteButtonText}>Vote</Text>
+          </TouchableOpacity>
         </View>
       </LinearGradient>
 
@@ -175,6 +100,7 @@ export default UpcomingEventCard;
 
 const styles = StyleSheet.create({
   cardContainer: {
+    backgroundColor:"black",
     margin: 10,
   },
   cardTop: {
@@ -220,15 +146,23 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 3,
   },
+  buttonview: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   voteButton: {
-    backgroundColor: "blue",
+    backgroundColor: "#d42070",
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 5,
+    alignItems: "center",
+    width: 110,
+    marginTop: 15,
   },
   voteButtonText: {
     color: "white",
-    fontSize: 14,
+    fontSize: 15,
   },
   cardBottom: {
     flexDirection: "row",

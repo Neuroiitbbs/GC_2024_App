@@ -49,6 +49,8 @@ const EventsProvider = ({ children }) => {
             teamB: teamB?.name || match_item.subEventId.split(" vs ")[1],
             scoreA: teamA?.points || 0,
             scoreB: teamB?.points || 0,
+            betsA: teamA?.bets,
+            betsB: teamB?.bets,
           };
         });
       });

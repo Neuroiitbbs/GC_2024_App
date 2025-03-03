@@ -433,8 +433,7 @@
 //   //       console.log("user is set to : ", userEmail, user);
 
 //   //       //updateDoc
-        
-        
+
 //   //     });
 //   //   } catch (error) {
 //   //     console.error("Error updating coins:", error);
@@ -635,27 +634,7 @@
 //   },
 // });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ############################### BEFORE ################################################
-
 
 import { LoginContext } from "../store/LoginContext.js";
 import { useState, useEffect, useContext } from "react";
@@ -692,7 +671,6 @@ import logoPaths from "../utils/logoPaths";
 import { initialBranchesData } from "../utils/initialScoreData";
 
 import setProperTeamName from "../utils/setProperTeamName";
-
 
 var { width, height } = Dimensions.get("window");
 
@@ -966,7 +944,7 @@ const fetchDataAndUpdateScore = async (teamName, setBranchesData) => {
   }
 };
 
-export default function HomePage() {
+export default function HomePage({navigation}) {
   const [lastUpdated, setLastUpdated] = useState("Unknown Date");
   const [leaderboardData, setLeaderboardData] = useState([]);
   const LoginCtx = useContext(LoginContext);
@@ -975,6 +953,9 @@ export default function HomePage() {
   const [BranchesData, setBranchesData] = useState(initialBranchesData);
   const [number, setNumber] = useState(0);
 
+  const onCLickHandler = () => {
+    navigation.navigate("  ");
+  };
 
   const fetchLeaderboardData = async () => {
     try {
@@ -985,9 +966,9 @@ export default function HomePage() {
       // console.log(data);
 
       // console.log(userData);
-      const {userArray} = response.data;
+      const { userArray } = response.data;
       console.log("a;sfjads;lfj", response.data);
-      const result = userArray.find(obj => obj.mail === userEmail);
+      const result = userArray.find((obj) => obj.mail === userEmail);
       setUser(result);
       // console.log("jeeeban test: ", userArray[userEmail], userEmail);
       initializeCoins(userArray);
@@ -1011,7 +992,7 @@ export default function HomePage() {
 
   useEffect(() => {
     fetchLeaderboardData();
-  }, [])
+  }, []);
 
   // async function updateCoinsForWinners() {
   //   try {
@@ -1127,8 +1108,7 @@ export default function HomePage() {
   //       console.log("user is set to : ", userEmail, user);
 
   //       //updateDoc
-        
-        
+
   //     });
   //   } catch (error) {
   //     console.error("Error updating coins:", error);
@@ -1184,13 +1164,15 @@ export default function HomePage() {
 
   return (
     <SafeAreaView style={leaderboardStyles.container}>
-      <View style = {{height: 150, width: "auto"}}>
+      <View style={{ height: 150, width: "auto" }}>
         <TeamCard />
       </View>
       <View style={leaderboardStyles.item}>
         <Text style={leaderboardStyles.name}>{user?.name || "Unknown"}</Text>
         <Text style={leaderboardStyles.points}>{user?.coins}</Text>
       </View>
+      <Pressable onPress={() => onCLickHandler()} style={styles.container}>
+      
       <View style={styles.containertop}>
         <View style={styles.containertop1}>
           <View style={styles.number2top}>
@@ -1218,7 +1200,7 @@ export default function HomePage() {
             <View style={styles.iconCont}>
               <FontAwesome5 name="crown" size={24} color="#FFAA00" />
             </View>
-         
+
             <Image
               source={logoPaths[top3[0].Name.replace(".", "").replace("+", "")]}
               style={{ width: 100, height: 100 }}
@@ -1245,6 +1227,7 @@ export default function HomePage() {
           </View>
         </View>
       </View>
+      </Pressable>
       {/* <Text style={leaderboardStyles.heading}>Top 10 Individuals</Text> */}
       {/* <FlatList
         data={leaderboardData}
