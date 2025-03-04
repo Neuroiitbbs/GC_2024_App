@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "GC '24",
+    "name": "GC '25",
     "slug": "GC_App_2024",
     "version": "1.1.0",
     "orientation": "portrait",
@@ -31,11 +31,11 @@
     },
     "scheme": "gcapp2024",
     "plugins": [],
-    // "extra": {
-    //   "eas": {
-    //     "projectId": "6df58503-0b8c-4446-99b6-7c12ac782344"
-    //   }
-    // },
-    "owner": "jeeban_jyoti_patra"
+    "extra": {
+      "eas": {
+        "projectId": "16721154-46fd-4831-ab25-846a88ee1fb8"
+      }
+    },
+    "owner": "siddarth_kadambari"
   }
 }

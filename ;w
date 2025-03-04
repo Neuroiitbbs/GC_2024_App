@@ -832,7 +832,14 @@ function TeamCard() {
         <ScrollView style={styles_1.container}>
           <View style={styles_1.content}>
             <View style={styles_1.teamsSection}>
-              <Text style={styles_1.teamsTitle}>ALL TEAMS</Text>
+              <Text style={{
+
+                                fontWeight: "bold",
+                                fontSize: 36,
+                                marginBottom: 10,
+                                color: "white",
+                                padding: 5,
+                            }}>ALL TEAMS</Text>
 
               <Carousel
                 enableMomentum={true}
@@ -1164,15 +1171,10 @@ export default function HomePage({navigation}) {
 
   return (
     <SafeAreaView style={leaderboardStyles.container}>
-      <View style={{ height: 150, width: "auto", marginBottom: 50}}>
+      <View style={{ height: 150, width: "auto" }}>
         <TeamCard />
       </View>
-              <Text style={{
-
-                fontWeight: "bold",
-                fontSize: 36,
-                color: "white",
-            }}>LEADERBOARD</Text>
+              <Text style={styles_1.teamsTitle}>ALL TEAMS</Text>
             {/*
                 <View style={leaderboardStyles.item}>
         <Text style={leaderboardStyles.name}>{user?.name || "Unknown"}</Text>

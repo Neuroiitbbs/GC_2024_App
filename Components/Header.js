@@ -158,7 +158,7 @@ export default function Header({ events, showmodal, navigation}) {
         />
         <Text style={{ color: "white", fontSize: 23, fontWeight: "bold" }}>
           {" "}
-          GC 2024
+          GC 2025
         </Text>
       </View>
       {/* <MaskedView
