@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList} from "react-native";
 import React, { useState, useEffect } from "react";
 import TechCultEventCard from "../../Components/TechCultEventCard";
 import axios from "axios";
 import { backend_link } from "../../utils/constants";
 import Loader from "../../Components/Loader";
+
+import { Text } from "react-native";
 
 const sortData = (data) => {
   let prevdata = [];
@@ -20,12 +22,14 @@ const sortData = (data) => {
   });
   nextdata.sort((a, b) => {
     return (
-      new Date(a.data.details?.timestamp) - new Date(b.data.details?.timestamp) //sort by date ascending
+      new Date(a.data.details?.timestamp) -
+      new Date(b.data.details?.timestamp) //sort by date ascending
     );
   });
   prevdata.sort((a, b) => {
     return (
-      new Date(b.data.details?.timestamp) - new Date(a.data.details?.timestamp) //sort by date descending
+      new Date(b.data.details?.timestamp) -
+      new Date(a.data.details?.timestamp) //sort by date descending
     );
   });
 
@@ -35,9 +39,26 @@ const sortData = (data) => {
 const CultEventScreen = ({ navigation, search }) => {
   const [cultEvents, setCultEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [filteredData, setFilteredData] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [branchCoords, setBranchCoords] = useState({});
+
+
+  const fetchBranchCoords = async () => {
+    try {
+      console.log(`${backend_link}api/event/getBranchCoord`);
+      const response = await axios.get(`${backend_link}api/event/getBranchCoord`);
+      setBranchCoords(response.data.branch_coordinators);
+    } catch (error) {
+      console.log("error fetching in fetching branch coords", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchBranchCoords();
+  }, []);
+
   useEffect(() => {
     console.log(search);
     if (search.length == 0 || !search) {
@@ -57,34 +78,46 @@ const CultEventScreen = ({ navigation, search }) => {
     setFilteredData(data);
   }, [search, dataLoaded]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          backend_link + "api/event/getEventByCategory?category=cult"
-        );
-        const data = response.data.events;
-        let cultdata = [];
-        data.map((item) => {
-          item !== null && cultdata.push(item);
-        });
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        backend_link + "api/event/getEventByCategory?category=cult"
+      );
+      const data = response.data.events;
+      let cultdata = [];
+      data.map((item) => {
+        item !== null && cultdata.push(item);
+      });
 
-        cultdata = sortData(cultdata);
-        setCultEvents(cultdata);
-        setDataLoaded(true);
-        setFilteredData(cultdata);
-        // console.log(cultdata);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+      cultdata = sortData(cultdata);
+      setCultEvents(cultdata);
+      setDataLoaded(true);
+      setFilteredData(cultdata);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchData();
+    setRefreshing(false);
+  };
+
   console.log("cult", cultEvents);
   return (
     <View style={styles.eventsContainer}>
+
+      <Text style={styles.votingNote}>
+        Note: The "First", "Second", and "Third" buttons in each card are for voting for the team that you expect to win.
+      </Text>
+
       {loading && (
         <Loader
           visible={loading}
@@ -98,13 +131,15 @@ const CultEventScreen = ({ navigation, search }) => {
           data={filteredData}
           renderItem={(itemData) => {
             return (
-              <TechCultEventCard data={itemData} navigation={navigation} />
+              <TechCultEventCard data={itemData} navigation={navigation} branchCoords = {branchCoords}/>
             );
           }}
           keyExtractor={(item, index) => {
             return item.data.details.title + index;
           }}
           alwaysBounceVertical={false}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
         />
       )}
     </View>
@@ -118,4 +153,14 @@ const styles = StyleSheet.create({
     flex: 5,
     maxHeight: "70%",
   },
+  votingNote: {
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 10,
+    color: "#ffffff",
+    paddingHorizontal: 30,
+    paddingBottom: 30
+  },
 });
+

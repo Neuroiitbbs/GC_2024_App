@@ -126,7 +126,7 @@ export default function Leaderboard() {
             />
           </View>
           <View style={styles.number2bottom}>
-            <Text style={[styles.leadHeading]}>{top3[1].Name}</Text>
+            <Text style={[styles.leadHeading]}>{(top3[1].Name === "ECE_META" ? "ECE_META_EP" : top3[1].Name)}</Text>
             <Text style={styles.leadScore}>{top3[1].Score}</Text>
           </View>
         </View>
@@ -142,7 +142,7 @@ export default function Leaderboard() {
             />
           </View>
           <View style={styles.number1bottom}>
-            <Text style={[styles.leadHeading]}>{top3[0].Name}</Text>
+            <Text style={[styles.leadHeading]}>{(top3[0].Name === "ECE_META" ? "ECE_META_EP" : top3[0].Name)}</Text>
             <Text style={styles.leadScore}>{top3[0].Score}</Text>
           </View>
         </View>
@@ -157,7 +157,7 @@ export default function Leaderboard() {
             />
           </View>
           <View style={styles.number3bottom}>
-            <Text style={[styles.leadHeading]}>{top3[2].Name}</Text>
+            <Text style={[styles.leadHeading]}>{(top3[2].Name === "ECE_META" ? "ECE_META_EP" : top3[2].Name)}</Text>
             <Text style={styles.leadScore}>{top3[2].Score}</Text>
           </View>
         </View>

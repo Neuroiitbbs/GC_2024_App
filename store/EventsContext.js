@@ -51,6 +51,8 @@ const EventsProvider = ({ children }) => {
             scoreB: teamB?.points || 0,
             betsA: teamA?.bets,
             betsB: teamB?.bets,
+            playersA: teamA?.players,
+            playersB: teamB?.players,
           };
         });
       });

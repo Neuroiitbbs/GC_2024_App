@@ -165,7 +165,7 @@ const AddNotification = ({ navigation }) => {
                 <Picker.Item label="Select Team" value="" />
                 <Picker.Item label="Notify All" value="All" />
                 <Picker.Item label="Mtech" value="MTech" />
-                <Picker.Item label="ECE+META" value="ECE_META" />
+                <Picker.Item label="ECE+META+EP" value="ECE_META" />
                 <Picker.Item label="CSE" value="CSE" />
                 <Picker.Item label="CIVIL" value="CIVIL" />
                 <Picker.Item label="EE" value="EE" />

@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 
 const LeaderBoardElement = (props) => {
+  console.log("LeaderBoardElement", props);
   return (
     
       <View style={styles.LeaderBoardElement}>
@@ -17,7 +18,7 @@ const LeaderBoardElement = (props) => {
         </View>
         <View style={styles.branchname}>
           <Text style={styles.LeaderBoardNameHolder}>
-            {props.branchData.Name}
+            {(props.branchData.Name === "ECE_META" ? "ECE_META_EP" : props.branchData.Name)}
           </Text>
         </View>
         <View style={styles.points}>

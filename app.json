@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "GC '25",
+    "name": "GC '24",
     "slug": "GC_App_2024",
     "version": "1.1.0",
     "orientation": "portrait",
@@ -30,12 +30,12 @@
       "favicon": "./assets/GClogo.png"
     },
     "scheme": "gcapp2024",
-    "plugins": [],
     "extra": {
       "eas": {
-        "projectId": "16721154-46fd-4831-ab25-846a88ee1fb8"
+        "projectId": "4c058831-328a-46c7-afeb-200a24a86a98"
       }
     },
-    "owner": "siddarth_kadambari"
+    "plugins": [],
+    "owner": "ayush1108g"
   }
 }

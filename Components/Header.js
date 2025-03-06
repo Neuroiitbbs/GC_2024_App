@@ -127,7 +127,6 @@ import EventDropDown from "./eventsDropdown";
 
 
 export default function Header({ events, showmodal, navigation}) {
-  console.log("testnig: ", navigation);
   const [modalVisible, setModalVisible] = useState(false);
   const openModal = () => {
     setModalVisible(true);

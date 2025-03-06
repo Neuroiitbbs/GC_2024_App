@@ -10,6 +10,8 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  FlatList,
+  ScrollView,
 } from "react-native";
 import logoPaths from "../../utils/logoPaths";
 import setProperTeamName from "../../utils/setProperTeamName";
@@ -31,7 +33,15 @@ import { useContext, useState } from "react";
 const deviceWidth = Dimensions.get("window").width;
 const deviceHeight = Dimensions.get("window").height;
 
-async function handleClick(eventName, eventId, LoginCtx, betTeamName,teamNameA,teamNameB) {
+async function handleClick(
+  eventName,
+  eventId,
+  LoginCtx,
+  betTeamName,
+  teamNameA,
+  teamNameB,
+  navigation
+) {
   // console.log(LoginCtx.user.email);
   try {
     // ✅ Fetch the existing event data
@@ -67,7 +77,11 @@ async function handleClick(eventName, eventId, LoginCtx, betTeamName,teamNameA,t
     const userInTeamB = eventDetails.points.teamB.bets.includes(user_email);
 
     if (userInTeamA || userInTeamB) {
-      alert(`❌ You have already placed bet on Team ${userInTeamA ? teamNameA : teamNameB }`);
+      Alert.alert(
+        "Bet Already Placed",
+        `You have already placed a bet on Team ${userInTeamA ? teamNameA : teamNameB }`,
+        [{ text: "OK", onPress: () => navigation.navigate("EventsStack",{reloader:1}) }]
+      );
       return; // ✅ Do NOT send a request to the backend
     }
 
@@ -118,7 +132,14 @@ async function handleClick(eventName, eventId, LoginCtx, betTeamName,teamNameA,t
     );
 
     console.log("API Response:", res.data);
-    Alert.alert(`Bet placed successfully on ${betTeamName==="A" ? teamNameA : teamNameB}`);
+
+    Alert.alert(
+      "Bet Placed",
+      `Your bet on ${betTeamName === "A" ? teamNameA : teamNameB} has been placed successfully.`,
+      [{ text: "OK", onPress: () => navigation.navigate("EventsStack",{reloader:1}) }]
+    );
+
+
   } catch (error) {
     console.error("Error updating bets:", error.message);
   }
@@ -133,7 +154,7 @@ async function handleClick(eventName, eventId, LoginCtx, betTeamName,teamNameA,t
 //   );
 // }
 
-export default function BettingScreen({ route }) {
+export default function BettingScreen({ route, navigation}) {
   const props = route.params.data;
   const timestamp = props.details?.timestamp;
   const date = new Date(timestamp);
@@ -146,7 +167,7 @@ export default function BettingScreen({ route }) {
   const LoginCtx = useContext(LoginContext);
 
   const currentUser = LoginCtx.user.email;
-  
+
   // ✅ useState for tracking user votes
   const [userInA, setUserInA] = useState(props.betsA.includes(currentUser));
   const [userInB, setUserInB] = useState(props.betsB.includes(currentUser));
@@ -154,13 +175,27 @@ export default function BettingScreen({ route }) {
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);
 
+  const { playersA, playersB } = props;
+
   async function handleVoteClick(team) {
     if (userInA || userInB) {
-      alert(`❌ You have already placed a bet on ${userInA ? props.teamA : props.teamB}`);
+      Alert.alert(
+        "Bet Already Placed",
+        `You have already placed a bet on ${userInA ? props.teamA : props.teamB}`,
+        [{ text: "OK", onPress: () => navigation.navigate("EventsStack",{reloader:1}) }]
+      );
       return;
     }
 
-    await handleClick(props.gameName, props.id, LoginCtx, team, props.teamA, props.teamB);
+    await handleClick(
+      props.gameName,
+      props.id,
+      LoginCtx,
+      team,
+      props.teamA,
+      props.teamB,
+      navigation
+    );
 
     // ✅ Update state after successful bet placement
     if (team === "A") {
@@ -170,9 +205,14 @@ export default function BettingScreen({ route }) {
     }
   }
 
+  console.log("siddarth testing: ", playersA, playersB);
+
   return (
     <View style={styles.cardContainer}>
       <Text style={styles.title}>Voting</Text>
+        <Text style={styles.note}>
+          Note: Press the team name to place your vote
+        </Text>
       <View style={styles.cardTop}>
         <View style={styles.headerContainer}>
           <Text style={styles.detailText}>{props.gameName}</Text>
@@ -189,9 +229,23 @@ export default function BettingScreen({ route }) {
               >
                 <Text style={styles.voteButtonText}>{props.teamA}</Text>
               </TouchableOpacity>
-            ) :(
-              <Text style={styles.votedText}>{userInA ? `Voted for ${props.teamA} ✅` : ""}</Text>
-            ) }
+            ) : (
+              <Text style={styles.votedText}>
+                {userInA ? `Voted for ${props.teamA} ✅` : ""}
+              </Text>
+            )}
+            <FlatList
+              data={playersA?.length ? playersA : ["No Players"]}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item, index }) => (
+                <View style={leaderboardStyles.item}>
+                  <Text style={leaderboardStyles.rank}>{index + 1}. </Text>
+                  <Text style={leaderboardStyles.name}>{item}</Text>
+                </View>
+              )}
+              style={leaderboardStyles.scrollableList}
+              nestedScrollEnabled={true} // Enables scrolling inside FlatList
+            />
           </View>
 
           <View style={styles.teamWrapper}>
@@ -203,17 +257,29 @@ export default function BettingScreen({ route }) {
               >
                 <Text style={styles.voteButtonText}>{props.teamB}</Text>
               </TouchableOpacity>
-            ) :  (
-              <Text style={styles.votedText}>{userInB ? `Voted for ${props.teamB} ✅` : ""}</Text>
+            ) : (
+              <Text style={styles.votedText}>
+                {userInB ? `Voted for ${props.teamB} ✅` : ""}
+              </Text>
             )}
+            <FlatList
+              data={playersB?.length ? playersB : ["No Players"]}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item, index }) => (
+                <View style={leaderboardStyles.item}>
+                  <Text style={leaderboardStyles.rank}>{index + 1}. </Text>
+                  <Text style={leaderboardStyles.name}>{item}</Text>
+                </View>
+              )}
+              style={leaderboardStyles.scrollableList}
+              nestedScrollEnabled={true} // Enables scrolling inside FlatList
+            />
           </View>
         </View>
       </View>
-      {!userInA && !userInB && (<Text style={styles.note}>Note: Press the team name to place your vote</Text>)}
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -229,10 +295,10 @@ const styles = StyleSheet.create({
     color: "white",
   },
   note: {
-    marginTop: 80,
     textAlign: "center",
     fontSize: 15,
     color: "white",
+    marginTop:  20,
   },
   cardTop: {
     padding: 12,
@@ -243,7 +309,7 @@ const styles = StyleSheet.create({
     // shadowOffset: { width: 0, height: 2 },
     // shadowRadius: 6,
     // shadowOpacity: 0.75,
-    marginTop: 70,
+    marginTop: 40,
   },
   headerContainer: {
     alignItems: "center",
@@ -299,7 +365,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   votedText: {
-    marginTop:20,
+    marginTop: 20,
     color: "white",
   },
   cardBottom: {
@@ -321,6 +387,32 @@ const styles = StyleSheet.create({
   detailText: {
     fontWeight: "700",
     fontSize: 20,
+    color: "white",
+  },
+});
+
+const leaderboardStyles = StyleSheet.create({
+  scrollableList: {
+    maxHeight: 150, // Limits height and makes list scrollable if overflowing
+    width: "100%",
+  },
+  item: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#222",
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    marginVertical: 4,
+    borderRadius: 8,
+  },
+  rank: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "gold",
+    marginRight: 10,
+  },
+  name: {
+    fontSize: 16,
     color: "white",
   },
 });

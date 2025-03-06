@@ -3,6 +3,8 @@ import { View, FlatList, StyleSheet } from "react-native";
 import UpcomingEventCard from "../../Components/UpcomingEventCard";
 import Loader from "../../Components/Loader";
 import { EventsContext } from "../../store/EventsContext";
+import axios from "axios";
+import { backend_link } from "../../utils/constants";
 
 const sortData = (data) => {
   return data.sort((a, b) => new Date(a.details.timestamp) - new Date(b.details.timestamp)); // Sort by date ascending
@@ -11,12 +13,27 @@ const sortData = (data) => {
 function UpcomingScreen({ search ,navigation}) {
   const { upcomingEvents, isLoading } = useContext(EventsContext); // Get state directly
   const [filteredData, setFilteredData] = useState([]);
+  const [branchCoords, setBranchCoords] = useState({});
 
   useEffect(() => {
     if (upcomingEvents.length > 0) {
       setFilteredData(sortData(upcomingEvents)); // Set state when events are loaded
     }
   }, [upcomingEvents]);
+
+  const fetchBranchCoords = async () => {
+    try {
+      console.log(`${backend_link}api/event/getBranchCoord`);
+      const response = await axios.get(`${backend_link}api/event/getBranchCoord`);
+      setBranchCoords(response.data.branch_coordinators);
+    } catch (error) {
+      console.log("error fetching in fetching branch coords", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchBranchCoords();
+  }, []);
 
   useEffect(() => {
     if (!upcomingEvents.length) return; // Prevent unnecessary filtering if no data is available
@@ -62,6 +79,9 @@ function UpcomingScreen({ search ,navigation}) {
             scoreB={itemData.item.scoreB}
             betsA = {itemData.item.betsA}
             betsB = {itemData.item.betsB}
+            playersA = {itemData.item.playersA}
+            playersB = {itemData.item.playersB}
+            branchCoords={branchCoords}
             navigation={navigation}
           />
         )}

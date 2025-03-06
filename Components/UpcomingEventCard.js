@@ -30,9 +30,21 @@ function UpcomingEventCard(props) {
   hour = hour % 12 || 12;
   const formattedTime = `${hour}:${minute < 10 ? "0" : ""}${minute} ${ampm}`;
   const LoginCtx = useContext(LoginContext);
+  const user_branch = LoginCtx.detail.dept;
+  const user_email = LoginCtx.user.email;
 
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);
+
+  const {branchCoords} = props;
+
+  const checkBranch = (branch) => {
+    console.log(branchCoords, user_email, branch, "testing in upcoming event card");
+    if (branch === "ECE" || branch === "MM" || branch === "EP" || branch === "EC_META" || branch === "ECE_META") {
+      return branchCoords["ECE_META_EP"] === user_email;
+    }
+    return branchCoords[branch] === user_email;
+  }
 
   return (
     <View style={styles.cardContainer}>
@@ -73,12 +85,31 @@ function UpcomingEventCard(props) {
             // onPress={() => handleClick(props.gameName, props.id, LoginCtx, "B")}
             onPress={() => 
               props.navigation.navigate("BettingScreen", { 
-                data : props
+                data : props,
               })
             }
           >
             <Text style={styles.voteButtonText}>Vote</Text>
           </TouchableOpacity>
+        </View>
+        <View style={styles.buttonview}>
+          {
+            (LoginCtx.isAdmin) && (checkBranch(props.teamA) || checkBranch(props.teamB)) && (
+              <TouchableOpacity
+                style={styles.RegisterButton}
+                onPress={() => 
+                  props.navigation.navigate("TeamRegistration", { 
+                    data : props,
+                    branch: LoginCtx.detail.dept,
+                    user : LoginCtx.user.email,
+                    event_category: "live_events",
+                  })
+                }
+              >
+                <Text style={styles.voteButtonText}>Register Team</Text>
+              </TouchableOpacity>
+
+            )}
         </View>
       </LinearGradient>
 
@@ -160,7 +191,20 @@ const styles = StyleSheet.create({
     width: 110,
     marginTop: 15,
   },
+  RegisterButton: {
+    backgroundColor: "#e73560",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+    alignItems: "center",
+    width: 120,
+    marginTop: 15,
+  },
   voteButtonText: {
+    color: "white",
+    fontSize: 15,
+  },
+  RegisterButtonText: {
     color: "white",
     fontSize: 15,
   },

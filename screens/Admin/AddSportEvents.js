@@ -42,6 +42,7 @@ const AddLiveEvents = () => {
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
+    console.log(currentDate);
     setShowDatepicker(false);
     setDate(currentDate);
     console.log(currentDate);
@@ -122,7 +123,7 @@ const AddLiveEvents = () => {
       return;
     }
 
-    console.log(new Date(timestamp));
+    console.log('sending this date: ', new Date(timestamp));
     const data = {
       eventId: eventIdFormatted,
       subEventId: subEventID,
@@ -308,7 +309,7 @@ const AddLiveEvents = () => {
             >
               <Picker.Item label="Select Team1" value="" />
               <Picker.Item label="Mtech" value="MTech" />
-              <Picker.Item label="ECE+META" value="ECE_META" />
+              <Picker.Item label="ECE+META+EP" value="ECE_META" />
               <Picker.Item label="CSE" value="CSE" />
               <Picker.Item label="CIVIL" value="CIVIL" />
               <Picker.Item label="EE" value="EE" />
@@ -338,7 +339,7 @@ const AddLiveEvents = () => {
             >
               <Picker.Item label="Select Team 2" value="" />
               <Picker.Item label="Mtech" value="MTech" />
-              <Picker.Item label="ECE+META" value="ECE_META" />
+              <Picker.Item label="ECE+META+EP" value="ECE_META" />
               <Picker.Item label="CSE" value="CSE" />
               <Picker.Item label="CIVIL" value="CIVIL" />
               <Picker.Item label="EE" value="EE" />
