@@ -31,11 +31,11 @@
     },
     "scheme": "gcapp2024",
     "plugins": [],
-    // "extra": {
-    //   "eas": {
-    //     "projectId": "16721154-46fd-4831-ab25-846a88ee1fb8"
-    //   }
-    // },
+    "extra": {
+      "eas": {
+        "projectId": "16721154-46fd-4831-ab25-846a88ee1fb8"
+      }
+    },
     "owner": "siddarth_kadambari"
   }
 }
