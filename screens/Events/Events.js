@@ -17,6 +17,9 @@ import UpcomingScreen from "./UpcomingScreen";
 import TechEventScreen from "./TechEventScreen";
 import CultEventScreen from "./CultEventScreen";
 import PastScreen from "./PastScreen";
+import axios from "axios";
+import { backend_link } from "../../utils/constants";
+
 
 export default function Events({ route, navigation }) {
   const field = route?.params?.field || "Sports";
@@ -27,15 +30,104 @@ export default function Events({ route, navigation }) {
   // Access EventsContext
   const { fetchAllLiveEvents } = useContext(EventsContext);
 
+  //
   // Fetch events on mount
+
+
+  /* const [loading, setLoading] = useState(true);
+  const [techEvents, setTechEvents] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false); */
+  const [techData, setTechData] = useState([]);
+  const [cultData, setCultData] = useState([]);
+
+
+const sortData = (data) => {
+  console.log("data", data);
+
+  let prevdata = [];
+  let nextdata = [];
+  data.map((item) => {
+    if (
+      new Date(item.data.details?.timestamp) >
+      new Date() - 24 * 60 * 60 * 1000
+    ) {
+      nextdata.push(item);
+    } else {
+      prevdata.push(item);
+    }
+  });
+  nextdata.sort((a, b) => {
+    return (
+      new Date(a.data.details?.timestamp) - new Date(b.data.details?.timestamp) //sort by date ascending
+    );
+  });
+  prevdata.sort((a, b) => {
+    return (
+      new Date(b.data.details?.timestamp) - new Date(a.data.details?.timestamp) //sort by date descending
+    );
+  });
+
+  return nextdata.concat(prevdata);
+};
+
+  const fetchTechData = async () => {
+    try {
+      const response = await axios.get(
+        backend_link + "api/event/getEventByCategory?category=tech"
+      );
+      const data = response.data.events;
+      let techdata = [];
+      data.map((item) => {
+        item !== null && techdata.push(item);
+      });
+      techdata = sortData(techdata);
+      /* setTechEvents(techdata);
+      setDataLoaded(true);
+      setFilteredData(techdata); */
+      setTechData(techdata);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      // setLoading(false);
+    }
+  };
+
+
+
+  const fetchCultData = async () => {
+    try {
+      const response = await axios.get(
+        backend_link + "api/event/getEventByCategory?category=cult"
+      );
+      const data = response.data.events;
+      let cultdata = [];
+      data.map((item) => {
+        item !== null && cultdata.push(item);
+      });
+      cultdata = sortData(cultdata);
+      setCultData(cultdata);
+      console.log('cult testing', cultData[0].data.pointsTable);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      // setLoading(false);
+    }
+  };
+
+
   useEffect(() => {
     fetchAllLiveEvents();
+    fetchTechData();
+    fetchCultData();
   }, []);
 
   // Pull-to-refresh
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await fetchAllLiveEvents();
+    await fetchTechData();
+    await fetchCultData();
     setRefreshing(false);
   }, []);
 
@@ -106,9 +198,9 @@ export default function Events({ route, navigation }) {
           </View>
         </>
       ) : field === "Tech" ? (
-        <TechEventScreen navigation={navigation} search={search} />
+        <TechEventScreen navigation={navigation} search={search} techData = {techData} />
       ) : (
-        <CultEventScreen navigation={navigation} search={search} />
+        <CultEventScreen navigation={navigation} search={search} cultData = {cultData} />
       )}
     </>
   );
@@ -168,3 +260,4 @@ const styles = StyleSheet.create({
     paddingBottom: 20, // Extra padding if needed
   },
 });
+

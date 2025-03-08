@@ -42,7 +42,7 @@ const PlayerList = ({ title, initialPlayers, eventName, eventId, category, event
       const response = await axios.post(`${backend_link}api/event/saveTeamAll`, {team, players, eventId, category});
       console.log(response.message);
     }
-    Alert.alert("Player Name Updated");
+    Alert.alert("Team saved");
   };
 
   console.log("this is a test by siddarth", title);
@@ -84,6 +84,7 @@ const TeamRegistration = ({route}) => {
   const Branch = (branch === ("ECE" || "MM") ? "ECE_META" : branch);
 
   let initialPlayers = [];
+  console.log("event is a part of ", event_category);
   if (event_category === "live_events") {
     data = route.params.data;
     const teamA = data?.teamA ?? "";
@@ -98,9 +99,12 @@ const TeamRegistration = ({route}) => {
     }
   } else {
     data = route.params.data.data.item.data;
+    console.log("this is my data from TeamRegistration", data.pointsTable[Branch].players) ;
     initialPlayers = data.pointsTable[Branch].players || [];
     console.log("initial players: ", initialPlayers);
   }
+
+  console.log("initial players: ", initialPlayers);
 
   console.log("team register: ",data, user, data.category, event_category, Branch);
   // console.log("Branch table: ", data.pointsTable[branch]);

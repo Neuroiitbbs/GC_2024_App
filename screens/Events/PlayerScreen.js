@@ -45,6 +45,7 @@ const modalStyles = StyleSheet.create({
 export default function PlayerScreen({ route }) {
   const props = route.params.data;
   console.log(props.data.item.data);
+  const eventName = props.data.item.data.details.title;
   const pointsTable = props.data.item.data.pointsTable;
   console.log(pointsTable);
   const { CIVIL, CSE, ECE_META, EE, MECH, MTech, PHD, MSc_ITEP } = pointsTable;
@@ -78,7 +79,7 @@ export default function PlayerScreen({ route }) {
 
   return (
     <View style={styles.cardContainer}>
-      <Text style={styles.title}>Players</Text>
+      <Text style={styles.title}>{eventName}</Text>
       <View style={styles.buttonview}>
         {Object.entries(teamData).map(([key, data]) => (
           <TouchableOpacity
@@ -90,6 +91,7 @@ export default function PlayerScreen({ route }) {
           </TouchableOpacity>
         ))}
       </View>
+      <Text style={styles.subTitle}>Click a team to see participants !</Text>
 
       {Object.entries(teamData).map(([key, data]) => (
         <Modal key={key} visible={modalVisible[key]} transparent animationType="slide">
@@ -129,6 +131,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
   },
+  subTitle: {
+    marginTop: 60,
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "white",
+  },
   buttonview: {
     marginVertical: 20,
     flexDirection: "row",
@@ -141,7 +150,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 5,
     alignItems: "center",
-    width: 110,
+    width: 115,
     margin: 10,
   },
   voteButtonText: {
@@ -149,4 +158,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
 });
+
 

@@ -35,6 +35,7 @@ import CheckSportUpdateEvent from "../Components/CheckSportUpdateEvent";
 import AddNotification from "./Admin/AddNotification";
 import SportPoints from "./Admin/SportPoints";
 import PlayerScreen from "./Events/PlayerScreen";
+import TechCultBettingScreen from "./Events/TechCultBettingScreen";
 
 import setProperTeamName from "../utils/setProperTeamName";
 import CreditsPage from "./CreditsPage";
@@ -98,6 +99,16 @@ function EventsStackNavigator() {
       <EventsStack.Screen
         name="TeamRegistration"
         component={TeamRegistration}
+        options={({ route }) => ({
+          headerTitle: () => <Header />,
+          headerStyle: { backgroundColor: "#111319", height: 120 },
+          headerTintColor: "white",
+          data: route.params.data,
+        })}
+      />
+      <EventsStack.Screen
+        name="TechCultBettingScreen"
+        component={TechCultBettingScreen}
         options={({ route }) => ({
           headerTitle: () => <Header />,
           headerStyle: { backgroundColor: "#111319", height: 120 },

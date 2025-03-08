@@ -829,7 +829,7 @@ function TeamCard() {
         </View>
       )}
       {!loading && (
-        <ScrollView style={styles_1.container}>
+          <>
           <View style={styles_1.content}>
             <View style={styles_1.teamsSection}>
               <Text style={styles_1.teamsTitle}>ALL TEAMS</Text>
@@ -868,7 +868,7 @@ function TeamCard() {
               height: 200,
             }}
           ></View>
-        </ScrollView>
+          </>
       )}
     </SafeAreaView>
   );
@@ -952,6 +952,8 @@ export default function HomePage({navigation}) {
   const [user, setUser] = useState({});
   const [BranchesData, setBranchesData] = useState(initialBranchesData);
   const [number, setNumber] = useState(0);
+
+
 
   const onCLickHandler = () => {
     navigation.navigate("  ");

@@ -49,10 +49,10 @@ function UpcomingEventCard(props) {
   return (
     <View style={styles.cardContainer}>
       <LinearGradient
-        start={{ x: 0.2, y: 0.1 }}
-        end={{ x: 0.65, y: 0.5 }}
-        locations={[0.6, 1]}
-        colors={["white", "#e3e3e3"]}
+        start={{ x: -0.4, y: 0.0 }}
+        end={{ x: 0.7, y: 1 }}
+        locations={[0.2, 0.8]}
+        colors={["#B0B0B0", "#E0E0E0"]}
         style={styles.cardTop}
       >
         <View style={styles.headerContainer}>
@@ -65,24 +65,15 @@ function UpcomingEventCard(props) {
         <View style={styles.teamsContainer}>
           <View style={styles.teamWrapper}>
             <Image style={styles.teamImage} source={logoPaths[teamA]} />
-            <Text style={styles.teamScore}>{props.scoreA}</Text>
-            {/* <TouchableOpacity style={styles.voteButton} onPress={() => handleClick(props.gameName, props.id, LoginCtx, "A")}>
-              <Text style={styles.voteButtonText}>{props.teamA}</Text>
-            </TouchableOpacity> */}
           </View>
 
           <View style={styles.teamWrapper}>
             <Image style={styles.teamImage} source={logoPaths[teamB]} />
-            <Text style={styles.teamScore}>{props.scoreB}</Text>
-            {/* <TouchableOpacity style={styles.voteButton} onPress={() => handleClick(props.gameName, props.id, LoginCtx, "B")}>
-              <Text style={styles.voteButtonText}>{props.teamB}</Text>
-            </TouchableOpacity> */}
           </View>
         </View>
         <View style={styles.buttonview}>
           <TouchableOpacity
             style={styles.voteButton}
-            // onPress={() => handleClick(props.gameName, props.id, LoginCtx, "B")}
             onPress={() => 
               props.navigation.navigate("BettingScreen", { 
                 data : props,
@@ -229,3 +220,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+

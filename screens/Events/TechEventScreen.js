@@ -36,21 +36,19 @@ const sortData = (data) => {
   return nextdata.concat(prevdata);
 };
 
-const TechEventScreen = ({ navigation, search }) => {
-  const [loading, setLoading] = useState(true);
-  const [techEvents, setTechEvents] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
+const TechEventScreen = ({ navigation, search,reloader, techData}) => {
+  const [filteredData, setFilteredData] = useState(techData);
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
   const [branchCoords, setBranchCoords] = useState({});
+  
 
   useEffect(() => {
     console.log(search);
     if (search.length === 0 || !search) {
-      setFilteredData(techEvents);
+      setFilteredData(techData);
       return;
     }
-    const data = techEvents.filter((item) => {
+    const data = techData.filter((item) => {
       let title = item?.data?.details?.title.toLowerCase();
       let event = item?.data?.eventId.toLowerCase();
       const location = item?.data?.details?.location.toLowerCase();
@@ -73,72 +71,36 @@ const TechEventScreen = ({ navigation, search }) => {
     }
   }
 
+
   useEffect(() => {
     fetchBranchCoords();
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        backend_link + "api/event/getEventByCategory?category=tech"
-      );
-      const data = response.data.events;
-      let techdata = [];
-      data.map((item) => {
-        item !== null && techdata.push(item);
-      });
-      techdata = sortData(techdata);
-      setTechEvents(techdata);
-      setDataLoaded(true);
-      setFilteredData(techdata);
-      console.log(techdata[0]);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+  // const onRefresh = async () => {
+    // setRefreshing(true);
+    // await fetchData();
+    // setRefreshing(false);
+  // };
+  
+  /* useEffect(() => {
+    if (reloader === 1) {
+      onRefresh();
     }
-  };
+  }, [reloader, onRefresh]); */
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await fetchData();
-    setRefreshing(false);
-  };
-
-  console.log("tech", techEvents);
+  console.log("tech", techData);
   return (
     <View style={styles.eventsContainer}>
-
-      <Text style={styles.votingNote}>
-        Note: The "First", "Second", and "Third" buttons in each card are for voting for the team that you expect to win.
-      </Text>
-
-      {loading && (
-        <Loader
-          visible={loading}
-          top={300}
-          bottom={0}
-          setModalVisible={setLoading}
-        />
-      )}
-      {!loading && (
-        <FlatList
-          data={filteredData}
-          renderItem={(itemData) => (
-            <TechCultEventCard data={itemData} navigation={navigation} branchCoords = {branchCoords} />
-          )}
-          keyExtractor={(item, index) =>
-            item.data.details.title + index
-          }
-          alwaysBounceVertical={false}
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-        />
-      )}
+      <FlatList
+        data={techData}
+        renderItem={(itemData) => (
+          <TechCultEventCard data={itemData} navigation={navigation} branchCoords = {branchCoords} />
+        )}
+        keyExtractor={(item, index) =>
+          item.data.details.title + index
+        }
+        alwaysBounceVertical={false}
+      />
     </View>
   );
 };
@@ -162,4 +124,5 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
 });
+
 

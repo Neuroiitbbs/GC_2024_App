@@ -36,12 +36,9 @@ const sortData = (data) => {
   return nextdata.concat(prevdata);
 };
 
-const CultEventScreen = ({ navigation, search }) => {
-  const [cultEvents, setCultEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filteredData, setFilteredData] = useState([]);
+const CultEventScreen = ({ navigation, search, cultData}) => {
+  const [filteredData, setFilteredData] = useState(cultData);
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
   const [branchCoords, setBranchCoords] = useState({});
 
 
@@ -62,10 +59,10 @@ const CultEventScreen = ({ navigation, search }) => {
   useEffect(() => {
     console.log(search);
     if (search.length == 0 || !search) {
-      setFilteredData(cultEvents);
+      setFilteredData(cultData);
       return;
     }
-    const data = cultEvents.filter((item) => {
+    const data = cultData.filter((item) => {
       let title = item?.data?.details?.title.toLowerCase();
       let event = item?.data?.eventId.toLowerCase();
       const location = item?.data?.details?.location.toLowerCase();
@@ -78,70 +75,20 @@ const CultEventScreen = ({ navigation, search }) => {
     setFilteredData(data);
   }, [search, dataLoaded]);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        backend_link + "api/event/getEventByCategory?category=cult"
-      );
-      const data = response.data.events;
-      let cultdata = [];
-      data.map((item) => {
-        item !== null && cultdata.push(item);
-      });
-
-      cultdata = sortData(cultdata);
-      setCultEvents(cultdata);
-      setDataLoaded(true);
-      setFilteredData(cultdata);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await fetchData();
-    setRefreshing(false);
-  };
-
-  console.log("cult", cultEvents);
   return (
     <View style={styles.eventsContainer}>
-
-      <Text style={styles.votingNote}>
-        Note: The "First", "Second", and "Third" buttons in each card are for voting for the team that you expect to win.
-      </Text>
-
-      {loading && (
-        <Loader
-          visible={loading}
-          top={300}
-          bottom={0}
-          setModalVisible={setLoading}
-        />
-      )}
-      {!loading && (
-        <FlatList
-          data={filteredData}
-          renderItem={(itemData) => {
-            return (
-              <TechCultEventCard data={itemData} navigation={navigation} branchCoords = {branchCoords}/>
-            );
-          }}
-          keyExtractor={(item, index) => {
-            return item.data.details.title + index;
-          }}
-          alwaysBounceVertical={false}
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-        />
-      )}
+      <FlatList
+        data={cultData}
+        renderItem={(itemData) => {
+          return (
+            <TechCultEventCard data={itemData} navigation={navigation} branchCoords = {branchCoords}/>
+          );
+        }}
+        keyExtractor={(item, index) => {
+          return item.data.details.title + index;
+        }}
+        alwaysBounceVertical={false}
+      />
     </View>
   );
 };
@@ -163,4 +110,5 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
 });
+
 
