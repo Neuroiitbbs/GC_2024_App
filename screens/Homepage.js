@@ -845,6 +845,7 @@ function TeamCard() {
                       item={item}
                       height={"100%"}
                       width={width * 0.9}
+                      borderRadius = {15}  
                     />
                   </Pressable>
                 )}
@@ -1166,7 +1167,7 @@ export default function HomePage({navigation}) {
 
   return (
     <SafeAreaView style={leaderboardStyles.container}>
-      <View style={{ height: 150, width: "auto", marginBottom: 50}}>
+      <View style={{ height: 150, width: "auto", marginBottom: 10}}>
         <TeamCard />
       </View>
               <Text style={{
@@ -1174,6 +1175,7 @@ export default function HomePage({navigation}) {
                 fontWeight: "bold",
                 fontSize: 36,
                 color: "white",
+                marginTop: 20,
             }}>LEADERBOARD</Text>
             {/*
                 <View style={leaderboardStyles.item}>
@@ -1556,4 +1558,10 @@ const styles_1 = StyleSheet.create({
     width: 80, // Fixed width for points
     textAlign: "right",
   },
+  teamBanner: {
+  width: "100%",
+  height: "100%",
+  borderRadius: 15, // Adjust for more or less rounding
+  overflow: "hidden",
+},
 });

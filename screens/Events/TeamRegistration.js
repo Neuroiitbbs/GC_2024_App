@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
   listWrapper: {
     flex: 1,
     alignItems: "center", // Align buttons properly
+    marginLeft: 20,
   },
   listContainer: {
     backgroundColor: "#111", // Slightly lighter black for contrast

@@ -31,8 +31,8 @@ function TechCultEventCard(props) {
   const { branchCoords } = props;
 
   const LoginCtx = useContext(LoginContext);
-  const user_branch = LoginCtx.detail.dept;
-  const user_email = LoginCtx.user.email;
+  const user_branch = LoginCtx?.detail?.dept;
+  const user_email = LoginCtx?.user?.email;
 
 
   const checkBranch = () => {

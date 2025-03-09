@@ -147,6 +147,13 @@ function TechCultBettingScreen({ route, navigation }) {
         }
       });
 
+      //
+      const now = Date.now();
+      if (eventData.data.details.timestamp < now) {
+            setDisabledButtons((prev) => [...prev, 0]);
+            setDisabledButtons((prev) => [...prev, 1]);
+            setDisabledButtons((prev) => [...prev, 2]);
+      }
       return updatedOptions;
     });
   }, []);

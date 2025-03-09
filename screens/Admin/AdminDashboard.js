@@ -28,8 +28,9 @@ const handleBetsUpdate = async () => {
         backend_link,
       }
     );
+    const res2 = await axios.get(`${backend_link}api/points/updateTechCultPoints`);
     // console.log("Updated Fantasy Points");
-    console.log(res.data);
+    // console.log(res.data);
     if (res.data.message != "success") {
       new Error("something went wrong");
     }
