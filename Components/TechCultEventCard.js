@@ -18,6 +18,9 @@ const deviceHeight = Dimensions.get("window").height;
 function TechCultEventCard(props) {
   const navigation = props.navigation;
   const eventData = props?.data?.data || props?.data?.item || props?.data;
+  const eventTimeStamp = eventData.data.details?.timestamp;
+
+
   const formattedDate = new Date(
     eventData.data.details?.timestamp
   ).toLocaleDateString();
@@ -41,6 +44,9 @@ function TechCultEventCard(props) {
     }
     return branchCoords[user_branch] === user_email;
   };
+
+
+  console.log("resting by siddarth", eventData.data.details?.title, LoginCtx.isAdmin, checkBranch(), eventTimeStamp > Date.now());
 
   return (
     <View style={{ paddingBottom: 2, paddingTop: 2 }}>
@@ -119,7 +125,7 @@ function TechCultEventCard(props) {
             </Text>
           </TouchableOpacity>
         </View>
-        {LoginCtx.isAdmin && checkBranch() && (
+        {LoginCtx.isAdmin && checkBranch() && eventTimeStamp > Date.now() && (
           <TouchableOpacity
             style={styles.registerButton}
             onPress={() =>

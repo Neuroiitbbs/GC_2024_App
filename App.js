@@ -213,14 +213,37 @@ const App = () => {
     }
   }, [response]);
 
+  const getDept = (email) => {
+    if(email.length < 22) return "PhD";
+    if(email[5] == '1' || email[5] == '2'){
+        if(email.substring(2, 4) == 'cs') return "CSE";
+        if(email.substring(2, 4) == 'ce') return "CE";
+        if(email.substring(2, 4) == 'me') return "ME";
+        if(email.substring(2, 4) == 'ee') return "EE";
+        if(email.substring(2, 4) == 'mm') return "MM";
+        if(email.substring(2, 4) == 'ec') return "ECE";
+        if(email.substring(2, 4) == 'ep') return "EP";
+    }
+    if(email[5] == '3') return "ITEP";
+    if(email[5] == '6') return "MTech";
+    return "MSc";
+};
+
   useEffect(() => {
     // isUserLoggedIn();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log(user, "User");
         AsyncStorage.setItem("userInfo", JSON.stringify(user));
         LoginCtx.setUser(user);
         LoginCtx.setIsLogin(true);
+        const resp = await axios.post(
+          backend_link + "api/user/add  User",
+          {
+            email: user.email,
+            name: user.displayName,
+            dept: getDept(user.email),
+          }
+        );
       } else {
         LoginCtx.setUser(null);
         LoginCtx.setIsLogin(false);

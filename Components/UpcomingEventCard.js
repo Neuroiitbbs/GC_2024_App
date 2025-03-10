@@ -30,8 +30,8 @@ function UpcomingEventCard(props) {
   hour = hour % 12 || 12;
   const formattedTime = `${hour}:${minute < 10 ? "0" : ""}${minute} ${ampm}`;
   const LoginCtx = useContext(LoginContext);
-  const user_branch = LoginCtx.detail.dept;
-  const user_email = LoginCtx.user.email;
+// const user_branch = LoginCtx.detail.dept;
+  const user_email = LoginCtx?.user?.email;
 
   const teamA = setProperTeamName(props.teamA);
   const teamB = setProperTeamName(props.teamB);

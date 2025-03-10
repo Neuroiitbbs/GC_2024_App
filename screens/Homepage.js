@@ -311,7 +311,7 @@ export default function HomePage({navigation}) {
   const [lastUpdated, setLastUpdated] = useState("Unknown Date");
   const [leaderboardData, setLeaderboardData] = useState([]);
   const LoginCtx = useContext(LoginContext);
-  const userEmail = LoginCtx.user.email;
+  const userEmail = LoginCtx?.user?.email;
   const [user, setUser] = useState({});
   const [BranchesData, setBranchesData] = useState(initialBranchesData);
   const [number, setNumber] = useState(0);
